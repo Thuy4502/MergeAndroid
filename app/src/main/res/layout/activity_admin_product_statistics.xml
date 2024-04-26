@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AdminProductStatisticsActivity">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                style="@style/Toolbar"
+                android:backgroundTint="@color/white"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:navigationIcon="@drawable/icon_arrow_back_24"
+                app:title="Thống kê sản phẩm"
+                app:titleTextColor="@color/black">
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+    </FrameLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="35dp"
+                android:orientation="vertical">
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/btn_showDate"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_height="50dp"
+                    app:strokeWidth="2dp"
+                    app:strokeColor="@color/mainColor"
+                    app:cardCornerRadius="12dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/tv_selectStarDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Thống kê theo ngày"
+                            android:fontFamily="@font/sora_semibold"
+                            android:textStyle="bold"
+                            android:textSize="16dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_gravity="center"/>
+                        <TextView
+                            android:id="@+id/tv_line"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" - "
+                            android:textStyle="bold"
+                            android:fontFamily="@font/sora_semibold"
+                            android:visibility="gone"/>
+                        <TextView
+                            android:id="@+id/tv_selectEndDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Today"
+                            android:fontFamily="@font/sora_semibold"
+                            android:textStyle="bold"
+                            android:textSize="16dp"
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_gravity="center"
+                            android:visibility="gone"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/icon_arrow_down_24"/>
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="20dp"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:fontFamily="@font/sora_semibold"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:text="@string/title_statisticProduct">
+            </TextView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewGraph"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:elevation="10dp"
+                app:cardCornerRadius="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingVertical="20dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_noData1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/no_data"
+                        android:layout_gravity="center"
+                        android:textStyle="italic"
+                        android:visibility="gone"/>
+                    <!--Pie chart to display the data-->
+
+                    <org.eazegraph.lib.charts.PieChart
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/piechart"
+                        android:layout_width="250dp"
+                        android:layout_height="250dp"
+                        android:padding="6dp"
+                        android:layout_gravity="center"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+
+                        android:paddingHorizontal="20dp"
+                        android:gravity="center_vertical"
+                        >
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+                            <LinearLayout
+                                android:id="@+id/layout_comment1"
+                                android:layout_width="180dp"
+                                android:layout_height="20dp"
+                                android:layout_marginVertical="3dp"
+                                android:layout_gravity="center_vertical"
+                                android:visibility="gone">
+
+                                <!--View to display the yellow color icon-->
+                                <View
+                                    android:layout_width="20dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/top1Color"/>
+
+                                <!--Text view to display R -->
+                                <TextView
+                                    android:id="@+id/tv_commentTop1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="R"
+                                    android:textStyle="bold"
+                                    android:paddingLeft="10dp"/>
+
+                            </LinearLayout>
+
+                            <!--Linear layout to display Python-->
+                            <LinearLayout
+                                android:id="@+id/layout_comment2"
+                                android:layout_width="180dp"
+                                android:layout_height="20dp"
+                                android:layout_marginVertical="3dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="5dp"
+                                android:visibility="gone">
+
+                                <!--View to display the green color icon-->
+                                <View
+                                    android:layout_width="20dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/top2Color"/>
+
+                                <!--Text view to display python text -->
+                                <TextView
+                                    android:id="@+id/tv_commentTop2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textStyle="bold"
+                                    android:text="Python"
+                                    android:paddingLeft="10dp"/>
+
+                            </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/layout_comment3"
+                                android:layout_width="180dp"
+                                android:layout_height="20dp"
+                                android:layout_marginVertical="3dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="5dp"
+                                android:visibility="gone">
+
+                                <!--View to display the red color icon-->
+                                <View
+                                    android:layout_width="20dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/top3Color"/>
+
+                                <!--Text view to display C++ text -->
+                                <TextView
+                                    android:id="@+id/tv_commentTop3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="C++"
+                                    android:textStyle="bold"
+                                    android:paddingLeft="10dp"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+
+                            <!--Linear layout to display Java-->
+                            <LinearLayout
+                                android:id="@+id/layout_comment4"
+                                android:layout_width="180dp"
+                                android:layout_height="20dp"
+                                android:layout_marginVertical="3dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="5dp"
+                                android:visibility="gone">
+
+                                <!--View to display the blue color icon-->
+                                <View
+                                    android:layout_width="20dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/top4Color"/>
+
+                                <!--Text view to display Java text -->
+                                <TextView
+                                    android:id="@+id/tv_commentTop4"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Java"
+                                    android:textStyle="bold"
+                                    android:paddingLeft="10dp"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/layout_comment5"
+                                android:layout_width="180dp"
+                                android:layout_height="20dp"
+                                android:layout_marginVertical="3dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="5dp"
+                                android:visibility="gone">
+
+                            <!--View to display the green color icon-->
+                            <View
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/top5Color"/>
+
+                            <!--Text view to display python text -->
+                            <TextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/tv_commentTop5"
+                                android:textStyle="bold"
+                                android:text="React"
+                                android:paddingLeft="10dp"/>
+
+                        </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cardViewGraph"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:elevation="10dp"
+                app:cardCornerRadius="10dp"
+                android:id="@+id/details">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_statisticData"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:textAllCaps="true"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_marginHorizontal="20sp"
+                        android:textColor="@color/mainColor"
+                        android:layout_marginTop="20dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_noData2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/no_data"
+                        android:layout_gravity="center"
+                        android:textStyle="italic"
+                        android:layout_marginVertical="10dp"
+                        android:visibility="gone"/>
+                    <RelativeLayout
+                        android:id="@+id/rlt_top1"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_marginRight="25dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/tv_productNameTop1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            android:text="top1"
+                            android:layout_marginBottom="10dp"
+                            android:textStyle="bold"
+                            android:textSize="14sp"/>
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:id="@+id/tv_top1"
+                            android:textAlignment="textEnd"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="10dp"
+                            android:fontFamily="sans-serif-light"
+                            android:layout_alignParentRight="true"/>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rlt_top2"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_marginRight="25dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginBottom="10dp"
+                        android:visibility="gone">
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/black"/>
+                        <TextView
+                            android:id="@+id/tv_productNameTop2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            android:text="top2"
+                            android:layout_marginTop="10dp"
+                            android:textStyle="bold"
+                            android:textSize="14sp"/>
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:id="@+id/tv_top2"
+                            android:textAlignment="textEnd"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="sans-serif-light"
+                            android:layout_alignParentRight="true"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rlt_top3"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_marginRight="25dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginBottom="10dp"
+                        android:visibility="gone">
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/black"/>
+                        <TextView
+                            android:id="@+id/tv_productNameTop3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            android:text="top3"
+                            android:layout_marginTop="10dp"
+                            android:textStyle="bold"
+                            android:textSize="14sp"/>
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:id="@+id/tv_top3"
+                            android:textAlignment="textEnd"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="sans-serif-light"
+                            android:layout_alignParentRight="true"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rlt_top4"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_marginRight="25dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginBottom="10dp"
+                        android:visibility="gone">
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/black"/>
+                        <TextView
+                            android:id="@+id/tv_productNameTop4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            android:text="top4"
+                            android:layout_marginTop="10dp"
+                            android:textStyle="bold"
+                            android:textSize="14sp"/>
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:id="@+id/tv_top4"
+                            android:textAlignment="textEnd"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="sans-serif-light"
+                            android:layout_alignParentRight="true"/>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rlt_top5"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_marginRight="25dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginBottom="10dp"
+                        android:visibility="gone">
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/black"/>
+                        <TextView
+                            android:id="@+id/tv_productNameTop5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            android:text="top5"
+                            android:layout_marginTop="10dp"
+                            android:textStyle="bold"
+                            android:textSize="14sp"/>
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:id="@+id/tv_top5"
+                            android:layout_marginTop="10dp"
+                            android:textAlignment="textEnd"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-light"
+                            android:layout_alignParentRight="true"/>
+                    </RelativeLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Base.Theme.TestApp"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="31">
+        <activity
+            android:name=".UserReviewActivity"
+            android:exported="true" />
+        <activity
+            android:name=".UserCouponDetailActivity"
+            android:exported="true" />
+        <activity
+            android:name=".AdminCouponListActivity"
+            android:exported="true" />
+        <activity
+            android:name=".AdminInfoCouponActivity"
+            android:exported="true" />
+        <activity
+            android:name=".UserCouponActivity"
+            android:exported="true" />
+        <activity
+            android:name=".HomeManagerActivity"
+            android:exported="true" />
+        <activity
+            android:name=".StaffNavigationMenuActivity"
+            android:exported="true" />
+        <activity
+            android:name=".StaffOderListActivity"
+            android:exported="true" />
+        <activity
+            android:name=".StaffOrderDetailActivity"
+            android:exported="true" />
+        <activity
+            android:name=".AdminSaleStatisticActivity"
+            android:exported="true" />
+        <activity
+            android:name=".AdminProductStatisticsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".UserDeliveryProcessActivity"
+            android:exported="true" />
+        <activity
+            android:name=".UserProfileActivity"
+            android:exported="true" />
+        <activity
+            android:name=".UserOrderBuyNowActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".ProductDetailActivityTemp"
+            android:exported="true"
+            android:theme="@style/CustomTheme" />
+        <activity
+            android:name=".Actionbar"
+            android:exported="true" />
+        <activity
+            android:name=".ForgotPasswordActivity"
+            android:exported="true"
+            android:theme="@style/Base.Theme.TestApp" />
+        <activity
+            android:name=".SetNewPasswordActivity"
+            android:exported="true"
+            android:theme="@style/Base.Theme.TestApp" />
+        <activity
+            android:name=".RegistrationActivity"
+            android:exported="true"
+            android:theme="@style/Base.Theme.TestApp" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true"
+            android:theme="@style/Base.Theme.TestApp" />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="true"
+            android:theme="@style/CustomTheme" />
+        <activity
+            android:name=".CustomerHomeActivity"
+            android:exported="true"
+             />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".OrderSuccessfully"
+            android:exported="true"
+            />
+
+        <activity
+            android:name=".UserOrderActivity"
+            android:exported="true"
+            android:theme="@style/CustomTheme"/>
+        <activity
+            android:name=".CartDetailActivity"
+            android:exported="true"
+            android:theme="@style/CustomTheme"
+            />
+
+        <activity
+            android:name=".ProductDetailActivity"
+            android:exported="true"
+            android:theme="@style/CustomTheme"
+            />
+        <activity
+            android:name=".CartListActivity"
+            android:exported="true"
+            android:theme="@style/CustomTheme"/>
+        <activity
+            android:name=".BuyNowActivity"
+            android:exported="true"
+            android:theme="@style/CustomTheme"/>
+        <activity
+            android:name=".DeleveryProcessOrderInCartActivity"
+            android:exported="true"/>
+
+    </application>
+
+</manifest>

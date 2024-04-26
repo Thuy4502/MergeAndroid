@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:theme="@style/Theme.Material3.Light.NoActionBar">
+    <com.google.android.material.card.MaterialCardView
+        app:cardCornerRadius="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        app:strokeColor="@color/lightGrey"
+        app:cardBackgroundColor="@color/white"
+        app:strokeWidth="1dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="10dp">
+            <ImageView
+                android:id="@+id/img_product"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/img_topping"
+                android:layout_gravity="center_vertical"/>
+            <LinearLayout
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="7dp"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_productName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name Product"
+                    android:fontFamily="@font/sora_semibold"
+                    android:textSize="12sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_productSize"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/TextLightColor"
+                        android:textSize="12sp"
+                        android:text="Size: M"/>
+                    <TextView
+                        android:layout_width="1dp"
+                        android:layout_height="15dp"
+                        android:background="@color/darkGrey"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="5dp"
+                        />
+                    <TextView
+                        android:id="@+id/tv_productQuantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/TextLightColor"
+                        android:text="SL: 1"
+                        android:textSize="12sp" />
+                </LinearLayout>
+                </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:theme="@style/CustomTheme"
+                android:layout_marginRight="10dp"
+                android:gravity="right"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tv_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="1"
+                    android:inputType="number"
+                    android:gravity="right|center"
+                    android:textSize="12dp">
+                </TextView>
+<!--                <TextView-->
+<!--                    android:layout_width="24dp"-->
+<!--                    android:layout_height="24dp"-->
+<!--                    android:background="@drawable/icon_add_20"-->
+<!--                    android:layout_gravity="center|right"-->
+<!--                    android:focusableInTouchMode="false">-->
+<!--                </TextView>-->
+            </LinearLayout>
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:icon="@drawable/icon_left_menu_coffee_24"
+        android:id="@+id/navProduct"
+        android:title="Sản phẩm" />
+
+    <item
+        android:icon="@drawable/icon_list_24"
+        android:id="@+id/navOrder"
+        android:title="Đơn hàng" />
+
+    <item
+        android:icon="@drawable/icon_left_menu_customer_24"
+        android:id="@+id/navCustomer"
+        android:title="Khách hàng" />
+
+    <item
+        android:icon="@drawable/icon_left_menu_statistic_chart_24"
+        android:id="@+id/navStatistic"
+        android:title="Thống kê" />
+
+    <item
+        android:icon="@drawable/icon_left_menu_coupon_24"
+        android:id="@+id/navCoupon"
+        android:title="Khuyến mãi" />
+
+    <item
+        android:id="@+id/navLogout"
+        android:title="Đăng xuất" />
+</menu>

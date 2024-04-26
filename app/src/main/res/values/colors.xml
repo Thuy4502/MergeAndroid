@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="statusBarColor">#FF454545</color>
+<!--    background color-->
+    <color name="bgColor_l1">#FF131313</color>
+    <color name="bgColor_l2">#FF313131</color>
+    <color name="bgColor_l3">#F9F9F9</color>
+<!--    bgColor main-->
+    <color name="bgMain_color1">#321711</color>
+    <color name="bgMain_color2">#0C0602</color>
+    <color name="bgMain_color3">#251408</color>
+<!--    base color-->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+<!--    <color name="yellow">#</color>-->
+
+<!--    <color name="mainColor">#FFC67C4E</color>-->
+    <color name="mainColor">#B42329</color>
+    <color name="darkGrey">#FF313131</color>
+    <color name="green">#36C07E</color>
+    <color name="lightGrey">#FFD4D4D4</color>
+    <color name="red">#FF0000</color>
+    <color name="grey">#d3d6db</color>
+
+<!--    text color-->
+    <color name="smallTextColor">#FFA9A9A9</color>
+    <color name="priceTextColor">#FF2F4B4E</color>
+    <color name="TextLightColor">#FF313131</color>
+    <color name="TextGreyColor">#979797</color>
+
+<!--    color statistic-->
+    <color name="top1Color">#f2b670</color>
+    <color name="top2Color">#b7d190</color>
+    <color name="top3Color">#85b9e1</color>
+    <color name="top4Color">#396264</color>
+    <color name="top5Color">#a295af</color>
+
+
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+</resources>

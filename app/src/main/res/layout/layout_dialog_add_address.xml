@@ -1,0 +1,36 @@
+<!-- dialog_change_address.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/white"
+    android:layout_marginLeft="20dp"
+    android:layout_margin="20dp">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_map_location_dot_solid"
+        android:layout_gravity="center"
+        android:layout_marginBottom="30dp"/>
+
+    <EditText
+        android:id="@+id/edtAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nhập địa chỉ giao hàng" />
+
+    <Button
+        android:id="@+id/btnSaveChange"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:text="Lưu"
+        android:layout_gravity="right"
+        android:textAllCaps="false"
+        android:background="@drawable/primary_button_bg_color"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:layout_marginTop="30dp"
+        />
+
+</LinearLayout>

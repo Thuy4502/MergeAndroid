@@ -1,0 +1,69 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.TestApp" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/mainColor</item>
+        <item name="android:fontFamily">@font/sora_regular</item>
+        <item name="android:textColor">@color/black</item>
+        <!-- Secondary brand color. -->
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/statusBarColor</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="CustomTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/white</item>
+        <item name="android:fontFamily">@font/sora_regular</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="toolbartxt" parent="TextAppearance.AppCompat.Button">
+        <item name="android:textSize" >16dp</item>
+    </style>
+    
+    <style name="Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="textAllCaps">false</item>
+        <item name="android:background" >@color/white</item>
+        <item name="theme" >@style/Base.Theme.TestApp</item>
+        <item name= "popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="titleTextAppearance">@style/toolbartxt</item>
+    </style>
+
+
+    
+    <style name="RatingBar" parent="Widget.AppCompat.RatingBar">
+        <item name="colorControlNormal">#4D000000</item>
+        <item name="colorControlActivated">@color/top1Color</item>
+    </style>
+
+
+    <style name="CustomTestApp" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/mainColor</item>
+        <item name="android:fontFamily">@font/sora_regular</item>
+        <item name="android:textColor">@color/black</item>
+        <!-- Secondary brand color. -->
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/statusBarColor</item>
+        <!-- Customize your theme here. -->
+    </style>
+    <style name="btn" parent="Theme.AppCompat.Light.NoActionBar">
+        Primary brand color.
+        <item name="colorPrimary">@color/white</item>
+        <item name="android:fontFamily">@font/sora_regular</item>
+    </style>
+
+
+    <style name="MenuTheme" parent="Theme.MaterialComponents.Light">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Customize your dark theme here. -->
+        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    </style>
+
+    <style name="btn_style" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@null</item>
+    </style>
+
+
+</resources>

@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Highlands</string>
+    <string name="thanhlap">Highlands Coffee được thành lập vào nằm 1999</string>
+
+
+    <string name="plus_icon">+</string>
+
+
+    <string name="read_more">Xem thêm</string>
+    <string name="read_less">Rút gọn</string>
+
+    <string name="receive_the_otp">Bạn không nhận được mã ?</string>
+    <string name="resendOtp">Gửi lại</string>
+
+    //statistic
+    <string name="title_statisticProduct">Biểu đồ thông kê sản phẩm bán chạy</string>
+    <string name="title_statisticData">Số liệu số lượng sản phẩm đã bán</string>
+
+    <string name="title_statisticSale">Biểu đồ thông kê doanh thu</string>
+
+    <string name="no_data">Không có dữ liệu</string>
+
+    //status name
+    <string name="statusName_0">Đơn hàng đang chờ xác nhận</string>
+    <string name="statusName_1">Đơn hàng đã được xác nhận</string>
+    <string name="statusName_2">Đơn hàng đang được thực hiện</string>
+    <string name="statusName_3">Đơn hàng đang được giao</string>
+    <string name="statusName_4">Đơn hàng đã được giao thành công</string>
+    <string name="statusName_5">Đã hoàn thành</string>
+
+
+    <string name="quản_lý_sản_phẩm">Quản lý sản phẩm</string>
+    <string name="action_search">Search</string>
+
+</resources>

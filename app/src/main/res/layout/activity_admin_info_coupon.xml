@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AdminInfoCouponActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/app_bar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/app_bar"
+                    style="@style/Toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:navigationIcon="@drawable/icon_arrow_back_24"
+                    app:title="THÊM MÃ GIẢM GIÁ"
+                    app:titleTextColor="@color/black">
+                </androidx.appcompat.widget.Toolbar>
+            </com.google.android.material.appbar.AppBarLayout>
+        </FrameLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:paddingBottom="?attr/actionBarSize">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="20dp"
+                android:orientation="vertical">
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="Vui lòng chọn ảnh"
+                        android:textStyle="italic"
+                        android:gravity="center"
+                        android:textColor="@color/TextGreyColor" />
+                    <ImageView
+                        android:id="@+id/iv_imgCoupon"
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/style_border_dash"/>
+                </FrameLayout>
+
+                <Button
+                    android:id="@+id/btn_uploadImg"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="Upload Image" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="start"
+                    android:orientation="vertical"
+                    android:hint="Nhập ID mã giảm giá"
+                    android:backgroundTint="@color/mainColor"
+                    android:textColorHint="@color/smallTextColor"
+                    app:boxStrokeColor="@color/mainColor"
+                    app:hintTextColor="@color/black"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_couponId"
+                        android:layout_width="match_parent"
+                        android:inputType="text"
+                        android:layout_height="50dp"
+                        android:padding="10dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="start"
+                    android:orientation="vertical"
+                    android:hint="Nhập tiêu đề giảm giá"
+                    android:backgroundTint="@color/mainColor"
+                    android:textColorHint="@color/smallTextColor"
+                    app:boxStrokeColor="@color/mainColor"
+                    app:hintTextColor="@color/black"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_couponTitle"
+                        android:layout_width="match_parent"
+                        android:inputType="text"
+                        android:layout_height="50dp"
+                        android:padding="10dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="start"
+                    android:orientation="vertical"
+                    android:hint="Nhập giá trị mã giảm giá"
+                    android:backgroundTint="@color/mainColor"
+                    android:textColorHint="@color/smallTextColor"
+                    app:boxStrokeColor="@color/mainColor"
+                    app:hintTextColor="@color/black"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_couponValue"
+                        android:layout_width="match_parent"
+                        android:inputType="text"
+                        android:layout_height="50dp"
+                        android:padding="10dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="start"
+                    android:orientation="vertical"
+                    android:hint="Nhập giá trị tối thiểu"
+                    android:backgroundTint="@color/mainColor"
+                    android:textColorHint="@color/smallTextColor"
+                    app:boxStrokeColor="@color/mainColor"
+                    app:hintTextColor="@color/black"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_couponMinium"
+                        android:layout_width="match_parent"
+                        android:inputType="text"
+                        android:layout_height="50dp"
+                        android:padding="10dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="start"
+                    android:orientation="vertical"
+                    android:hint="Nhập nội dung"
+                    android:backgroundTint="@color/mainColor"
+                    android:textColorHint="@color/smallTextColor"
+                    app:boxStrokeColor="@color/mainColor"
+                    app:hintTextColor="@color/black"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_couponContent"
+                        android:layout_width="match_parent"
+                        android:inputType="text"
+                        android:gravity="top|left"
+                        android:layout_height="130dp"
+                        android:padding="10dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="start"
+                    android:orientation="vertical"
+                    android:hint="Thiết lập thời hạn giảm giá"
+                    android:backgroundTint="@color/mainColor"
+                    android:textColorHint="@color/smallTextColor"
+                    app:boxStrokeColor="@color/mainColor"
+                    app:hintTextColor="@color/black"
+                    app:startIconDrawable="@drawable/icon_calendar_24">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_couponTime"
+                        android:layout_width="match_parent"
+                        android:inputType="text"
+                        android:layout_height="50dp"
+                        android:padding="10dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="right|center"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Active"/>
+                    <Switch
+                        android:layout_width="60dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="right"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="bottom|center">
+                    <Button
+                        android:layout_width="200dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/style_button"
+                        android:text="Hoàn tất" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

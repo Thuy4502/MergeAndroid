@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "600010446117",
+    "project_id": "image-highland-6ae35",
+    "storage_bucket": "image-highland-6ae35.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:600010446117:android:d24d050386cdfc8d08f6cc",
+        "android_client_info": {
+          "package_name": "com.example.testapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyNXAA2bPFGoQQJTt2M1I-ruC6Bw74EPM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
