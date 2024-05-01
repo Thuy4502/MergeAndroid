@@ -21,6 +21,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".UserMapDirectionsActivity"
+            android:exported="true" />
+        <activity
             android:name=".UserReviewActivity"
             android:exported="true" />
         <activity
@@ -92,8 +95,7 @@
             android:theme="@style/CustomTheme" />
         <activity
             android:name=".CustomerHomeActivity"
-            android:exported="true"
-             />
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -103,39 +105,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".OrderSuccessfully"
-            android:exported="true"
-            />
-
+            android:exported="true" />
         <activity
             android:name=".UserOrderActivity"
             android:exported="true"
-            android:theme="@style/CustomTheme"/>
+            android:theme="@style/CustomTheme" />
         <activity
             android:name=".CartDetailActivity"
             android:exported="true"
-            android:theme="@style/CustomTheme"
-            />
-
+            android:theme="@style/CustomTheme" />
         <activity
             android:name=".ProductDetailActivity"
             android:exported="true"
-            android:theme="@style/CustomTheme"
-            />
+            android:theme="@style/CustomTheme" />
         <activity
             android:name=".CartListActivity"
             android:exported="true"
-            android:theme="@style/CustomTheme"/>
+            android:theme="@style/CustomTheme" />
         <activity
             android:name=".BuyNowActivity"
             android:exported="true"
-            android:theme="@style/CustomTheme"/>
+            android:theme="@style/CustomTheme" />
         <activity
             android:name=".DeleveryProcessOrderInCartActivity"
-            android:exported="true"/>
-
+            android:exported="true" />
     </application>
 
 </manifest>

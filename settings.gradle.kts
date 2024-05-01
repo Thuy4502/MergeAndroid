@@ -12,7 +12,7 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven {
-//            setUrl ("https://jcenter.bintray.com")
+            setUrl ("https://jcenter.bintray.com")
             setUrl ("https://jitpack.io")
 
         }

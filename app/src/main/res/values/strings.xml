@@ -32,4 +32,7 @@
     <string name="quản_lý_sản_phẩm">Quản lý sản phẩm</string>
     <string name="action_search">Search</string>
 
+    //map
+    <string name="API_KEY">AIzaSyBBs598eY_FcDCAhXk6b4FyT6iFPStdXPc</string>
+
 </resources>
