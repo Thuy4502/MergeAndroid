@@ -33,6 +33,7 @@
     <string name="action_search">Search</string>
 
     //map
-    <string name="API_KEY">AIzaSyBBs598eY_FcDCAhXk6b4FyT6iFPStdXPc</string>
+    <string name="API_KEY">AIzaSyAArm8OLzCuc8PBeBnEh9NKbQK_ss-ImzI</string>
+    <string name="title_activity_maps">MapsActivity</string>
 
 </resources>

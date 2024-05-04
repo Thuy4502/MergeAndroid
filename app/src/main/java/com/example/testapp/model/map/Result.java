@@ -1,4 +1,4 @@
-package com.example.testapp.model;
+package com.example.testapp.model.map;
 
 import java.util.List;
 

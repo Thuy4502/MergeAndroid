@@ -2,6 +2,12 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="MapActivity">
+        <State />
+      </entry>
+      <entry key="MapsActivity">
+        <State />
+      </entry>
       <entry key="UserMapDirectionsActivity">
         <State />
       </entry>

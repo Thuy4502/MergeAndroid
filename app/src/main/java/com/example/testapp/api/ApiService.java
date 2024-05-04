@@ -7,7 +7,6 @@ import com.example.testapp.model.Order;
 import com.example.testapp.model.OrderID;
 import com.example.testapp.model.Product;
 import com.example.testapp.model.ProductSaleRequest;
-import com.example.testapp.model.Result;
 import com.example.testapp.model.Size;
 import com.example.testapp.model.StatisticRequest;
 import com.example.testapp.model.User;

@@ -20,7 +20,7 @@
     <style name="toolbartxt" parent="TextAppearance.AppCompat.Button">
         <item name="android:textSize" >16dp</item>
     </style>
-    
+
     <style name="Toolbar" parent="Widget.AppCompat.Toolbar">
         <item name="textAllCaps">false</item>
         <item name="android:background" >@color/white</item>
@@ -30,7 +30,7 @@
     </style>
 
 
-    
+
     <style name="RatingBar" parent="Widget.AppCompat.RatingBar">
         <item name="colorControlNormal">#4D000000</item>
         <item name="colorControlActivated">@color/top1Color</item>

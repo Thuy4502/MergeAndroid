@@ -1,4 +1,4 @@
-package com.example.testapp.model;
+package com.example.testapp.model.map;
 
 public class OverViewPolyline {
     private String points;

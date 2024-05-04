@@ -1,7 +1,9 @@
+import org.gradle.internal.impldep.bsh.commands.dir
+
 plugins {
     id("com.android.application")
     id ("com.google.gms.google-services")
-//    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -31,21 +33,42 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        viewBinding = true
+    }
+}
+
+secrets {
+    // Optionally specify a different file name containing your secrets.
+    // The plugin defaults to "local.properties"
+    propertiesFileName = "secrets.properties"
+
+    // A properties file containing default secret values. This file can be
+    // checked in version control.
+    defaultPropertiesFileName = "local.defaults.properties"
+
+    // Configure which keys should be ignored by the plugin by providing regular expressions.
+    // "sdk.dir" is ignored by default.
+    ignoreList.add("keyToIgnore") // Ignore the key "keyToIgnore"
+    ignoreList.add("sdk.*")       // Ignore all keys matching the regexp "sdk.*"
 }
 
 dependencies {
     //map
-//    implementation ("com.google.android.libraries.places:places:2.4.0")
-//    implementation ("com.google.maps.android:android-maps-utils:2.2.0")
-//    implementation ("com.google.android.gms:play-services-maps:17.0.1")
-//    implementation ("com.google.maps:google-maps-services:0.2.9")
-//    implementation ("org.slf4j:slf4j-simple:1.7.25")
-//    implementation ("com.android.volley:volley:1.1.1")
+    implementation ("com.github.jd-alexander:library:1.1.0")
+
+    implementation ("com.google.android.gms:play-services-maps:18.2.0")
+    implementation ("com.google.maps:google-maps-services:2.2.0")
+    implementation ("com.google.android.gms:play-services-maps:18.2.0")
 
 
-    implementation("com.google.android.gms:play-services-location:21.2.0")
-    implementation("com.google.android.gms:play-services-analytics:18.0.4")
-    implementation("com.google.android.gms:play-services-maps:18.2.0")
+
+    implementation("com.google.android.gms:play-services-location:17.0.0")
+    implementation("com.google.android.gms:play-services-analytics:17.0.0")
+
+    implementation ("com.google.gms:google-services:4.3.15")
+    implementation ("com.google.android.gms:play-services-maps:18.1.0")
+
 
     implementation ("io.reactivex.rxjava2:rxjava:2.2.2")
     implementation ("com.squareup.retrofit2:adapter-rxjava2:2.0.0")
@@ -74,11 +97,12 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.12.0")
     implementation("androidx.activity:activity:1.8.0")
     implementation("androidx.work:work-runtime:2.9.0")
+    implementation("androidx.leanback:leanback:1.0.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
 
 
-    implementation("androidx.appcompat:appcompat:1.4.0")
-    implementation("com.google.android.material:material:1.8.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.3")
 
     testImplementation("junit:junit:4.13.2")
