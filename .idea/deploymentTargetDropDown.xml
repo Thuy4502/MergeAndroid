@@ -8,8 +8,24 @@
       <entry key="MapsActivity">
         <State />
       </entry>
-      <entry key="UserMapDirectionsActivity">
+      <entry key="UserDeliveryProcessActivity">
         <State />
+      </entry>
+      <entry key="UserMapDirectionsActivity">
+        <State>
+          <runningDeviceTargetSelectedWithDropDown>
+            <Target>
+              <type value="RUNNING_DEVICE_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="SERIAL_NUMBER" />
+                  <value value="adb-6fe98a59-zRzy46._adb-tls-connect._tcp" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </runningDeviceTargetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-05-04T11:13:40.864100800Z" />
+        </State>
       </entry>
       <entry key="app">
         <State />

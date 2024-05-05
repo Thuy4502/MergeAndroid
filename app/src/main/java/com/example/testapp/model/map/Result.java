@@ -3,14 +3,14 @@ package com.example.testapp.model.map;
 import java.util.List;
 
 public class Result {
-    private List<Route> routes;
+    private List<Routes> routes;
     private String status;
 
-    public List<Route> getRoutes() {
+    public List<Routes> getRoutes() {
         return routes;
     }
 
-    public void setRoutes(List<Route> routes) {
+    public void setRoutes(List<Routes> routes) {
         this.routes = routes;
     }
 

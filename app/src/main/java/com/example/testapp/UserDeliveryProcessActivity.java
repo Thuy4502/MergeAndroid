@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.content.Context;
@@ -35,6 +37,7 @@ public class UserDeliveryProcessActivity extends AppCompatActivity {
     private ImageView tvStatus;
     private ImageButton ibCallShipper;
     private final Handler handler = new Handler();
+    private Integer save_statusId = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +51,8 @@ public class UserDeliveryProcessActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MyPerfs", Context.MODE_PRIVATE);
         String token = "Bearer " + sharedPreferences.getString("token", null);
 
-        getOrderById(token,BuyNowActivity.orderId);
+//        getOrderById(token,BuyNowActivity.orderId);
+        getOrderById("Bearer eyJhbGciOiJIUzM4NCJ9.eyJpYXQiOjE3MTQ4ODY1ODYsImV4cCI6MTcxNTQ5MTM4NiwidXNlcm5hbWUiOiIrODQ5NzkzNDUxOTAiLCJhdXRob3JpdGllcyI6IkNVU1RPTUVSIn0.VLtKzUfmyICWq9PrV1F7bxFm4Y0LHvjn-BYS83_28kqVTeaUqRDbNOjPLs0Mrguj",3L);
             ibCallShipper.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -84,9 +88,16 @@ public class UserDeliveryProcessActivity extends AppCompatActivity {
         // Dang giao hang
         else if (status_id == 3){
             tvStatusName.setText(getString(R.string.statusName_3));
-            Glide.with(this)
-                    .load(R.drawable.gif_step3)
-                    .into(tvStatus);
+
+            //Tạo một instance của Fragment lộ trình giao hàng
+            MapsFragment deliveryRouteFragment = new MapsFragment();
+            // Sử dụng FragmentManager để bắt đầu một giao dịch Fragment
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+           // Thay thế nội dung của FragmentContainerView hoặc FrameLayout bằng Fragment mới
+            fragmentTransaction.replace(R.id.frame_status, deliveryRouteFragment);
+            fragmentTransaction.commit();
+
             tvLineStatus1.setBackgroundTintList(ContextCompat.getColorStateList(UserDeliveryProcessActivity.this, R.color.green));
             tvLineStatus2.setBackgroundTintList(ContextCompat.getColorStateList(UserDeliveryProcessActivity.this, R.color.green));
             tvLineStatus3.setBackgroundTintList(ContextCompat.getColorStateList(UserDeliveryProcessActivity.this, R.color.green));
@@ -112,7 +123,10 @@ public class UserDeliveryProcessActivity extends AppCompatActivity {
                     EntityStatusResponse<Order> resultResponse = response.body();
                     if(resultResponse != null){
                         Order orderResponse = resultResponse.getData();
-                        showStatusOrder(orderResponse.getStatus());
+                        save_statusId = orderResponse.getStatus();
+                        if(orderResponse.getStatus() != save_statusId){
+                            showStatusOrder(orderResponse.getStatus());
+                        }
                         tvOrderId.setText(id.toString());
                         tvTotalQuantity.setText(orderResponse.getTotal_quantity().toString());
                         tvTotalPrice.setText(Function.formatToVND(orderResponse.getTotal_price()));
