@@ -3,6 +3,7 @@ package com.example.testapp.function;
 import android.text.TextUtils;
 import android.widget.EditText;
 
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
@@ -18,6 +19,15 @@ public class Function {
         char[] chars = dateTime.toCharArray();
         for (int i = 0; i < 10; i++) {
                 result += chars[i];
+        }
+        return  result;
+    }
+
+    public static String formatDateTimeToTime(String dateTime){
+        String result = "";
+        char[] chars = dateTime.toCharArray();
+        for (int i = 11; i < chars.length; i++) {
+            result += chars[i];
         }
         return  result;
     }
@@ -49,5 +59,18 @@ public class Function {
             return false;
         }
         return true;
+    }
+
+    public static int[]ToTimes(BigDecimal second)
+    {
+        long longVal = second.longValue();
+        int hours = (int) longVal / 3600;
+        int remainder = (int) longVal - hours * 3600;
+        int mins = remainder / 60;
+        remainder = remainder - mins * 60;
+        int secs = remainder;
+
+        int[] ints = {hours , mins , secs};
+        return ints;
     }
 }
