@@ -35,11 +35,14 @@
             android:layout_height="match_parent"
             android:layout_marginTop="?attr/actionBarSize"
             android:orientation="vertical">
-
             <FrameLayout
                 android:id="@+id/frame_status"
                 android:layout_width="match_parent"
                 android:layout_height="400dp">
+                <FrameLayout
+                    android:id="@+id/frame_showMap"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
                 <ImageView
                     android:id="@+id/iv_status"
                     android:layout_marginVertical="70dp"

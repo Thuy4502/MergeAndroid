@@ -38,7 +38,7 @@ public interface ApiService {
 //    String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
 
 
-    ApiService apiService = new Retrofit.Builder().baseUrl("http://192.168.0.188:9999/").addConverterFactory(GsonConverterFactory.create(gson))
+    ApiService apiService = new Retrofit.Builder().baseUrl("http://192.168.52.100:9999/").addConverterFactory(GsonConverterFactory.create(gson))
             .build().create(ApiService.class);
 
     @POST("auth/signup")

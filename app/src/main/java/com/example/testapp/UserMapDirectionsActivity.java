@@ -44,6 +44,7 @@ public class UserMapDirectionsActivity extends FragmentActivity implements OnMap
     private ApiInterface apiInterface;
     private List<LatLng> polylineList;
     private PolylineOptions polylineOptions;
+    private boolean apiCalled = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +65,11 @@ public class UserMapDirectionsActivity extends FragmentActivity implements OnMap
         map = googleMap;
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         map.setTrafficEnabled(true);
-        getDirection("97 Man thiện, Thành phố thủ đức", "360/19/7A Lã xuân oai, long trường");
+        if (!apiCalled) {
+            getDirection("97 Man thiện, Thành phố thủ đức", "360/19/7A Lã xuân oai, long trường");
+            apiCalled = true;
+        }
+//        getDirection("97 Man thiện, Thành phố thủ đức", "360/19/7A Lã xuân oai, long trường");
     }
 
     private void getDirection(String destination,String origin){
@@ -100,8 +105,9 @@ public class UserMapDirectionsActivity extends FragmentActivity implements OnMap
                 LatLngBounds.Builder builder = new LatLngBounds.Builder();
                 LatLng start = new LatLng(result.getRoutes().get(0).getLegs().get(0).getEnd_location().getLat(), result.getRoutes().get(0).getLegs().get(0).getEnd_location().getLng());
                 LatLng end = new LatLng(result.getRoutes().get(0).getLegs().get(0).getStart_location().getLat(), result.getRoutes().get(0).getLegs().get(0).getStart_location().getLng());
-
-//                addMarkers(start, end);
+                String start_address = result.getRoutes().get(0).getLegs().get(0).getStart_address();
+                String end_address = result.getRoutes().get(0).getLegs().get(0).getEnd_address();
+                addMarkers(start, end, start_address, end_address);
                 builder.include(start);
                 builder.include(end);
                 map.animateCamera(CameraUpdateFactory.newLatLngBounds(builder.build(),100));
@@ -150,13 +156,13 @@ public class UserMapDirectionsActivity extends FragmentActivity implements OnMap
     private void addMarkers(LatLng origin, LatLng destination, String start_address, String end_address) {
         MarkerOptions originMarkerOptions = new MarkerOptions()
                 .position(origin)
-                .title("HighLands")
+                .title(start_address)
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_marker_cooffeshop));
         map.addMarker(originMarkerOptions);
 
         MarkerOptions destinationMarkerOptions = new MarkerOptions()
                 .position(destination)
-                .title("Khách hàng")
+                .title(end_address)
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_marker_location));
         map.addMarker(destinationMarkerOptions);
     }

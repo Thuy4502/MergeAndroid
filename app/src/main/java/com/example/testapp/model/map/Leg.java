@@ -3,11 +3,15 @@ package com.example.testapp.model.map;
 
 public class Leg {
     private Distance distance;
+    private Duration duration;
     private Location end_location;
 
     private  Location start_location;
     private String start_address, end_address;
 
+    public Duration getDuration() {
+        return duration;
+    }
 
     public Location getStart_location() {
         return start_location;

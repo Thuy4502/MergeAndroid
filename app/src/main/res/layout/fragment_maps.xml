@@ -15,6 +15,7 @@
     android:gravity="bottom"
     android:orientation="vertical">
     <TextView
+        android:id="@+id/tv_duration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Thời gian ước tính hoàn thành: 9:15 - 9:30"
@@ -27,6 +28,7 @@
         android:backgroundTint="@color/grey" />
 
     <TextView
+        android:id="@+id/tv_distance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Khoảng cách: 22Km"

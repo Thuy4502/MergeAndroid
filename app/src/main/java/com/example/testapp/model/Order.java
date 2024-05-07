@@ -10,6 +10,7 @@ public class Order {
     private Long customer_id;
     private List<OrderDetail> order_detail;
     private Customer customer;
+    private Staff staff;
 
     public Customer getCustomer() {
         return customer;
@@ -113,7 +114,9 @@ public class Order {
         this.order_detail = order_detail;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+
+    public Staff getStaff() {
+        return staff;
     }
+
 }
