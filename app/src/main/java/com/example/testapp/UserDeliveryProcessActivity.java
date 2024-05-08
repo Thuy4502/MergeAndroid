@@ -125,7 +125,7 @@ public class UserDeliveryProcessActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<EntityStatusResponse<Order>> call, Throwable t) {
-                Log.i("error", t.getMessage());
+                Log.i("error get order: ", t.getMessage());
             }
         });
     }
