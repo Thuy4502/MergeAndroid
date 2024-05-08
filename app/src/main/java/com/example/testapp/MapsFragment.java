@@ -63,10 +63,10 @@ public class MapsFragment extends Fragment {
             map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
             map.setTrafficEnabled(true);
             // Check if API has already been called
-//            if (!apiCalled) {
-//                getDirection("97 Man thiện, Thành phố thủ đức", "360/19/7A Lã xuân oai, long trường");
-//                apiCalled = true;
-//            }
+            if (!apiCalled) {
+                getDirection("97 Man thiện, Thành phố thủ đức", UserDeliveryProcessActivity.addressCustomer); // orgin: start point - dest: end point
+                apiCalled = true;
+            }
         }
     };
     @Nullable

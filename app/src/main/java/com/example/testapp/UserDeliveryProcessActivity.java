@@ -49,7 +49,7 @@ public class UserDeliveryProcessActivity extends AppCompatActivity {
     FrameLayout frame_showMap;
     private final Handler handler = new Handler();
     private Integer save_statusId = -1;
-    public static String timeUpdateOrder, phoneStaff;
+    public static String timeUpdateOrder, phoneStaff, addressCustomer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,34 +137,15 @@ public class UserDeliveryProcessActivity extends AppCompatActivity {
                     EntityStatusResponse<Order> resultResponse = response.body();
                     if(resultResponse != null) {
                         Order orderResponse = resultResponse.getData();
-//                        showStatusOrder(orderResponse.getStatus());
                         phoneStaff = orderResponse.getStaff().getPhone();
+                        timeUpdateOrder = formatDateTimeToTime (orderResponse.getUpdate_at());
+                        addressCustomer = orderResponse.getCustomer().getAddress();
 
                         if(orderResponse.getStatus() != save_statusId){
                             showStatusOrder(orderResponse.getStatus());
                             save_statusId = orderResponse.getStatus();
                             Log.i("check_status", String.valueOf(save_statusId));
                         }
-
-                        timeUpdateOrder = formatDateTimeToTime (orderResponse.getUpdate_at());
-
-//                        Integer duration_value = 3600;
-//                        int [] deliveryTime = ToTimes(BigDecimal.valueOf(Long.parseLong(String.valueOf(duration_value))));
-//
-//                        LocalTime time = null;
-//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                            time = LocalTime.parse(UserDeliveryProcessActivity.timeUpdateOrder.toString());
-//                        }
-//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                            time = time.plusHours(deliveryTime[0]).plusMinutes(deliveryTime[1]).plusSeconds(deliveryTime[2]);
-//                        }
-//                        Log.i("time update", "onResponse: " + time);
-//
-//
-//                        tvOrderId.setText(id.toString());
-//                        tvTotalQuantity.setText(orderResponse.getTotal_quantity().toString());
-//                        tvTotalPrice.setText(Function.formatToVND(orderResponse.getTotal_price()));
-//                        Log.i("status", orderResponse.getStatus().toString());
 
                         Log.i("message", "onResponse: " + resultResponse.getMessage());
                     }
@@ -192,7 +173,6 @@ public class UserDeliveryProcessActivity extends AppCompatActivity {
         }
 
     }
-
     private void setControl() {
         tvStatus = findViewById(R.id.iv_status);
         ibCallShipper = findViewById(R.id.ib_autoCallShipper);
