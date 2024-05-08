@@ -8,6 +8,12 @@
       <entry key="MapsActivity">
         <State />
       </entry>
+<<<<<<< HEAD
+=======
+      <entry key="StaffOrderDetailActivity">
+        <State />
+      </entry>
+>>>>>>> 28c7f3c09b42e6557e9f35b88e5482d1036457b6
       <entry key="UserDeliveryProcessActivity">
         <State />
       </entry>

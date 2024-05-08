@@ -4,7 +4,15 @@ import java.io.Serializable;
 
 public class Staff implements Serializable {
     private int id;
-    private String firstName, lastName;
+    private String firstName, lastName, phone;
+
+    public String getPhone() {
+        return phone;
+}
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public int getId() {
         return id;

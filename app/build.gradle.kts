@@ -37,7 +37,11 @@ android {
         viewBinding = true
     }
 }
-
+buildscript {
+    dependencies {
+        classpath("com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1")
+    }
+}
 secrets {
     // Optionally specify a different file name containing your secrets.
     // The plugin defaults to "local.properties"

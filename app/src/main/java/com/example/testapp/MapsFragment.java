@@ -1,17 +1,24 @@
 package com.example.testapp;
 
-import android.os.Bundle;
-import android.util.Log;
+import static androidx.core.content.res.ResourcesCompat.getColor;
+
+import static com.example.testapp.function.Function.ToTimes;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
-import androidx.fragment.app.FragmentActivity;
+import android.os.Build;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.testapp.api.ApiInterface;
-import com.example.testapp.model.map.OverViewPolyline;
 import com.example.testapp.model.map.Result;
 import com.example.testapp.model.map.Routes;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -22,10 +29,12 @@ import com.google.android.gms.maps.model.JointType;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polygon;
-import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,39 +46,51 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class UserMapDirectionsActivity extends FragmentActivity implements OnMapReadyCallback {
-
+public class MapsFragment extends Fragment {
     private final String keyApi = "AIzaSyAArm8OLzCuc8PBeBnEh9NKbQK_ss-ImzI";
     private GoogleMap map;
     private ApiInterface apiInterface;
-    private List<LatLng> polylineList;
     private PolylineOptions polylineOptions;
+    private TextView tvDistance , tvDuration;
     private boolean apiCalled = false;
+
+    private OnMapReadyCallback callback = new OnMapReadyCallback() {
+
+        @Override
+        public void onMapReady(GoogleMap googleMap) {
+            Log.i("check", String.valueOf(apiCalled));
+            map = googleMap;
+            map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+            map.setTrafficEnabled(true);
+            // Check if API has already been called
+//            if (!apiCalled) {
+//                getDirection("97 Man thiện, Thành phố thủ đức", "360/19/7A Lã xuân oai, long trường");
+//                apiCalled = true;
+//            }
+        }
+    };
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_map_directions);
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_maps, container, false);
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        SupportMapFragment mapFragment =
+                (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map1);
+        tvDistance = getActivity().findViewById(R.id.tv_distance);
+        tvDuration = getActivity().findViewById(R.id.tv_duration);
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync( this);
-
-
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(callback);
+        }
         Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl("https://maps.googleapis.com/").build();
         apiInterface = retrofit.create(ApiInterface.class);
-
-    }
-    @Override
-    public void onMapReady(@NonNull GoogleMap googleMap) {
-        map = googleMap;
-        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        map.setTrafficEnabled(true);
-        if (!apiCalled) {
-            getDirection("97 Man thiện, Thành phố thủ đức", "360/19/7A Lã xuân oai, long trường");
-            apiCalled = true;
-        }
-//        getDirection("97 Man thiện, Thành phố thủ đức", "360/19/7A Lã xuân oai, long trường");
     }
 
     private void getDirection(String destination,String origin){
@@ -81,7 +102,7 @@ public class UserMapDirectionsActivity extends FragmentActivity implements OnMap
             @Override
             public void onSuccess(Result result) {
                 ArrayList<LatLng> latLngs = new ArrayList<>();
-                
+
                 // get encode (point) from direction API
                 for(Routes rt : result.getRoutes()){
                     String point = rt.getOverview_polyline().getPoints();
@@ -90,36 +111,54 @@ public class UserMapDirectionsActivity extends FragmentActivity implements OnMap
 
                 // Format polyline
                 polylineOptions = new PolylineOptions();
-                polylineOptions.color(getColor(R.color.mainColor));
+                polylineOptions.color(getResources().getColor(R.color.mainColor));
                 polylineOptions.width(8);
                 polylineOptions.startCap(new ButtCap());
                 polylineOptions.jointType(JointType.ROUND);
-
-                // Use latLng list draw polyline
                 polylineOptions.clickable(true).addAll(latLngs);
-
                 // Add polyLine in google map
                 map.addPolyline(polylineOptions);
-                
-                // Set animationCamera focus polyLine
+
+                // set animationCamera focus polyLine
                 LatLngBounds.Builder builder = new LatLngBounds.Builder();
                 LatLng start = new LatLng(result.getRoutes().get(0).getLegs().get(0).getEnd_location().getLat(), result.getRoutes().get(0).getLegs().get(0).getEnd_location().getLng());
                 LatLng end = new LatLng(result.getRoutes().get(0).getLegs().get(0).getStart_location().getLat(), result.getRoutes().get(0).getLegs().get(0).getStart_location().getLng());
                 String start_address = result.getRoutes().get(0).getLegs().get(0).getStart_address();
                 String end_address = result.getRoutes().get(0).getLegs().get(0).getEnd_address();
                 addMarkers(start, end, start_address, end_address);
+
+                // get time and km
+                String distance_value = result.getRoutes().get(0). getLegs().get(0).getDistance().getText();
+                Integer duration_value = result.getRoutes().get(0). getLegs().get(0).getDuration().getValue();
+
+                tvDistance.setText("Khoảng cách: " + distance_value);
+
+                Log.i(distance_value, String.valueOf(duration_value));
+
+                int [] deliveryTime = ToTimes(BigDecimal.valueOf(Long.parseLong(String.valueOf(duration_value))));
+
+                LocalTime time = null;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    time = LocalTime.parse(UserDeliveryProcessActivity.timeUpdateOrder.toString());
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    time = time.plusHours(deliveryTime[0]).plusMinutes(deliveryTime[1]).plusSeconds(deliveryTime[2]);
+                }
+                tvDuration.setText("Thời gian dự kiến giao hàng: " + time);
+                Log.i("time update", "onResponse: " + time);
+
                 builder.include(start);
                 builder.include(end);
                 map.animateCamera(CameraUpdateFactory.newLatLngBounds(builder.build(),100));
             }
             @Override
             public void onError(Throwable e) {
-                Log.e("Error", "Error occurred: " + e.getMessage());
+                Log.d("error map", e.getMessage());
             }
         });
 
     }
-    // Change encode to list LatLng
+
     private List<LatLng> decodePoly (String encoded){
         List<LatLng> poly = new ArrayList<>();
         int index = 0, len = encoded.length();
@@ -165,9 +204,5 @@ public class UserMapDirectionsActivity extends FragmentActivity implements OnMap
                 .title(end_address)
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_marker_location));
         map.addMarker(destinationMarkerOptions);
-    }
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-        super.onPointerCaptureChanged(hasCapture);
     }
 }
