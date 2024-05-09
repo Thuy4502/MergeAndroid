@@ -1,6 +1,7 @@
 package com.example.testapp.api;
 
 import com.example.testapp.model.Coupon;
+import com.example.testapp.model.CouponDetail;
 import com.example.testapp.model.Customer;
 import com.example.testapp.model.FullCart;
 import com.example.testapp.model.Order;
@@ -19,14 +20,19 @@ import com.example.testapp.response.CommonResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -123,6 +129,42 @@ public interface ApiService {
     @GET("api/users/profile")
     Call<EntityStatusResponse<UserTemp>> getUserInfor(@Header("Authorization") String token);
 
+    @GET("api/admin/product/all")
+    Call<CommonResponse<Product>> getProductAll(@Header("Authorization") String token);
 
+    @Multipart
+    @POST("api/admin/product/add")
+    Call<ApiResponse> addProduct(@Header("Authorization") String token,
+                                 @Part MultipartBody.Part image,
+                                 @Part("data") RequestBody data);
+
+    @DELETE("api/admin/product/{product_id}/delete/")
+    Call<ApiResponse> deleteProduct(@Header("Authorization") String token,
+                                    @Path("product_id") String product_id);
+
+
+    @Multipart
+    @PUT("api/admin/product/{product_id}/update")
+    Call<ApiResponse> updateProduct(@Header("Authorization") String token,
+                                    @Path("product_id") String product_id,
+                                    @Part MultipartBody.Part image,
+                                    @Part("data") RequestBody data);
+
+    // Coupon API Admin
+    @GET("api/admin/coupon/all")
+    Call<CommonResponse<Coupon>> adminGetAllCoupon(@Header("Authorization") String token);
+
+    @Multipart
+    @POST("api/admin/coupon/add")
+    Call<ApiResponse> addCoupon(@Header("Authorization") String token,
+                                @Part MultipartBody.Part image,
+                                @Part("data") RequestBody data);
+
+    @GET("api/coupon/mycoupon")
+    Call<CommonResponse<CouponDetail>> getMyCoupon(@Header("Authorization") String token);
+
+    @GET("api/coupon/get")
+    Call<ApiResponse> customerGetCoupon(@Header("Authorization") String token,
+                                        @Query("coupon_id") String coupon_id);
 
 }

@@ -117,4 +117,6 @@ dependencies {
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("me.relex:circleindicator:2.1.6")
     implementation ("com.github.colourmoon:readmore-textview:v1.0.2")
+
+    implementation ("com.squareup.picasso:picasso:2.71828")
 }

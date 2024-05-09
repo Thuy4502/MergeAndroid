@@ -20,7 +20,9 @@
         <!-- Các thuộc tính của chủ đề -->
         <item name="colorControlNormal">@color/mainColor</item>
     </style>
-
+    <style name="Customer" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="theme">@style/Base.Theme.TestApp</item>
+    </style>
 
 
 </resources>

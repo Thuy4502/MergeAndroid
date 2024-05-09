@@ -47,7 +47,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin;
     private EditText etPhone, etPassword;
     private ProgressBar pbLogin;
-
+    static boolean isInit = false;
+    static boolean isLoad=false;
     public static String role, staftName;
 
     @Override

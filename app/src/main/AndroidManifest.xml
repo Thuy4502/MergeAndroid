@@ -153,6 +153,27 @@
         <activity
             android:name=".DeleveryProcessOrderInCartActivity"
             android:exported="true" />
+        <activity android:name=".ProductListActivity"
+            android:exported="true"/>
+        <activity android:name=".ProductAddingActivity"
+            android:exported="true"
+            android:theme="@style/Base.Theme.TestApp"/>
+        <activity android:name=".ProductEditingActivity"
+            android:exported="true"
+            android:theme="@style/Base.Theme.TestApp"/>
+        <activity android:name=".ProductInfoDetail"
+            android:exported="true"
+            android:theme="@style/Base.Theme.TestApp"/>
+        <activity android:name=".CouponListAdminActivity"
+            android:exported="true"
+            android:theme="@style/CustomTheme"/>
+
+        <activity android:name=".CouponAddingAdminActivity"
+            android:exported="true"
+            android:theme="@style/Base.Theme.TestApp"/>
+
+        <activity android:name=".CouponUserActivity"
+            android:exported="true"/>
     </application>
 
 </manifest>
