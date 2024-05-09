@@ -3,9 +3,7 @@ package com.example.testapp.adapter;
 
 
 
-import static com.example.testapp.ProductListActivity.deletePd;
-import static com.example.testapp.ProductListActivity.getProductList;
-import static com.example.testapp.ProductListActivity.tokenStaff;
+
 import static com.example.testapp.api.ApiService.apiService;
 import static com.example.testapp.function.Function.formatToVND;
 
