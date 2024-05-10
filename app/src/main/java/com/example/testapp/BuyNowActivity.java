@@ -51,7 +51,7 @@ public class BuyNowActivity extends AppCompatActivity {
     TextView tvProductName, tvProductPrice, tvQuantity, tvTotalPrice, tvDeliveryCost, tvSize, tvAddress, tvPrice, tvFlexible;
     ImageView ivProductImg, ivAdd, ivMinus;
     public static int quantity ;
-    public static Long orderId;
+    public Long orderId;
     public static float totalPrice;
     public static Product sp;
     EntityStatusResponse<UserTemp> userInfor;
@@ -185,7 +185,7 @@ public class BuyNowActivity extends AppCompatActivity {
         appBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent(BuyNowActivity.this, CustomerHomeActivity.class);
             }
         });
     }
@@ -216,6 +216,7 @@ public class BuyNowActivity extends AppCompatActivity {
                 orderId = response.body().getData().getId();
                 Toast.makeText(BuyNowActivity.this, "Đặt hàng thành công", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(BuyNowActivity.this, UserDeliveryProcessActivity.class);
+                intent.putExtra("OrderID", orderId);
                 startActivity(intent);
             }
 

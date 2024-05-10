@@ -51,12 +51,20 @@ public class UserDeliveryProcessActivity extends AppCompatActivity {
     private final Handler handler = new Handler();
     private Integer save_statusId = -1;
     public static String timeUpdateOrder, phoneStaff, addressCustomer;
+    public static Long orderID, tmp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getOrderID();
         setContentView(R.layout.activity_delivery_process);
         setControl();
         setEvent();
+    }
+
+    public void getOrderID() {
+        Intent intent = getIntent();
+        orderID = intent.getLongExtra("OrderID", 0);
+        System.out.println("--------------ID ne he" + orderID);
     }
 
     private void setEvent() {
@@ -64,11 +72,7 @@ public class UserDeliveryProcessActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MyPerfs", Context.MODE_PRIVATE);
         String token = "Bearer " + sharedPreferences.getString("token", null);
 
-
-
-        Long orderId = getIntent().getLongExtra("orderId", 0);
-        getOrderById(token, orderId);
-
+        getOrderById(token, orderID);
 
         ibCallShipper.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,7 +147,8 @@ public class UserDeliveryProcessActivity extends AppCompatActivity {
                     EntityStatusResponse<Order> resultResponse = response.body();
                     if(resultResponse != null) {
                         Order orderResponse = resultResponse.getData();
-                        phoneStaff = orderResponse.getStaff().getPhone();
+//                        phoneStaff = orderResponse.getStaff().getPhone();
+                        phoneStaff = "0362221935";
                         timeUpdateOrder = formatDateTimeToTime (orderResponse.getUpdate_at());
                         addressCustomer = orderResponse.getCustomer().getAddress();
 

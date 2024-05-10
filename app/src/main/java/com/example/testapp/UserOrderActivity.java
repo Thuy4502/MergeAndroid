@@ -246,7 +246,8 @@ public class UserOrderActivity extends AppCompatActivity {
             public void onResponse(Call<EntityStatusResponse<OrderID>> call, Response<EntityStatusResponse<OrderID>> response) {
                 System.out.println("Đặt hàng thành công!");
                 orderInCartID = response.body().getData().getId();
-                Intent intent = new Intent(UserOrderActivity.this, DeleveryProcessOrderInCartActivity.class);
+                Intent intent = new Intent(UserOrderActivity.this, UserDeliveryProcessActivity.class);
+                intent.putExtra("OrderID", orderInCartID);
                 startActivity(intent);
                 Toast.makeText(UserOrderActivity.this, "Đặt hàng thành công", Toast.LENGTH_LONG).show();
             }
