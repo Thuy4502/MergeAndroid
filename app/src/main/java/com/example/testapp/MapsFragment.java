@@ -58,7 +58,7 @@ public class MapsFragment extends Fragment {
 
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            Log.i("check", String.valueOf(apiCalled));
+            Log.i("check call api", String.valueOf(apiCalled));
             map = googleMap;
             map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
             map.setTrafficEnabled(true);

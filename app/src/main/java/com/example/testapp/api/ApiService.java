@@ -78,8 +78,13 @@ public interface ApiService {
     Call<CommonResponse<Order>> getOrderByStatus(@Header("Authorization") String token, @Query("status") Integer status );
     @GET ("api/admin/order/date")
     Call<CommonResponse<Order>> getOrderByDate(@Header("Authorization")String token, @Query("start") String start, @Query("end") String end);
+    @GET("api/order/all")
+    Call<CommonResponse<Order>> getOrderHistoryByJwt(@Header("Authorization") String token);
     @GET("api/coupon/all")
     Call<CommonResponse<Coupon>> getAllCoupon(@Header("Authorization") String token);
+
+
+
 
     @GET("api/products/category?")
     Call<CommonResponse<Product>> filterProductByCategory(@Header("Authorization") String token, @Query("name") String nameParam);

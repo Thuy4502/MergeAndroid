@@ -113,9 +113,9 @@ public class ProductCustomerAdapter extends RecyclerView.Adapter<ProductCustomer
         Product product;
         public ProductCustomerHolder(@NonNull View itemView) {
             super(itemView);
-            txtProductName = itemView.findViewById(R.id.txtProductName);
-            ivAnhSp = itemView.findViewById(R.id.ivAnhSp);
-            txtProductPrice = itemView.findViewById(R.id.txtProductPrice);
+            txtProductName = itemView.findViewById(R.id.tv_ProductName);
+            ivAnhSp = itemView.findViewById(R.id.img_Product);
+            txtProductPrice = itemView.findViewById(R.id.tv_ProductPrice);
             btnAddItem = itemView.findViewById(R.id.btnAddItem);
             rootView = itemView;
             itemView.setOnClickListener(new View.OnClickListener() {

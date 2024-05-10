@@ -32,7 +32,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setEvent() {
-        Khoitao();
         recyclerView.setHasFixedSize(true);
         // Thiết lập LayoutManager GridLayoutManager với 2 cột
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
@@ -53,13 +52,6 @@ public class HomeActivity extends AppCompatActivity {
         Intent intent = new Intent(this, UserProfileActivity.class);
         startActivity(intent);
     }
-
-    private void Khoitao() {
-
-    }
-
-
-
 
     private void setControl() {
         recyclerView = findViewById(R.id.recycler_listProduct);

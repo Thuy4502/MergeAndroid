@@ -64,7 +64,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
     private PhotoAdapter photoAdapter;
 
     static int countCart = 0;
-    private static final int SLIDE_DELAY = 3000; // Thời gian chờ giữa mỗi lần chuyển hình (2 giây)
+    private static final int SLIDE_DELAY = 3000; // Thời gian chờ giữa mỗi lần chuyển hình (3 giây)
     private Timer timer;
 
     String name;
@@ -278,6 +278,8 @@ public class CustomerHomeActivity extends AppCompatActivity {
                     case R.id.btn_home:
                         return true;
                     case R.id.btn_listOder:
+                        Intent intent = new Intent(CustomerHomeActivity.this, UserOrderHistoryActivity.class);
+                        startActivity(intent);
                         return true;
                     case R.id.btn_showCart:
                         Intent cartIntent = new Intent(CustomerHomeActivity.this, CartListActivity.class);

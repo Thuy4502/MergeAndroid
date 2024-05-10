@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".CustomerHomeActivity">
-
     <FrameLayout
         android:id="@+id/frameLayout2"
         android:layout_width="match_parent"
@@ -23,14 +23,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:weightSum="10"
                 android:orientation="horizontal"
                 android:padding="20dp">
 
                 <LinearLayout
-                    android:layout_width="300dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="9"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -74,7 +75,7 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     app:cardCornerRadius="16dp">
 
                     <androidx.viewpager.widget.ViewPager
@@ -95,23 +96,17 @@
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
                     android:scrollbars="none">
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
                         android:orientation="horizontal"
-                        android:padding="5dp">
-
-
+                        android:padding="10dp">
                         <Button
                             android:id="@+id/btnAll"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
-                            android:layout_marginHorizontal="5dp"
+                            android:layout_margin="5dp"
                             android:background="@drawable/bg_button_color"
                             android:contentDescription="Nút để chọn cà phê"
                             android:text="Tất cả"
@@ -124,7 +119,7 @@
                             android:id="@+id/btnCaPhe"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
-                            android:layout_marginHorizontal="5dp"
+                            android:layout_margin="5dp"
                             style="@style/btn_style"
                             android:background="@drawable/bg_button_color"
                             android:contentDescription="Nút để chọn cà phê"
@@ -137,7 +132,7 @@
                             android:id="@+id/btnTra"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
-                            android:layout_marginHorizontal="5dp"
+                            android:layout_margin="5dp"
                             style="@style/btn_style"
                             android:background="@drawable/bg_button_color"
                             android:text="Trà"
@@ -150,7 +145,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             style="@style/btn_style"
-                            android:layout_marginHorizontal="5dp"
+                            android:layout_margin="5dp"
                             android:background="@drawable/bg_button_color"
                             android:text="Phindi"
                             android:textAllCaps="false"
@@ -162,7 +157,7 @@
                             style="@style/btn_style"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
-                            android:layout_marginHorizontal="5dp"
+                            android:layout_margin="5dp"
                             android:background="@drawable/bg_button_color"
                             android:text="Freeze"
                             android:textAllCaps="false"
@@ -174,7 +169,7 @@
                             style="@style/btn_style"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
-                            android:layout_marginHorizontal="5dp"
+                            android:layout_margin="5dp"
                             android:background="@drawable/bg_button_color"
                             android:text="Bánh"
                             android:textAllCaps="false"
@@ -193,8 +188,7 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp">
+                        android:layout_height="wrap_content">
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recycler_listProduct"

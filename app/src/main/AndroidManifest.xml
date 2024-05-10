@@ -46,8 +46,11 @@
             android:name=".UserMapDirectionsActivity"
             android:exported="true" />
         <activity
-            android:name=".UserReviewActivity"
+            android:name=".UserOrderHistoryActivity"
             android:exported="true" />
+        <activity
+            android:name=".UserOrderDetailActivity"
+            android:exported="false" />
         <activity
             android:name=".UserCouponDetailActivity"
             android:exported="true" />
