@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -47,6 +48,7 @@ public class UserDeliveryProcessActivity extends AppCompatActivity {
     private TextView tvStatusName, tvLineStatus1, tvLineStatus2, tvLineStatus3, tvLineStatus4, tvOrderId, tvTotalQuantity, tvTotalPrice, tvType;
     private ImageView tvStatus;
     private ImageButton ibCallShipper;
+    private LinearLayout lnlCallStaff;
     FrameLayout frame_showMap;
     private final Handler handler = new Handler();
     private Integer save_statusId = -1;
@@ -147,8 +149,14 @@ public class UserDeliveryProcessActivity extends AppCompatActivity {
                     EntityStatusResponse<Order> resultResponse = response.body();
                     if(resultResponse != null) {
                         Order orderResponse = resultResponse.getData();
-//                        phoneStaff = orderResponse.getStaff().getPhone();
-                        phoneStaff = "0362221935";
+
+                        if(orderResponse.getStatus() == 0){
+                            lnlCallStaff.setVisibility(View.GONE);
+                        }else{
+                            lnlCallStaff.setVisibility(View.VISIBLE);
+                            phoneStaff = orderResponse.getStaff().getPhone();
+                        }
+
                         timeUpdateOrder = formatDateTimeToTime (orderResponse.getUpdate_at());
                         addressCustomer = orderResponse.getCustomer().getAddress();
 
@@ -203,5 +211,7 @@ public class UserDeliveryProcessActivity extends AppCompatActivity {
         tvTotalPrice = findViewById(R.id.tv_totalPrice);
 
         frame_showMap = findViewById(R.id.frame_showMap);
+
+        lnlCallStaff = findViewById(R.id.lnl_callStaff);
     }
 }

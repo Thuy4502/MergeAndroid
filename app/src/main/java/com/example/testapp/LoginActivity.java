@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.browser.trusted.TokenStore;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -35,6 +36,7 @@ import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -78,6 +80,9 @@ public class LoginActivity extends AppCompatActivity {
     private void setEvent() {
         setUp();
 
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPerfs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
         tvForgotPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                postUser();
+                postUser(editor);
             }
         });
     }
@@ -200,8 +205,9 @@ public class LoginActivity extends AppCompatActivity {
     }
     
     //Get role user
-    private void getRole(String token){
+    private void getRole(String token, SharedPreferences.Editor editor){
         ApiService.apiService.getUserProfile("Bearer " + token).enqueue(new Callback<EntityStatusResponse<Customer>>() {
+            @SuppressLint("SuspiciousIndentation")
             @Override
             public void onResponse(Call<EntityStatusResponse<Customer>> call, Response<EntityStatusResponse<Customer>> response) {
                 if(response.isSuccessful()){
@@ -211,8 +217,9 @@ public class LoginActivity extends AppCompatActivity {
                         role = customerResponse.getUser().getRole().getRole_name();
                         staffName = customerResponse.getUser().getFirst_name() + " " + customerResponse.getUser().getLast_name();
                         address = customerResponse.getAddress();
-                        Log.i("role", customerResponse.getUser().getRole().getRole_name());
-                        if(customerResponse.getUser().getRole().getRole_name().equals("CUSTOMER")){
+                        String roleName = customerResponse.getUser().getRole().getRole_name();
+                        Log.i("role: ", roleName);
+                        if(roleName.equals("CUSTOMER")){
                             pbLogin.setVisibility(View.GONE);
                             btnLogin.setVisibility(View.VISIBLE);
                             openActivityCustomerHome();
@@ -221,6 +228,9 @@ public class LoginActivity extends AppCompatActivity {
                             btnLogin.setVisibility(View.VISIBLE);
                             openActivityStaffHome();
                         }
+                        editor.putString("address", address);
+                        editor.putString("role", roleName);
+                        editor.apply();
                     }
                 } else
                     pbLogin.setVisibility(View.GONE);
@@ -237,9 +247,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     //Post data user
-    private void postUser() {
-        SharedPreferences sharedPreferences =getSharedPreferences("MyPerfs", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+    private void postUser(SharedPreferences.Editor editor) {
+
 
         List<EditText> listRequired = Arrays.asList(etPhone, etPassword);
         if(setRequired(listRequired, "Vui lòng nhập đầy đủ thông tin")){
@@ -259,8 +268,17 @@ public class LoginActivity extends AppCompatActivity {
                         if (userResult != null){
                             String token = userResult.getToken();
                             Log.i("Token:", token);
-                            getRole(token);
+                            getRole(token, editor);
+
+                            // save token
                             editor.putString("token", token);
+                            // save exp
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.add(Calendar.DAY_OF_MONTH, 7);
+                            long expirationTime = calendar.getTimeInMillis();
+
+                            editor.putLong("expiration_time", expirationTime);
+
                             editor.apply();
                         } else {
                             Toast.makeText(LoginActivity.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();

@@ -37,11 +37,14 @@ public interface ApiService {
 //    WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
 //    String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
 
-    ApiService apiService = new Retrofit.Builder().baseUrl("http://192.168.1.3:9999/").addConverterFactory(GsonConverterFactory.create(gson))
+    ApiService apiService = new Retrofit.Builder().baseUrl("http://192.168.0.188:9999/").addConverterFactory(GsonConverterFactory.create(gson))
             .build().create(ApiService.class);
 
     @POST("auth/signup")
     Call<ApiResponse> sendUser(@Body User user);
+
+    @POST("auth/logout")
+    Call<ApiResponse> logOut(@Header("Authorization") String token);
 
     @POST("auth/signin")
     Call<User> loginUser(@Body User user);
