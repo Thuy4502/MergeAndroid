@@ -33,11 +33,9 @@
         android:theme="@style/Base.Theme.TestApp"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:exported="true" />
@@ -153,27 +151,35 @@
         <activity
             android:name=".DeleveryProcessOrderInCartActivity"
             android:exported="true" />
-        <activity android:name=".ProductListActivity"
-            android:exported="true"/>
-        <activity android:name=".ProductAddingActivity"
+        <activity
+            android:name=".ProductListActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ProductAddingActivity"
             android:exported="true"
-            android:theme="@style/Base.Theme.TestApp"/>
-        <activity android:name=".ProductEditingActivity"
+            android:theme="@style/Base.Theme.TestApp" />
+        <activity
+            android:name=".ProductEditingActivity"
             android:exported="true"
-            android:theme="@style/Base.Theme.TestApp"/>
-        <activity android:name=".ProductInfoDetail"
+            android:theme="@style/Base.Theme.TestApp" />
+        <activity
+            android:name=".ProductInfoDetail"
             android:exported="true"
-            android:theme="@style/Base.Theme.TestApp"/>
-        <activity android:name=".CouponListAdminActivity"
+            android:theme="@style/Base.Theme.TestApp" />
+        <activity
+            android:name=".CouponListAdminActivity"
             android:exported="true"
-            android:theme="@style/CustomTheme"/>
-
-        <activity android:name=".CouponAddingAdminActivity"
+            android:theme="@style/CustomTheme" />
+        <activity
+            android:name=".CouponAddingAdminActivity"
             android:exported="true"
-            android:theme="@style/Base.Theme.TestApp"/>
-
-        <activity android:name=".CouponUserActivity"
-            android:exported="true"/>
+            android:theme="@style/Base.Theme.TestApp" />
+        <activity
+            android:name=".CouponUserActivity"
+            android:exported="true" />
+        <activity
+            android:name=".CouponDetailAdminActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

@@ -82,7 +82,7 @@ public class CouponAddingAdminActivity extends AppCompatActivity {
         ivCouponImg = findViewById(R.id.ivCouponImg);
         etDateRange = findViewById(R.id.etDateRange);
         btnUploadImg = findViewById(R.id.btnUploadImg);
-        etCouponType = findViewById(R.id.etCouponType);
+        etCouponType = findViewById(R.id.etCouponTitle);
         etCouponQuantity = findViewById(R.id.etCouponQuantity);
         etCouponValue = findViewById(R.id.etCouponValue);
         etCouponContent = findViewById(R.id.etCouponContent);

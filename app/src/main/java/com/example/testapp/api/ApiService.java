@@ -43,7 +43,7 @@ public interface ApiService {
 //    WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
 //    String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
 
-    ApiService apiService = new Retrofit.Builder().baseUrl("http://192.168.1.10:9999/").addConverterFactory(GsonConverterFactory.create(gson))
+    ApiService apiService = new Retrofit.Builder().baseUrl("http://192.168.52.67:9999/").addConverterFactory(GsonConverterFactory.create(gson))
             .build().create(ApiService.class);
 
     @POST("auth/signup")
@@ -167,4 +167,6 @@ public interface ApiService {
     Call<ApiResponse> customerGetCoupon(@Header("Authorization") String token,
                                         @Query("coupon_id") String coupon_id);
 
+    @PUT("api/admin/coupon/{coupon_id}/status")
+    Call<ApiResponse> disableCoupon(@Header("Authorization") String token, @Path("coupon_id") String coupon_id, @Body Coupon coupon);
 }

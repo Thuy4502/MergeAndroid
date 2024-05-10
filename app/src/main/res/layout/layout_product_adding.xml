@@ -55,9 +55,9 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:background="@drawable/rounded_button"
-            android:padding="15sp"
+            android:paddingHorizontal="15sp"
             android:text="Tải ảnh lên"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -161,7 +161,7 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="20dp"
         android:background="@drawable/rounded_button"
-        android:padding="15dp"
+        android:paddingHorizontal="15dp"
         android:text="Thêm sản phẩm"
         android:textColor="@color/white" />
 </LinearLayout>

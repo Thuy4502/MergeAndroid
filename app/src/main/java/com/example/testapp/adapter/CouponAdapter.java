@@ -97,31 +97,9 @@ public class CouponAdapter extends ArrayAdapter<Coupon> {
             } else if(coupon.getStatus().equals("unactive")) {
                 holder.tvStatus.setText("Inactive");
                 holder.tvStatus.setTextColor(ContextCompat.getColorStateList(CouponAdapter.this.getContext(), R.color.mainColor));
-                holder.ivDelete.setVisibility(View.GONE);
+
             }
         }
-
-        if (coupon.getStatus().equals("active")){
-            holder.ivDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    new AlertDialog.Builder(v.getContext())
-                            .setTitle("Xác nhận ngưng ")
-                            .setMessage("Bạn có chắc chắn muốn ngưng bán sản phẩm này không?")
-                            .setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                }
-                            })
-                            .setNegativeButton("Hủy", null)
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .show();
-
-                }
-            });
-        }
-
 
 
         if(holder.tvSaveCoupon!=null) {
@@ -153,28 +131,5 @@ public class CouponAdapter extends ArrayAdapter<Coupon> {
         return convertView;
     }
 
-    public void filterById(String query) {
-        filterCouponList.clear();
-        if (query.isEmpty()) {
-            filterCouponList.addAll(data);
-        } else {
-            for (Coupon coupon : data) {
-                if (coupon.getCoupon_id().toString().toLowerCase().contains(query.toLowerCase())) {
-                    filterCouponList.add(coupon);
-                }
-            }
-        }
-        notifyDataSetChanged();
-    }
 
-    // Tạo getter để lấy danh sách coupon đã lọc
-    public Coupon findCouponById(String couponId) {
-        for (int i = 0; i < getCount(); i++) {
-            Coupon coupon = getItem(i);
-            if (coupon.getCoupon_id().toString().equals(couponId)) {
-                return coupon;
-            }
-        }
-        return null;
-    }
 }

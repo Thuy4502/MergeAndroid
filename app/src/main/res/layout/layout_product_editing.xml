@@ -54,7 +54,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:background="@drawable/rounded_button"
-            android:padding="15sp"
+            android:paddingHorizontal="15dp"
             android:text="Thay đổi ảnh"
             android:textColor="@color/white"/>
 
@@ -181,7 +181,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@drawable/rounded_button"
-        android:padding="15dp"
+        android:paddingHorizontal="15dp"
         android:text="Lưu thay đổi"
         android:textColor="@color/white" />
 </LinearLayout>

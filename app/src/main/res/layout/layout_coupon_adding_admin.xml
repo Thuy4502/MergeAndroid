@@ -67,7 +67,7 @@
 
                     <ImageView
                         android:id="@+id/ivCouponImg"
-                        android:layout_width="100dp"
+                        android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:layout_gravity="center"
                         android:background="@drawable/style_border_dash" />
@@ -89,13 +89,13 @@
                     android:layout_gravity="start"
                     android:layout_marginTop="10dp"
                     android:backgroundTint="@color/mainColor"
-                    android:hint="Nhập loại giảm giá"
+                    android:hint="Nhập tên giảm giá"
                     android:textColorHint="@color/smallTextColor"
                     app:boxStrokeColor="@color/mainColor"
                     app:hintTextColor="@color/black">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etCouponType"
+                        android:id="@+id/etCouponTitle"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:inputType="text"
@@ -172,7 +172,7 @@
                     android:layout_gravity="start"
                     android:layout_marginTop="10dp"
                     android:backgroundTint="@color/mainColor"
-                    android:hint="Nhập tên giảm giá"
+                    android:hint="Nhập nội dung giảm giá"
                     android:orientation="vertical"
                     android:textColorHint="@color/smallTextColor"
                     app:boxStrokeColor="@color/mainColor"

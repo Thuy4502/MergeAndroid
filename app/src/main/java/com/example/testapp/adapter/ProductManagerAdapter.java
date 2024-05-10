@@ -136,17 +136,15 @@ public class ProductManagerAdapter extends RecyclerView.Adapter<ProductManagerAd
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-         TextView tvProductID;
+        TextView tvProductID;
         TextView tvProductName;
         TextView tvProductPrice;
         ShapeableImageView imgProduct;
-        CheckBox cbProduct;
         LinearLayout itemProduct;
         ImageButton btnDelete;
         TextInputEditText etProductName, etProductPrice, etDescription;
         ImageView ivProductImg;
         TextView tvCategoryItem;
-        AppCompatSpinner spnCategoryOption;
 
         public MyViewHolder (@NonNull View itemView) {
             super(itemView);

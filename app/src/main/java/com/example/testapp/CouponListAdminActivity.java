@@ -2,6 +2,7 @@ package com.example.testapp;
 
 
 import static com.example.testapp.LoginActivity.isLoad;
+import static com.example.testapp.function.Function.formatDateTimeToDate;
 
 import android.content.Context;
 import android.content.Intent;
@@ -49,7 +50,7 @@ public class CouponListAdminActivity extends AppCompatActivity {
     public static String tokenStaff;
     AppCompatSpinner spnCouponFilter;
     List<String> listStatus = new ArrayList<>();
-
+    boolean isLoadCouponList = false;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,8 +65,8 @@ public class CouponListAdminActivity extends AppCompatActivity {
     private void setControl() {
         btnAddCoupon = findViewById(R.id.btnAddCoupon);
         lvCouponList = findViewById(R.id.lv_couponList);
-        ivBack = findViewById(R.id.ivBack);
         svCoupon = findViewById(R.id.svCoupon);
+        ivBack = findViewById(R.id.ivBack);
         spnCouponFilter = findViewById(R.id.spnCouponFilter);
     }
 
@@ -107,11 +108,12 @@ public class CouponListAdminActivity extends AppCompatActivity {
                     }
                 }
 
-                if(filtedList.isEmpty()){
+                if(filtedList.isEmpty() && isLoadCouponList==true){
                     Toast.makeText(CouponListAdminActivity.this, "No data", Toast.LENGTH_SHORT).show();
                 }
                 couponManagerAdapter = new CouponAdapter(CouponListAdminActivity.this, R.layout.item_coupon_admin, filtedList);
                 lvCouponList.setAdapter(couponManagerAdapter);
+                isLoadCouponList = true;
 
             }
 
@@ -121,7 +123,26 @@ public class CouponListAdminActivity extends AppCompatActivity {
             }
         });
 
+        lvCouponList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Lấy coupon tại vị trí được nhấp
+                Coupon clickedCoupon = (Coupon) parent.getItemAtPosition(position);
+                Log.i("QQ", ""+clickedCoupon.getCoupon_id());
+                // Tạo một Intent để chuyển sang CouponDetailActivity
+                Intent intent = new Intent(CouponListAdminActivity.this, CouponDetailAdminActivity.class);
 
+                // Đưa dữ liệu của coupon vào Intent
+                intent.putExtra("title", clickedCoupon.getType());
+                intent.putExtra("id", String.valueOf(clickedCoupon.getCoupon_id()));
+                intent.putExtra("startDate", formatDateTimeToDate(clickedCoupon.getStart_date()));
+                intent.putExtra("endDate", formatDateTimeToDate(clickedCoupon.getEnd_date()));
+                intent.putExtra("content", clickedCoupon.getContent());
+
+                // Bắt đầu CouponDetailActivity
+                startActivity(intent);
+            }
+        });
 
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
