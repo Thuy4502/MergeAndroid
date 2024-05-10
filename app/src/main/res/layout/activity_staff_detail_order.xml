@@ -2,10 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserOrderDetailActivity">
+    tools:context=".StaffOrderDetailActivity">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -88,65 +87,34 @@
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         />
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content" />-->
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginVertical="10dp">
-
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:src="@drawable/img_user"/>
-
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center|left"
-                        android:orientation="vertical">
-
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginVertical="5dp">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Shipper Name"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
+                            android:text="Tóm tắt đơn hàng"
+                            android:textStyle="bold"
+                            android:textSize="18sp"
+                            android:textColor="@color/black"
+                            android:layout_marginBottom="15dp"
+                            />
+                        <ListView
+                            android:id="@+id/lv_listProduct"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Người giao hàng"
-                            android:textColor="@color/TextLightColor"
-                            android:textSize="12sp" />
+                            android:divider="@android:color/transparent"
+                            android:dividerHeight="10dp">
+                        </ListView>
                     </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginVertical="5dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Tóm tắt đơn hàng"
-                        android:textStyle="bold"
-                        android:textSize="18sp"
-                        android:textColor="@color/black"
-                        android:layout_marginBottom="15dp"
-                        />
-                    <ListView
-                        android:id="@+id/lv_listProduct"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:divider="@android:color/transparent"
-                        android:dividerHeight="10dp">
-                    </ListView>
-
-                </LinearLayout>
 
                 <LinearLayout
-
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
@@ -260,15 +228,30 @@
                     android:textAlignment="center"
                     android:textSize="10sp"
                     android:background="@drawable/style_button"/>
+                <TextView
+                    android:id="@+id/tv_completedOrder"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginVertical="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="17sp"
+                    android:gravity="center"
+                    android:textStyle="italic"
+                    android:fontFamily="@font/sora_semibold"
+                    android:drawableStart="@drawable/icon_check_24"
+                    android:paddingHorizontal="10dp"
+                    android:text="@string/statusName_5"
+                    android:visibility="gone"/>
             </LinearLayout>
             <Button
-                android:id="@+id/btn_showProcess"
+                android:id="@+id/btn_updateStatus"
                 android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_add_cart"
                 android:fontFamily="@font/sora_semibold"
-                android:text="Liên hệ với cửa hàng"
+                android:text="Nhận đơn"
                 android:textSize="18sp"
                 android:focusable="true"
                 android:textAllCaps="false"

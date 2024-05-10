@@ -2,6 +2,7 @@ package com.example.testapp;
 
 import static com.example.testapp.function.Function.ToTimes;
 import static com.example.testapp.function.Function.formatDateTimeToTime;
+import static com.example.testapp.function.Function.formatToVND;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,7 +44,7 @@ import retrofit2.Response;
 
 public class UserDeliveryProcessActivity extends AppCompatActivity {
     private static final int REQUEST_CALL_PHONE_PERMISSION = 1;
-    private TextView tvStatusName, tvLineStatus1, tvLineStatus2, tvLineStatus3, tvLineStatus4, tvOrderId, tvTotalQuantity, tvTotalPrice;
+    private TextView tvStatusName, tvLineStatus1, tvLineStatus2, tvLineStatus3, tvLineStatus4, tvOrderId, tvTotalQuantity, tvTotalPrice, tvType;
     private ImageView tvStatus;
     private ImageButton ibCallShipper;
     FrameLayout frame_showMap;
@@ -63,14 +64,19 @@ public class UserDeliveryProcessActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MyPerfs", Context.MODE_PRIVATE);
         String token = "Bearer " + sharedPreferences.getString("token", null);
 
-        getOrderById(token,BuyNowActivity.orderId);
-            ibCallShipper.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    autoCallShipper(phoneStaff);
-                }
-            });
-        }
+
+
+        Long orderId = getIntent().getLongExtra("orderId", 0);
+        getOrderById(token, orderId);
+
+
+        ibCallShipper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                autoCallShipper(phoneStaff);
+            }
+        });
+    }
 
     private  void showStatusOrder(Integer status_id){
         if(status_id == 0){
@@ -108,7 +114,7 @@ public class UserDeliveryProcessActivity extends AppCompatActivity {
             // Sử dụng FragmentManager để bắt đầu một giao dịch Fragment
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-           // Thay thế nội dung của FragmentContainerView hoặc FrameLayout bằng Fragment mới
+            // Thay thế nội dung của FragmentContainerView hoặc FrameLayout bằng Fragment mới
             fragmentTransaction.replace(R.id.frame_showMap, deliveryRouteFragment);
             fragmentTransaction.commit();
             tvLineStatus1.setBackgroundTintList(ContextCompat.getColorStateList(UserDeliveryProcessActivity.this, R.color.green));
@@ -140,6 +146,10 @@ public class UserDeliveryProcessActivity extends AppCompatActivity {
                         phoneStaff = orderResponse.getStaff().getPhone();
                         timeUpdateOrder = formatDateTimeToTime (orderResponse.getUpdate_at());
                         addressCustomer = orderResponse.getCustomer().getAddress();
+
+                        tvOrderId.setText(orderResponse.getOrder_id().toString());
+                        tvTotalQuantity.setText(orderResponse.getTotal_quantity().toString());
+                        tvTotalPrice.setText(formatToVND(orderResponse.getTotal_price()));
 
                         if(orderResponse.getStatus() != save_statusId){
                             showStatusOrder(orderResponse.getStatus());

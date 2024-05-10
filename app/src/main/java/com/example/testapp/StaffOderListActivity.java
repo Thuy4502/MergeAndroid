@@ -1,6 +1,7 @@
 package com.example.testapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -81,9 +82,9 @@ public class StaffOderListActivity extends AppCompatActivity {
 
         btnShow.setOnClickListener(new View.OnClickListener() {
             @Override
-        public void onClick(View v) {
-            openDatePicker(token);
-        }
+            public void onClick(View v) {
+                openDatePicker(token);
+            }
         });
 
         statusAdapter = new OrderStatusAdapter(this, R.layout.layout_item_order_status, listStatus);
@@ -123,12 +124,25 @@ public class StaffOderListActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     CommonResponse<Order> resultResponse = response.body();
                     if(resultResponse != null){
-                    List<Order> orderList = resultResponse.getData();
+                        List<Order> orderList = resultResponse.getData();
                         if(orderList.isEmpty()){
                             tvNoData.setVisibility(View.VISIBLE);
                         }else {
                             orderAdapter = new OrderListAdapter(StaffOderListActivity.this, R.layout.layout_item_order, orderList);
                             lvOrderList.setAdapter(orderAdapter);
+                            lvOrderList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    // Lấy dữ liệu từ item được click
+                                    Order order = (Order) parent.getItemAtPosition(position);
+                                    // Lấy ID của Order
+                                    Long orderId = order.getOrder_id();
+                                    // Chuyển dữ liệu đến Activity mới để hiển thị chi tiết
+                                    Intent intent = new Intent(StaffOderListActivity.this, StaffOrderDetailActivity.class);
+                                    intent.putExtra("orderId", orderId);
+                                    startActivity(intent);
+                                }
+                            });
                             proBarShowList.setVisibility(View.GONE);
                         }
                         Log.i("get all order: ", resultResponse.getMessage());
@@ -139,7 +153,8 @@ public class StaffOderListActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFailure(Call<CommonResponse<Order>> call, Throwable t) {
+            public void onFailure(Call<CommonResponse
+                    <Order>> call, Throwable t) {
                 Log.i("error get all order: ", t.getMessage());
             }
         });

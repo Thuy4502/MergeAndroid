@@ -104,10 +104,12 @@ public class UserOrderHistoryActivity extends AppCompatActivity {
                 String selectedStatus = String.valueOf(listStatus.get(position).getName());
 //                Toast.makeText(StaffOderListActivity.this, selectedStatus, Toast.LENGTH_SHORT).show();
                 int statusId = listStatus.get(position).getId();
-                if(statusId != -1)
+                if(statusId != -1) {
                     getOrderById(token, statusId);
-                else
+                    System.out.println("statsu: " + statusId); }
+                else{
                     getAllOrder(token);
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -133,7 +135,11 @@ public class UserOrderHistoryActivity extends AppCompatActivity {
                     CommonResponse<Order> resultResponse = response.body();
                     if(resultResponse != null){
                         List<Order> orderList = resultResponse.getData();
+                        for (Order od : orderList){
+
+                        }
                         if(orderList.isEmpty()){
+
                             tvNoData.setVisibility(View.VISIBLE);
                             proBarShowList.setVisibility(View.GONE);
                         }else {
@@ -175,22 +181,35 @@ public class UserOrderHistoryActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<CommonResponse<Order>> call, Response<CommonResponse<Order>> response) {
                 if(response.isSuccessful()){
-                    CommonResponse<Order> resultResponse = response.body();
+                    CommonResponse<Order> resultResponse = null;
+                    try {
+                         resultResponse = response.body();
+                        System.out.println("HIENTHI" + resultResponse.getStatus() + resultResponse.getMessage());
+                    }catch (Exception e){
+                        System.out.println("eee" +e.getMessage());
+                    }
+
+
                     if(resultResponse != null){
                         List<Order> listOrder = resultResponse.getData();
+                        System.out.println("LISTORDER");
                         if(listOrder.isEmpty()){
                             tvNoData.setVisibility(View.VISIBLE);
                         }else {
                             orderAdapter = new OrderListAdapter(UserOrderHistoryActivity.this, R.layout.layout_item_order, listOrder);
                             lvOrderList.setAdapter(orderAdapter);
+                            orderAdapter.notifyDataSetChanged();
+
                         }
                     }
+
                 }
             }
 
             @Override
             public void onFailure(Call<CommonResponse<Order>> call, Throwable t) {
                 Log.i("error", t.getMessage());
+                System.out.println("Troongsssssssssssssssssssssssssss" + t.getMessage());
             }
         });
     }

@@ -50,7 +50,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
     static RecyclerView rvProduct;
     private static List<Product> listPro;
     static ProductCustomerAdapter productApiAdapter;
-    private TextView btnAddItem;
+    private TextView btnAddItem, tvAddress;
     private ImageButton ib_avtUser;
 
     private Button btnCaPhe, btnPhindi, btnTra, btnFreeze, btnBanh, btnAll, btnCartList;
@@ -62,23 +62,18 @@ public class CustomerHomeActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private CircleIndicator circleIndicator;
     private PhotoAdapter photoAdapter;
-
     static int countCart = 0;
     private static final int SLIDE_DELAY = 3000; // Thời gian chờ giữa mỗi lần chuyển hình (3 giây)
     private Timer timer;
-
     String name;
-//    static String token = "eyJhbGciOiJIUzM4NCJ9.eyJpYXQiOjE3MTM4NDU0OTgsImV4cCI6MTcxNDQ1MDI5OCwidXNlcm5hbWUiOiIwOTI3MDE0MDUxIiwiYXV0aG9yaXRpZXMiOiJDVVNUT01FUiJ9.nzaEjAP5q0ZUyiSIRNJCQtJegz8wS_UgnG8lo89TgJDydUx5zJsAiz-Gnsx7oqUm";
     static String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
         SharedPreferences sharedPreferences = getSharedPreferences("MyPerfs", Context.MODE_PRIVATE);
         token =  sharedPreferences.getString("token", null);
-
         setControls();
         rvProduct.setHasFixedSize(true);
         // Thiết lập LayoutManager GridLayoutManager với 2 cột
@@ -140,10 +135,11 @@ public class CustomerHomeActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         circleIndicator = findViewById(R.id.circle_indicator);
         ib_avtUser = findViewById(R.id.ib_avtUser);
-
+        tvAddress = findViewById(R.id.txtAddress);
     }
 
     public void setEvent() {
+        tvAddress.setText(LoginActivity.address);
         int id = btnCaPhe.getId();
         System.out.println(id);
         int cornerRadiusPixels = (int) TypedValue.applyDimension(
@@ -194,10 +190,6 @@ public class CustomerHomeActivity extends AppCompatActivity {
                 btnAll.setBackground(drawableDisable);
                 name = "Cà phê";
                 callApiFilterProductByCategory();
-
-
-
-
             }
         });
         btnTra.setOnClickListener(new View.OnClickListener() {
@@ -318,7 +310,6 @@ public class CustomerHomeActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<CommonResponse<Product>> call, @NonNull Response<CommonResponse<Product>> response) {
                 CommonResponse<Product> list = new CommonResponse<>();
                 list = response.body();
-                System.out.println("Token ne:    "+ token);
                 listPro = list.getData();
                 productApiAdapter = new ProductCustomerAdapter(list.getData());
                 rvProduct.setAdapter(productApiAdapter);
@@ -450,7 +441,6 @@ public class CustomerHomeActivity extends AppCompatActivity {
                 System.out.println("Xoa san pham khoi gio hang thanh cong");
                 ApiResponse cartResponse = response.body();
                 setCountProductInCart();
-
                 if(cartResponse != null) {
                     System.out.println("Giỏ hàng rỗng nên không thể xóa");
                 }
@@ -459,6 +449,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
                 }
 
             }
+
 
             @Override
             public void onFailure(Call<ApiResponse> call, Throwable t) {

@@ -47,8 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin;
     private EditText etPhone, etPassword;
     private ProgressBar pbLogin;
-
-    public static String role, staftName;
+    public static String role, staffName, address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,13 +66,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private void setControl() {
         etPhone = findViewById(R.id.etPhone);
-
         etPassword = findViewById(R.id.etPassword);
         tvForgotPass = findViewById(R.id.forgetPass);
         tvLinkSignup = findViewById(R.id.tvLinkSignup);
         btnLogin = findViewById(R.id.btnLogin);
         pbLogin = findViewById(R.id.proBar_login);
-
         tvForgotPass.setPaintFlags(tvForgotPass.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         tvLinkSignup.setPaintFlags(tvLinkSignup.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
     }
@@ -212,7 +209,8 @@ public class LoginActivity extends AppCompatActivity {
                     if (resultResponse != null){
                         Customer customerResponse = resultResponse.getData();
                         role = customerResponse.getUser().getRole().getRole_name();
-                        staftName = customerResponse.getUser().getFirst_name() + " " + customerResponse.getUser().getLast_name() ;
+                        staffName = customerResponse.getUser().getFirst_name() + " " + customerResponse.getUser().getLast_name();
+                        address = customerResponse.getAddress();
                         Log.i("role", customerResponse.getUser().getRole().getRole_name());
                         if(customerResponse.getUser().getRole().getRole_name().equals("CUSTOMER")){
                             pbLogin.setVisibility(View.GONE);

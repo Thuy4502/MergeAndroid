@@ -46,11 +46,8 @@ public class OrderListAdapter extends ArrayAdapter {
         txtStatus = convertView.findViewById(R.id.txtOrderStatus);
         txtCreatedDate = convertView.findViewById(R.id.txtCreatedDate);
         tvRewardPoint = convertView.findViewById(R.id.tvRewardPoint);
-
-
         Order order = data.get(position);
-//        txtAddress.setText(order.getAddress());
-        txtAddress.setText("35/2A, đường 339, phuờng Phước Long");
+        txtAddress.setText(String.valueOf(order.getCustomer().getAddress()));
         txtOrderPrice.setText(String.valueOf(Function.formatToVND(order.getTotal_price())));
         tvRewardPoint.setText("0 điểm");
 //        txtStatus.setText(order.getOrderType()+"  |  "+order.getStatus());
@@ -79,22 +76,6 @@ public class OrderListAdapter extends ArrayAdapter {
             txtStatus.setBackgroundTintList (ContextCompat.getColorStateList(OrderListAdapter.this.getContext(), R.color.mainColor));
 
         }
-
-
-
-        // click xem chi tiết đơn hàng
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(order != null){
-                    Long orderId = order.getOrder_id();
-                    Intent intent = new Intent(context, StaffOrderDetailActivity.class);
-                    intent.putExtra("orderId",orderId);
-                    context.startActivity(intent);
-                }
-
-            }
-        });
         return convertView;
     }
 

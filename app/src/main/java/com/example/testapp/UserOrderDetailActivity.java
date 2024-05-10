@@ -38,8 +38,7 @@ import retrofit2.Response;
 
 public class UserOrderDetailActivity extends AppCompatActivity {
     private ListView lvListProduct;
-    private Button btnUpdateStatus, btnOpenReview;
-    private List<OrderDetail> data = new ArrayList<>();
+    private Button btnShowProcess;
     private Toolbar tb_app_bar;
     private ProductDetailOrderAdapter adapter_productDetail;
 
@@ -48,6 +47,7 @@ public class UserOrderDetailActivity extends AppCompatActivity {
     private ProgressBar proBar_loading;
 
     private LinearLayout lnl_showOrderDetail;
+    private Integer statusId;
     private final Handler handler = new Handler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +67,7 @@ public class UserOrderDetailActivity extends AppCompatActivity {
     private void setControl() {
         lvListProduct = findViewById(R.id.lv_listProduct);
 
-        btnUpdateStatus = findViewById(R.id.btn_updateStatus);
-        btnOpenReview = findViewById(R.id.btn_openReview);
+        btnShowProcess = findViewById(R.id.btn_showProcess);
 
         tvOrderId = findViewById(R.id.tv_orderId);
         tvProductPrice = findViewById(R.id.tv_productPrice);
@@ -94,17 +93,8 @@ public class UserOrderDetailActivity extends AppCompatActivity {
         Long orderId = getIntent().getLongExtra("orderId", 0);
         getOrderById(token, orderId);
 
-        btnOpenReview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openUserReviewActivity();
-            }
-        });
-    }
 
-    private void openUserReviewActivity() {
-        Intent intent = new Intent(this, UserReviewActivity.class);
-        startActivity(intent);
+
     }
 
     private void getOrderById(String token, Long orderId) {
@@ -153,20 +143,21 @@ public class UserOrderDetailActivity extends AppCompatActivity {
                         adapter_productDetail = new ProductDetailOrderAdapter(UserOrderDetailActivity.this, R.layout.layout_item_product_order, listOrderDetail);
                         lvListProduct.setAdapter(adapter_productDetail);
 
-//                        String productName = listOrderDetail.get(0).getProduct().getProductName();
+//                        String productName = listOrderDetail.get(0).getProduct().getProduct_name();
 //
 //                        orderDetailsReview.add(new OrderDetail(null, listOrderDetail.get(0).getPrice(), null, listOrderDetail.get(0).getProduct()));
 //
 //                        for (int i = 1; i < listOrderDetail.size(); i++) {
-//                            if (!listOrderDetail.get(i).getProduct().getProductName().equals(productName)) {
+//                            if (!listOrderDetail.get(i).getProduct().getProduct_name().equals(productName)) {
 //                                orderDetailsReview.add(new OrderDetail(null, listOrderDetail.get(i).getPrice(), null, listOrderDetail.get(i).getProduct()));
-//                                productName = listOrderDetail.get(i).getProduct().getProductName();
+//                                productName = listOrderDetail.get(i).getProduct().getProduct_name();
 //                            }
 //                        }
 //                        Intent intent = new Intent(UserOrderDetailActivity.this, UserReviewActivity.class);
 //                        intent.putParcelableArrayListExtra("orderList", (ArrayList<? extends Parcelable>) orderDetailsReview);
 //                        startActivity(intent);
-//                        Log.i("listReview", String.valueOf(orderDetailsReview.get(0).getProduct().getProductName()));
+//                        Log.i("listReview", String.valueOf(orderDetailsReview.get(0).getProduct().getProduct_name()));
+                        statusId = orderResponse.getStatus();
 
                         //set height for list view
                         if (listOrderDetail.size() <= 3){
@@ -175,13 +166,17 @@ public class UserOrderDetailActivity extends AppCompatActivity {
                             lvListProduct.getLayoutParams().height = 690;
                         }
 
-                        btnUpdateStatus.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                updateStatusOrder(token,orderResponse.getStatus()+1,1L);
-                                getOrderById(token, 1L);
-                            }
-                        });
+                        if(statusId != 4){
+                            btnShowProcess.setText("Tiến trình đơn hàng");
+                            btnShowProcess.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(UserOrderDetailActivity.this, UserDeliveryProcessActivity.class);
+                                    intent.putExtra("orderId", orderId);
+                                    startActivity(intent);
+                                }
+                            });
+                        }
 
                         Log.i("status", orderResponse.getStatus().toString());
                         Log.i("message", "onResponse: " + resultResponse.getMessage());
@@ -194,29 +189,5 @@ public class UserOrderDetailActivity extends AppCompatActivity {
                 Log.i("error", t.getMessage());
             }
         });
-    }
-
-    private void updateStatusOrder(String token, Integer statusUpdate, Long orderId) {
-        Order order = new Order();
-        order.setStatus(statusUpdate);
-        ApiService.apiService.updateStatusOrder(token, orderId, order).enqueue(new Callback<EntityStatusResponse<Order>>() {
-            @Override
-            public void onResponse(Call<EntityStatusResponse<Order>> call, Response<EntityStatusResponse<Order>> response) {
-                if (response.isSuccessful()) {
-                    EntityStatusResponse<Order> resultResponse = response.body();
-                    if (resultResponse != null) {
-                        Order orderResponse = resultResponse.getData();
-//                        showStatusName(orderResponse.getStatus());
-                        Log.i("message update status", resultResponse.getMessage());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<EntityStatusResponse<Order>> call, Throwable t) {
-                Log.i("error", t.getMessage());
-            }
-        });
-
     }
 }
