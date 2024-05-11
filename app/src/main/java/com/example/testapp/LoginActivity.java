@@ -50,6 +50,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etPhone, etPassword;
     private ProgressBar pbLogin;
     public static String role, staffName, address;
+    static boolean isInit = false;
+    static boolean isLoad=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -232,9 +234,10 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("role", roleName);
                         editor.apply();
                     }
-                } else
+                } else {
                     pbLogin.setVisibility(View.GONE);
                     btnLogin.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
