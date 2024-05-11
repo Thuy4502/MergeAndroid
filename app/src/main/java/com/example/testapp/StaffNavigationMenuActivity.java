@@ -47,7 +47,7 @@ public class StaffNavigationMenuActivity extends AppCompatActivity {
                     case R.id.navProduct:
                         // Xử lý khi click vào item "Sản phẩm"
                         // Ví dụ: mở màn hình Sản phẩm
-
+                        openListProduct();
                         break;
                     case R.id.navOrder:
                         openListOrder();
@@ -65,7 +65,7 @@ public class StaffNavigationMenuActivity extends AppCompatActivity {
                     case R.id.navCoupon:
                         // Xử lý khi click vào item "Khuyến mãi"
                         // Ví dụ: mở màn hình Khuyến mãi
-
+                        openListCoupon();
                         break;
                     case R.id.navLogout:
                         // Xử lý khi click vào item "Đăng xuất"
@@ -84,6 +84,16 @@ public class StaffNavigationMenuActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void openListCoupon() {
+        Intent intent = new Intent(StaffNavigationMenuActivity.this, CouponListAdminActivity.class);
+        startActivity(intent);
+    }
+
+    private void openListProduct() {
+        Intent intent = new Intent(StaffNavigationMenuActivity.this, ProductListActivity.class);
+        startActivity(intent);
     }
 
     private void setControl() {

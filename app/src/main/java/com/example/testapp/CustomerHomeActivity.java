@@ -234,19 +234,19 @@ public class CustomerHomeActivity extends AppCompatActivity {
 
             }
         });
-        btnBanh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btnBanh.setBackground(drawableEnable);
-                btnFreeze.setBackground(drawableDisable);
-                btnTra.setBackground(drawableDisable);
-                btnCaPhe.setBackground(drawableDisable);
-                btnPhindi.setBackground(drawableDisable);
-                btnAll.setBackground(drawableDisable);
-                name = "Bánh";
-                callApiFilterProductByCategory();
-            }
-        });
+//        btnBanh.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                btnBanh.setBackground(drawableEnable);
+//                btnFreeze.setBackground(drawableDisable);
+//                btnTra.setBackground(drawableDisable);
+//                btnCaPhe.setBackground(drawableDisable);
+//                btnPhindi.setBackground(drawableDisable);
+//                btnAll.setBackground(drawableDisable);
+//                name = "Bánh";
+//                callApiFilterProductByCategory();
+//            }
+//        });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

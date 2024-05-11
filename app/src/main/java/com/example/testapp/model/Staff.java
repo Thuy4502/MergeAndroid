@@ -4,7 +4,9 @@ import java.io.Serializable;
 
 public class Staff implements Serializable {
     private int id;
-    private String firstName, lastName, phone;
+    private String firstname;
+    private String lastname;
+    private String  phone;
 
     public String getPhone() {
         return phone;
@@ -23,18 +25,18 @@ public class Staff implements Serializable {
     }
 
     public String getFirstName() {
-        return firstName;
+        return firstname;
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        this.firstname = firstName;
     }
 
     public String getLastName() {
-        return lastName;
+        return lastname;
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        this.lastname = lastName;
     }
 }
