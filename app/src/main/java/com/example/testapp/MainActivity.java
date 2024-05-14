@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setEvent() {
+
         btnStarted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

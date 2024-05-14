@@ -273,7 +273,7 @@
                     android:background="@drawable/style_button"/>
             </LinearLayout>
             <Button
-                android:id="@+id/btn_updateStatus"
+                android:id="@+id/btn_showProcess"
                 android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"

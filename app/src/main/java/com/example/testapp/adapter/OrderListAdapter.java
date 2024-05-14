@@ -79,22 +79,6 @@ public class OrderListAdapter extends ArrayAdapter {
             txtStatus.setBackgroundTintList (ContextCompat.getColorStateList(OrderListAdapter.this.getContext(), R.color.mainColor));
 
         }
-
-
-
-        // click xem chi tiết đơn hàng
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(order != null){
-                    Long orderId = order.getOrder_id();
-                    Intent intent = new Intent(context, StaffOrderDetailActivity.class);
-                    intent.putExtra("orderId",orderId);
-                    context.startActivity(intent);
-                }
-
-            }
-        });
         return convertView;
     }
 

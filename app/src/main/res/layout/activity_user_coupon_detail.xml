@@ -118,17 +118,17 @@
                         android:text="Mã giảm giá: CP01"
                         android:textStyle="bold"/>
                 </LinearLayout>
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:orientation="vertical"-->
-<!--                    android:gravity="bottom|center">-->
-<!--                    <Button-->
-<!--                        android:layout_width="200dp"-->
-<!--                        android:layout_height="40dp"-->
-<!--                        android:background="@drawable/style_button"-->
-<!--                        android:text="Vô hiệu hóa" />-->
-<!--                </LinearLayout>-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="bottom|center">
+                    <Button
+                        android:layout_width="200dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/style_button"
+                        android:text="Vô hiệu hóa" />
+                </LinearLayout>
             </LinearLayout>
         </ScrollView>
     </RelativeLayout>

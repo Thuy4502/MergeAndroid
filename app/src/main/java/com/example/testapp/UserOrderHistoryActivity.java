@@ -105,7 +105,7 @@ public class UserOrderHistoryActivity extends AppCompatActivity {
 //                Toast.makeText(StaffOderListActivity.this, selectedStatus, Toast.LENGTH_SHORT).show();
                 int statusId = listStatus.get(position).getId();
                 if(statusId != -1)
-                    getOrderById(token, statusId);
+                    getOrderByStatus(token, statusId);
                 else
                     getAllOrder(token);
             }
@@ -170,7 +170,7 @@ public class UserOrderHistoryActivity extends AppCompatActivity {
         });
     }
 
-    private  void getOrderById(String token, Integer statusId){
+    private  void getOrderByStatus(String token, Integer statusId){
         ApiService.apiService.getOrderByStatus(token, statusId).enqueue(new Callback<CommonResponse<Order>>() {
             @Override
             public void onResponse(Call<CommonResponse<Order>> call, Response<CommonResponse<Order>> response) {

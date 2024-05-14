@@ -127,6 +127,7 @@
                             android:layout_height="wrap_content"
                             android:text=" OD01" />
                         <TextView
+                            android:id="@+id/tv_orderType"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Delivery"
@@ -169,18 +170,22 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/lnl_callStaff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginVertical="20dp">
+                    android:weightSum="10"
+                    android:layout_marginTop="10dp">
 
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
+                        android:layout_weight="1"
                         android:src="@drawable/img_user"/>
 
                     <LinearLayout
-                        android:layout_width="180dp"
+                        android:layout_width="200dp"
+                        android:weightSum="8"
                         android:layout_marginHorizontal="10dp"
                         android:layout_height="match_parent"
                         android:gravity="center|left"
@@ -189,20 +194,21 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Shipper Name"
+                            android:text="Nhân viên cửa hàng"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Người giao hàng"
+                            android:text="Hãy liên hệ khi có vấn đề về đơn hàng"
                             android:textColor="@color/TextLightColor"
                             android:textSize="12sp" />
                     </LinearLayout>
 
                     <ImageButton
+                        android:layout_weight="3"
                         android:id="@+id/ib_autoCallShipper"
-                        android:layout_width="50dp"
+                        android:layout_width="80dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="right"
                         android:background="@drawable/button_style"
