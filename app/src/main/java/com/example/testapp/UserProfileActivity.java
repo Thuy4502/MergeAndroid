@@ -11,9 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.testapp.api.ApiService;
 import com.example.testapp.model.Customer;
+import com.example.testapp.response.ApiResponse;
 import com.example.testapp.response.EntityStatusResponse;
 
 import retrofit2.Call;
@@ -42,13 +44,45 @@ public class UserProfileActivity extends AppCompatActivity {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openLoginActivity();
+                logOut(token);
+            }
+        });
+
+    }
+
+    private void logOut(String token) {
+        ApiService.apiService.logOut(token).enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                if (response.isSuccessful()){
+                    if(response.body() != null){
+                        SharedPreferences sharedPreferences = getSharedPreferences("MyPerfs", Context.MODE_PRIVATE);
+                        String token = sharedPreferences.getString("token", null);
+                        long expirationTime = sharedPreferences.getLong("expiration_time", 0);
+
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.remove("token");
+                        editor.remove("expiration_time");
+                        editor.remove("address");
+                        editor.apply();
+                        token = null; // Đảm bảo token bị xóa khỏi bộ nhớ
+
+                        openLoginActivity();
+                    }else
+                        Log.i("fail: ", "log out fail");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+                Log.i("error logout: ", t.getMessage());
             }
         });
 
     }
 
     private void openLoginActivity() {
+
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }

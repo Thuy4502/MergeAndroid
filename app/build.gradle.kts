@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.testapp"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -117,4 +117,10 @@ dependencies {
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("me.relex:circleindicator:2.1.6")
     implementation ("com.github.colourmoon:readmore-textview:v1.0.2")
+
+    implementation ("org.apache.poi:poi:5.2.0")
+
+
+    implementation ("com.squareup.picasso:picasso:2.71828")
+
 }

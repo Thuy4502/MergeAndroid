@@ -10,6 +10,7 @@ import android.widget.Button;
 public class UserOrderBuyNowActivity extends AppCompatActivity {
     private Button btnBuy;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

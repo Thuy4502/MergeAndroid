@@ -7,6 +7,8 @@ import androidx.core.util.Pair;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.storage.StorageManager;
+import android.os.storage.StorageVolume;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -20,9 +22,15 @@ import com.example.testapp.response.CommonResponse;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.eazegraph.lib.charts.PieChart;
 import org.eazegraph.lib.models.PieModel;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -42,23 +50,90 @@ public class AdminProductStatisticsActivity extends AppCompatActivity {
     private LinearLayout layoutCommment1, layoutCommment2, layoutCommment3, layoutCommment4, layoutCommment5;
     private RelativeLayout rlt_top1, rlt_top2, rlt_top3, rlt_top4, rlt_top5;
     private TextView tvSelectStarDate, tvSelectEndDate, tvNoData1, tvNoData2, tvLine;
-    private CardView btnShow;
+    private CardView btnShow, btnExportFile;
+    List<ProductSaleRequest> dataExport;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_product_statistics);
         setControl();
         setEvent();
+
+
+
     }
 
+    public void buttonCreateExcelFile(View view){
+        HSSFWorkbook hssfWorkbook = new HSSFWorkbook();
+        HSSFSheet hssfSheet = hssfWorkbook.createSheet("Sheet1");
+
+        HSSFRow hssfRow = hssfSheet.createRow(0);
+        HSSFCell hssfCellID = hssfRow.createCell(0);
+        hssfCellID.setCellValue("Mã sản phẩm");
+        HSSFCell hssfCell1Name = hssfRow.createCell(1);
+        hssfCell1Name.setCellValue("Tên sản phẩm");
+        HSSFCell hssfCellQuantity = hssfRow.createCell(2);
+        hssfCellQuantity.setCellValue("Tổng số lượng đã bán");
+        HSSFCell hssfCell3Price = hssfRow.createCell(3);
+        hssfCell3Price.setCellValue("Tổng tiền");
+
+
+        for (int i = 0; i<dataExport.size(); i++){
+            HSSFRow hssfRowX = hssfSheet.createRow(i+1);
+            HSSFCell hssfCell = hssfRowX.createCell(0);
+            HSSFCell hssfCell1 = hssfRowX.createCell(1);
+            HSSFCell hssfCell2 = hssfRowX.createCell(2);
+            HSSFCell hssfCell3 = hssfRowX.createCell(3);
+
+            hssfCell.setCellValue(String.valueOf(dataExport.get(i).getProduct_id()));
+            hssfCell1.setCellValue(String.valueOf(dataExport.get(i).getProduct_name()));
+            hssfCell2.setCellValue(String.valueOf(dataExport.get(i).getTotal_quantity()));
+            hssfCell3.setCellValue(String.valueOf(dataExport.get(i).getTotal_sold()));
+        }
+        saveWorkBook(hssfWorkbook);
+    }
+
+
+    private void saveWorkBook(HSSFWorkbook hssfWorkbook){
+        StorageManager storageManager = (StorageManager) getSystemService(STORAGE_SERVICE);
+        StorageVolume storageVolume = storageManager.getStorageVolumes().get(0); // internal storage
+
+        File fileOutput = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            fileOutput = new File(storageVolume.getDirectory().getPath() +"/Download/StatisticRevenue.xls");
+        }
+
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(fileOutput);
+            hssfWorkbook.write(fileOutputStream);
+            fileOutputStream.close();
+            hssfWorkbook.close();
+            Toast.makeText(this, "File Created Successfully", Toast.LENGTH_LONG).show();
+
+        } catch (Exception e) {
+            Toast.makeText(this, "File Creation Failed", Toast.LENGTH_LONG).show();
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
     private void setEvent() {
-       SharedPreferences sharedPreferences = getSharedPreferences("MyPerfs", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPerfs", Context.MODE_PRIVATE);
         String token = "Bearer " + sharedPreferences.getString("token", null);
 
         btnShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openDatePicker(token);
+            }
+        });
+
+        btnExportFile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonCreateExcelFile(v);
             }
         });
         //get best-selling product data all time
@@ -114,6 +189,7 @@ public class AdminProductStatisticsActivity extends AppCompatActivity {
                     CommonResponse<ProductSaleRequest> productSaleRequest = response.body();
                     if (productSaleRequest != null) {
                         List<ProductSaleRequest> productSaleRequests = productSaleRequest.getData();
+                        dataExport = productSaleRequests;
                         showDataByChart(productSaleRequests);
                     }
                     Log.i("message", "onResponse:" + productSaleRequest.getMessage());
@@ -169,6 +245,7 @@ public class AdminProductStatisticsActivity extends AppCompatActivity {
                     CommonResponse<ProductSaleRequest> dataResponse = response.body();
                     if(dataResponse != null){
                         List<ProductSaleRequest> listProduct = dataResponse.getData();
+                        dataExport = listProduct;
                         showDataByChart(listProduct);
                         Log.i("message", "onResponse:" + dataResponse.getMessage());
                     }else {
@@ -187,6 +264,8 @@ public class AdminProductStatisticsActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
 
     private void setControl() {
@@ -222,6 +301,7 @@ public class AdminProductStatisticsActivity extends AppCompatActivity {
 
         pieChart = findViewById(R.id.piechart);
         btnShow = findViewById(R.id.btn_showDate);
+        btnExportFile = findViewById(R.id.cvExportFile);
 
         tvSelectStarDate = findViewById(R.id.tv_selectStarDate);
         tvSelectEndDate = findViewById(R.id.tv_selectEndDate);

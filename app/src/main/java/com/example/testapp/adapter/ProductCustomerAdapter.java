@@ -70,7 +70,6 @@ public class ProductCustomerAdapter extends RecyclerView.Adapter<ProductCustomer
             for (PriceUpdateDetail priceUpdateDetail : priceUpdateDetailList) {
                 priceText.append(String.valueOf(priceUpdateDetail.getPriceNew())).append(", ");
             }
-            // Loại bỏ dấu phẩy cuối cùng
             if (priceText.length() > 0) {
                 priceText.deleteCharAt(priceText.length() - 2);
             }

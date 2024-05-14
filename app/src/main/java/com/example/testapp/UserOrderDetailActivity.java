@@ -40,6 +40,7 @@ public class UserOrderDetailActivity extends AppCompatActivity {
     private ListView lvListProduct;
     private Button btnShowProcess;
     private List<OrderDetail> data = new ArrayList<>();
+
     private Toolbar tb_app_bar;
     private ProductDetailOrderAdapter adapter_productDetail;
 
@@ -152,6 +153,21 @@ public class UserOrderDetailActivity extends AppCompatActivity {
 
                         Log.i("listReview", String.valueOf(orderDetailsReview.get(0).getProduct().getProductName()));
 
+//                        String productName = listOrderDetail.get(0).getProduct().getProduct_name();
+//
+//                        orderDetailsReview.add(new OrderDetail(null, listOrderDetail.get(0).getPrice(), null, listOrderDetail.get(0).getProduct()));
+//
+//                        for (int i = 1; i < listOrderDetail.size(); i++) {
+//                            if (!listOrderDetail.get(i).getProduct().getProduct_name().equals(productName)) {
+//                                orderDetailsReview.add(new OrderDetail(null, listOrderDetail.get(i).getPrice(), null, listOrderDetail.get(i).getProduct()));
+//                                productName = listOrderDetail.get(i).getProduct().getProduct_name();
+//                            }
+//                        }
+//                        Intent intent = new Intent(UserOrderDetailActivity.this, UserReviewActivity.class);
+//                        intent.putParcelableArrayListExtra("orderList", (ArrayList<? extends Parcelable>) orderDetailsReview);
+//                        startActivity(intent);
+//                        Log.i("listReview", String.valueOf(orderDetailsReview.get(0).getProduct().getProduct_name()));
+                        statusId = orderResponse.getStatus();
 
                         //set height for list view
                         if (listOrderDetail.size() <= 3){
@@ -163,6 +179,7 @@ public class UserOrderDetailActivity extends AppCompatActivity {
                         //set event when status != 4
                         if(statusId != 4){
                             btnShowProcess.setText("Xem tiến trình đơn hàng");
+
                             btnShowProcess.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -182,6 +199,7 @@ public class UserOrderDetailActivity extends AppCompatActivity {
                                     productName = listOrderDetail.get(i).getProduct().getProductName();
                                 }
                             }
+
                         }
 
                         Log.i("status", orderResponse.getStatus().toString());

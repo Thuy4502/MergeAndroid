@@ -51,7 +51,7 @@ public class BuyNowActivity extends AppCompatActivity {
     TextView tvProductName, tvProductPrice, tvQuantity, tvTotalPrice, tvDeliveryCost, tvSize, tvAddress, tvPrice, tvFlexible;
     ImageView ivProductImg, ivAdd, ivMinus;
     public static int quantity ;
-    public static Long orderId;
+    public Long orderId;
     public static float totalPrice;
     public static Product sp;
     EntityStatusResponse<UserTemp> userInfor;
@@ -59,7 +59,7 @@ public class BuyNowActivity extends AppCompatActivity {
     LinearLayout lyEditAdress;
     private Toolbar appBar;
     String token;
-    Button btnOrder, btnChangeAddress, btnDelivery, btnPickUp;
+    Button btnOrder, btnShowListCoupon, btnChangeAddress, btnDelivery, btnPickUp;
     public static float price,  tPrice,  dCost, priceBySize;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,7 +69,8 @@ public class BuyNowActivity extends AppCompatActivity {
         token =  sharedPreferences.getString("token", null);
         setControl();
         quantity = Integer.parseInt(String.valueOf(tvQuantity.getText()));
-        dCost = Float.parseFloat(String.valueOf(tvDeliveryCost.getText()));
+        String numbers = String.valueOf(tvDeliveryCost.getText()).replaceAll("\\D+", "");
+        dCost = Float.parseFloat(numbers);
         callApiGetUserInfor();
         setInfor();
         setEvent();
@@ -94,7 +95,7 @@ public class BuyNowActivity extends AppCompatActivity {
         tvFlexible = findViewById(R.id.tvFlexible);
         lyEditAdress = findViewById(R.id.lyEditAdress);
         appBar = findViewById(R.id.app_bar);
-
+        btnShowListCoupon = findViewById(R.id.btnShowListCoupon);
 
     }
 
@@ -115,6 +116,14 @@ public class BuyNowActivity extends AppCompatActivity {
         drawableDisable.setCornerRadius(cornerRadiusPixels);
         drawableDisable.setColor(Color.parseColor("#FFFFFF"));
         drawableDisable.setStroke(4, Color.parseColor("#b42329"));
+
+        btnShowListCoupon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BuyNowActivity.this, CouponUserActivity.class);
+                startActivity(intent);
+            }
+        });
 
         ivAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,7 +194,7 @@ public class BuyNowActivity extends AppCompatActivity {
         appBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent(BuyNowActivity.this, CustomerHomeActivity.class);
             }
         });
     }
@@ -216,6 +225,7 @@ public class BuyNowActivity extends AppCompatActivity {
                 orderId = response.body().getData().getId();
                 Toast.makeText(BuyNowActivity.this, "Đặt hàng thành công", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(BuyNowActivity.this, UserDeliveryProcessActivity.class);
+                intent.putExtra("OrderID", orderId);
                 startActivity(intent);
             }
 

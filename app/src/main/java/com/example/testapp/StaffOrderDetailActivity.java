@@ -43,12 +43,11 @@ public class StaffOrderDetailActivity extends AppCompatActivity {
 
     private LinearLayout lnl_showOrderDetail;
     private final Handler handler = new Handler();
-    static Long orderId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_staff_change_order_status);
+        setContentView(R.layout.activity_staff_detail_order);
         setControl();
         setEvent();
     }
@@ -79,9 +78,15 @@ public class StaffOrderDetailActivity extends AppCompatActivity {
         proBar_loading.setVisibility(View.VISIBLE);
         lnl_showOrderDetail.setVisibility(View.GONE);
 
-        orderId = getIntent().getLongExtra("orderId", 0);
+        Long orderId = getIntent().getLongExtra("orderId", 0);
         getOrderById(token, orderId);
 
+//        btnUpdateStatus.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                updateStatusOrder(token, );
+//            }
+//        });
 
     }
 
@@ -103,7 +108,6 @@ public class StaffOrderDetailActivity extends AppCompatActivity {
 
     }
 
-
     private void getOrderById(String token, Long orderId) {
         ApiService.apiService.getOrderById(token, orderId).enqueue(new Callback<EntityStatusResponse<Order>>() {
             @Override
@@ -122,10 +126,10 @@ public class StaffOrderDetailActivity extends AppCompatActivity {
                         //total price product
                         tvProductPrice.setText(Function.formatToVND(orderResponse.getTotal_price()));
                         //order total price
-                        Integer totalPrice = orderResponse.getTotal_price() + Integer.parseInt((String) tvFreightCost.getText());
-                        Integer format = Integer.parseInt((String) tvFreightCost.getText());
+                        Integer totalPrice = orderResponse.getTotal_price();
+//                        Integer format = Integer.parseInt((String) tvFreightCost.getText());
 
-                        tvFreightCost.setText(Function.formatToVND(format));
+//                        tvFreightCost.setText(Function.formatToVND(format));
 
                         tvTotalPrice.setText(Function.formatToVND(totalPrice));
 
@@ -146,17 +150,18 @@ public class StaffOrderDetailActivity extends AppCompatActivity {
                         List<OrderDetail> listOrderDetail = orderResponse.getOrder_detail();
                         adapter_productDetail = new ProductDetailOrderAdapter(StaffOrderDetailActivity.this, R.layout.layout_item_product_order, listOrderDetail);
                         lvListProduct.setAdapter(adapter_productDetail);
+
                         //set height for list view
                         if (listOrderDetail.size() <= 3){
                             lvListProduct.getLayoutParams().height = listOrderDetail.size() * 230;
                         }else {
                             lvListProduct.getLayoutParams().height = 690;
                         }
+
                         btnUpdateStatus.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onClick(View view) {
-                                updateStatusOrder(token,orderResponse.getStatus()+1, orderId);
-                                getOrderById(token, orderId);
+                            public void onClick(View v) {
+                                updateStatusOrder(token, orderResponse.getStatus() + 1, orderId);
                             }
                         });
 
@@ -164,7 +169,7 @@ public class StaffOrderDetailActivity extends AppCompatActivity {
                         Log.i("message", "onResponse: " + resultResponse.getMessage());
                     }
                 }
-//                handler.postDelayed(() -> getOrderById(token, orderId), 10000); // 10 giây
+                handler.postDelayed(() -> getOrderById(token, orderId), 10000); // 10 giây
             }
             @Override
             public void onFailure(Call<EntityStatusResponse<Order>> call, Throwable t) {
