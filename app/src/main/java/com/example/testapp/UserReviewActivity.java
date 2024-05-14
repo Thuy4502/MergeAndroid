@@ -35,6 +35,7 @@ public class UserReviewActivity extends AppCompatActivity {
         setControl();
         setEvent();
     }
+    //fix
 
     private void setControl() {
         lvListProduct = findViewById(R.id.lv_listProductReview);
