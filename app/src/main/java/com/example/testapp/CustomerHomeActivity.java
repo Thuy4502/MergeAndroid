@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
@@ -74,6 +75,8 @@ public class CustomerHomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         SharedPreferences sharedPreferences = getSharedPreferences("MyPerfs", Context.MODE_PRIVATE);
         token =  sharedPreferences.getString("token", null);
+        String address = sharedPreferences.getString("address", null);
+        Log.i("address", address);
         setControls();
         rvProduct.setHasFixedSize(true);
         // Thiết lập LayoutManager GridLayoutManager với 2 cột
@@ -82,6 +85,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
         setCountProductInCart();
         setEvent();
         setSlider();
+        tvAddress.setText(address);
     }
 
     public void setSlider() {
@@ -139,7 +143,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
     }
 
     public void setEvent() {
-        tvAddress.setText(LoginActivity.address);
+
         int id = btnCaPhe.getId();
         System.out.println(id);
         int cornerRadiusPixels = (int) TypedValue.applyDimension(
@@ -234,19 +238,19 @@ public class CustomerHomeActivity extends AppCompatActivity {
 
             }
         });
-        btnBanh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btnBanh.setBackground(drawableEnable);
-                btnFreeze.setBackground(drawableDisable);
-                btnTra.setBackground(drawableDisable);
-                btnCaPhe.setBackground(drawableDisable);
-                btnPhindi.setBackground(drawableDisable);
-                btnAll.setBackground(drawableDisable);
-                name = "Bánh";
-                callApiFilterProductByCategory();
-            }
-        });
+//        btnBanh.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                btnBanh.setBackground(drawableEnable);
+//                btnFreeze.setBackground(drawableDisable);
+//                btnTra.setBackground(drawableDisable);
+//                btnCaPhe.setBackground(drawableDisable);
+//                btnPhindi.setBackground(drawableDisable);
+//                btnAll.setBackground(drawableDisable);
+//                name = "Bánh";
+//                callApiFilterProductByCategory();
+//            }
+//        });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

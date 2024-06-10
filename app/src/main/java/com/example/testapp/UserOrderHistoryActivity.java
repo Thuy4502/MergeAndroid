@@ -104,8 +104,9 @@ public class UserOrderHistoryActivity extends AppCompatActivity {
                 String selectedStatus = String.valueOf(listStatus.get(position).getName());
 //                Toast.makeText(StaffOderListActivity.this, selectedStatus, Toast.LENGTH_SHORT).show();
                 int statusId = listStatus.get(position).getId();
+
                 if(statusId != -1) {
-                    getOrderById(token, statusId);
+                    getOrderByStatus(token, statusId);
                     System.out.println("statsu: " + statusId); }
                 else{
                     getAllOrder(token);
@@ -135,9 +136,6 @@ public class UserOrderHistoryActivity extends AppCompatActivity {
                     CommonResponse<Order> resultResponse = response.body();
                     if(resultResponse != null){
                         List<Order> orderList = resultResponse.getData();
-                        for (Order od : orderList){
-
-                        }
                         if(orderList.isEmpty()){
 
                             tvNoData.setVisibility(View.VISIBLE);
@@ -176,7 +174,7 @@ public class UserOrderHistoryActivity extends AppCompatActivity {
         });
     }
 
-    private  void getOrderById(String token, Integer statusId){
+    private  void getOrderByStatus(String token, Integer statusId){
         ApiService.apiService.getOrderByStatus(token, statusId).enqueue(new Callback<CommonResponse<Order>>() {
             @Override
             public void onResponse(Call<CommonResponse<Order>> call, Response<CommonResponse<Order>> response) {
@@ -209,7 +207,6 @@ public class UserOrderHistoryActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<CommonResponse<Order>> call, Throwable t) {
                 Log.i("error", t.getMessage());
-                System.out.println("Troongsssssssssssssssssssssssssss" + t.getMessage());
             }
         });
     }

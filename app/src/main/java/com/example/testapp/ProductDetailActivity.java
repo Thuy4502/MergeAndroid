@@ -230,12 +230,12 @@ public class ProductDetailActivity extends AppCompatActivity {
                 sp = response.body();
                 categoryName = String.valueOf(sp.getCategory().getCategory_name());
                 setTextForProduct();
-                if(categoryName.equals("Bánh")) {
-                    llSize.setVisibility(View.GONE);
-                    size = "M";
-                    btnBuyNow.setEnabled(true);
-                    btnAddItem.setEnabled(true);
-                }
+//                if(categoryName.equals("Bánh")) {
+//                    llSize.setVisibility(View.GONE);
+//                    size = "M";
+//                    btnBuyNow.setEnabled(true);
+//                    btnAddItem.setEnabled(true);
+//                }
 
                 if (orderRequest == null) {
                     orderRequest = new OrderRequest();

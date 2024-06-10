@@ -20,8 +20,9 @@ public class Coupon {
     private int quantity;
 
 
-    private int remaining_amount;
+    private int use_value;
 
+    private int remaining_amount;
 
     private int minimum_value;
 
@@ -44,7 +45,7 @@ public class Coupon {
         super();
     }
 
-    public Coupon(Long coupon_id, String image, String start_date, String end_date, String type, String content, int quantity, int remaining_amount, int minimum_value, String status, Long created_by, Long updated_by) {
+    public Coupon(Long coupon_id, String image, String start_date, String end_date, String type, String content, int quantity, int use_value, int minimum_value, String status, Long created_by, Long updated_by) {
         this.coupon_id = coupon_id;
         this.image = image;
         this.start_date = start_date;
@@ -52,7 +53,7 @@ public class Coupon {
         this.type = type;
         this.content = content;
         this.quantity = quantity;
-        this.remaining_amount = remaining_amount;
+        this.use_value = use_value;
         this.minimum_value = minimum_value;
         this.status = status;
         this.created_by = created_by;
@@ -115,12 +116,12 @@ public class Coupon {
         this.quantity = quantity;
     }
 
-    public int getRemaining_amount() {
-        return remaining_amount;
+    public int getUse_value() {
+        return use_value;
     }
 
-    public void setRemaining_amount(int remaining_amount) {
-        this.remaining_amount = remaining_amount;
+    public void setUse_value(int remaining_amount) {
+        this.use_value = remaining_amount;
     }
 
     public int getMinimum_value() {
@@ -153,5 +154,13 @@ public class Coupon {
 
     public void setUpdated_by(Long updated_by) {
         this.updated_by = updated_by;
+    }
+
+    public int getRemaining_amount() {
+        return remaining_amount;
+    }
+
+    public void setRemaining_amount(int remaining_amount) {
+        this.remaining_amount = remaining_amount;
     }
 }

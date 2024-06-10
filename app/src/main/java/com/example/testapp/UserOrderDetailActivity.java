@@ -39,6 +39,8 @@ import retrofit2.Response;
 public class UserOrderDetailActivity extends AppCompatActivity {
     private ListView lvListProduct;
     private Button btnShowProcess;
+    private List<OrderDetail> data = new ArrayList<>();
+
     private Toolbar tb_app_bar;
     private ProductDetailOrderAdapter adapter_productDetail;
 
@@ -49,6 +51,8 @@ public class UserOrderDetailActivity extends AppCompatActivity {
     private LinearLayout lnl_showOrderDetail;
     private Integer statusId;
     private final Handler handler = new Handler();
+
+    public static ArrayList<OrderDetail> orderDetailsReview = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +95,7 @@ public class UserOrderDetailActivity extends AppCompatActivity {
         lnl_showOrderDetail.setVisibility(View.GONE);
 
         Long orderId = getIntent().getLongExtra("orderId", 0);
+
         getOrderById(token, orderId);
 
 
@@ -98,7 +103,7 @@ public class UserOrderDetailActivity extends AppCompatActivity {
     }
 
     private void getOrderById(String token, Long orderId) {
-        ArrayList<OrderDetail> orderDetailsReview = new ArrayList<>();
+
         ApiService.apiService.getOrderById(token, orderId).enqueue(new Callback<EntityStatusResponse<Order>>() {
             @Override
             public void onResponse(Call<EntityStatusResponse<Order>> call, Response<EntityStatusResponse<Order>> response) {
@@ -108,11 +113,8 @@ public class UserOrderDetailActivity extends AppCompatActivity {
 
                         proBar_loading.setVisibility(View.GONE);
                         lnl_showOrderDetail.setVisibility(View.VISIBLE);
-
-
                         //get info order
                         Order orderResponse = resultResponse.getData();
-
                         //order id
                         tvOrderId.setText(orderResponse.getOrder_id().toString());
                         //total price product
@@ -126,7 +128,8 @@ public class UserOrderDetailActivity extends AppCompatActivity {
                         tvTotalPrice.setText(Function.formatToVND(totalPrice));
 
                         //show statusName for button change status
-                        Log.i("statusId", orderResponse.getStatus().toString());
+                        statusId = orderResponse.getStatus();
+                        Log.i("statusId", statusId.toString());
 
                         //set title action bar
                         tb_app_bar.setTitle(orderResponse.getUpdate_at().toString());
@@ -142,6 +145,13 @@ public class UserOrderDetailActivity extends AppCompatActivity {
 
                         adapter_productDetail = new ProductDetailOrderAdapter(UserOrderDetailActivity.this, R.layout.layout_item_product_order, listOrderDetail);
                         lvListProduct.setAdapter(adapter_productDetail);
+
+
+//                        Intent intent = new Intent(UserOrderDetailActivity.this, UserReviewActivity.class);
+//                        intent.putParcelableArrayListExtra("orderList", (ArrayList<? extends Parcelable>) orderDetailsReview);
+//                        startActivity(intent);
+
+                        Log.i("listReview", String.valueOf(orderDetailsReview.get(0).getProduct().getProductName()));
 
 //                        String productName = listOrderDetail.get(0).getProduct().getProduct_name();
 //
@@ -166,8 +176,10 @@ public class UserOrderDetailActivity extends AppCompatActivity {
                             lvListProduct.getLayoutParams().height = 690;
                         }
 
+                        //set event when status != 4
                         if(statusId != 4){
-                            btnShowProcess.setText("Tiến trình đơn hàng");
+                            btnShowProcess.setText("Xem tiến trình đơn hàng");
+
                             btnShowProcess.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -176,6 +188,18 @@ public class UserOrderDetailActivity extends AppCompatActivity {
                                     startActivity(intent);
                                 }
                             });
+
+                            String productName = listOrderDetail.get(0).getProduct().getProductName();
+
+                            orderDetailsReview.add(new OrderDetail(null, listOrderDetail.get(0).getPrice(), null, listOrderDetail.get(0).getProduct()));
+
+                            for (int i = 1; i < listOrderDetail.size(); i++) {
+                                if (!listOrderDetail.get(i).getProduct().getProductName().equals(productName)) {
+                                    orderDetailsReview.add(new OrderDetail(null, listOrderDetail.get(i).getPrice(), null, listOrderDetail.get(i).getProduct()));
+                                    productName = listOrderDetail.get(i).getProduct().getProductName();
+                                }
+                            }
+
                         }
 
                         Log.i("status", orderResponse.getStatus().toString());

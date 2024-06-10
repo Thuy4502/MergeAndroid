@@ -21,7 +21,7 @@
     <color name="lightGrey">#FFD4D4D4</color>
     <color name="red">#FF0000</color>
     <color name="grey">#d3d6db</color>
-
+    <color name="pink">#feb1b1</color>
 <!--    text color-->
     <color name="smallTextColor">#FFA9A9A9</color>
     <color name="priceTextColor">#FF2F4B4E</color>
