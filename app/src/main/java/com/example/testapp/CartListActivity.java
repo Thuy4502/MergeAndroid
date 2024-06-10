@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -58,6 +59,9 @@ public class CartListActivity extends AppCompatActivity {
         setControl();
         rvCart.setHasFixedSize(true);
         rvCart.setLayoutManager(new GridLayoutManager(this, 1));
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rvCart.getContext(),
+                DividerItemDecoration.VERTICAL);
+        rvCart.addItemDecoration(dividerItemDecoration);
         callApiGetAllCart();
         setEvent();
         System.out.println("Thành công");

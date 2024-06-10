@@ -203,7 +203,6 @@ public class BuyNowActivity extends AppCompatActivity {
         if (orderRequest == null) {
             orderRequest = new OrderRequest();
         }
-        System.out.println("00000000000000" + sp.getProductId());
         orderRequest.setProduct_id(sp.getProductId());
         orderRequest.setSize(ProductDetailActivity.size);
         updateProductPrice();
@@ -240,7 +239,7 @@ public class BuyNowActivity extends AppCompatActivity {
             tvProductName.setText(sp.getProductName());
             tvSize.setText(ProductDetailActivity.size);
             Glide.with(BuyNowActivity.this)
-                    .load(sp.getImage()) // Lấy URL hình ảnh từ đối tượng ProAPI
+                    .load(sp.getImage())
                     .into(ivProductImg);
             tvProductPrice.setText(UserOrderActivity.formatNumber(priceBySize));
             tvPrice.setText(UserOrderActivity.formatNumber(priceBySize));
@@ -319,7 +318,6 @@ public class BuyNowActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 newAddress = String.valueOf(edtAddress.getText());
-                System.out.println("-------------------------" + newAddress);
                 callApiChangeAdress();
                 dialog.dismiss();
                 callApiGetUserInfor();
