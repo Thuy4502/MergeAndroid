@@ -8,6 +8,8 @@ import com.example.testapp.model.Order;
 import com.example.testapp.model.OrderID;
 import com.example.testapp.model.Product;
 import com.example.testapp.model.ProductSaleRequest;
+import com.example.testapp.model.Review;
+import com.example.testapp.model.ReviewDTO;
 import com.example.testapp.model.Size;
 import com.example.testapp.model.StatisticRequest;
 import com.example.testapp.model.User;
@@ -40,10 +42,7 @@ public interface ApiService {
     //base link:http://....:9999/
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
-//    WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
-//    String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
-
-    ApiService apiService = new Retrofit.Builder().baseUrl("http://192.168.52.100:9999/").addConverterFactory(GsonConverterFactory.create(gson))
+    ApiService apiService = new Retrofit.Builder().baseUrl("http://192.168.0.188:9999/").addConverterFactory(GsonConverterFactory.create(gson))
 
             .build().create(ApiService.class);
 
@@ -92,9 +91,8 @@ public interface ApiService {
     Call<CommonResponse<Order>> getOrderHistoryByJwt(@Header("Authorization") String token);
     @GET("api/coupon/all")
     Call<CommonResponse<Coupon>> getAllCoupon(@Header("Authorization") String token);
-
-
-
+    @POST("api/review/add")
+    Call<EntityStatusResponse<Review>> addReview(@Header("Authorization") String token, @Body ReviewDTO reviewDTO);
 
     @GET("api/products/category?")
     Call<CommonResponse<Product>> filterProductByCategory(@Header("Authorization") String token, @Query("name") String nameParam);

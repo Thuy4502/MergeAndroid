@@ -65,28 +65,18 @@
                 <ListView
                     android:id="@+id/lv_listProductReview"
                     android:layout_width="match_parent"
-                    android:layout_height="120dp" />
-                <LinearLayout
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Tồng tiền: "
-                        android:layout_marginRight="5dp"/>
-                    <TextView
-                        android:id="@+id/tv_totalPrice"
-                        android:layout_width="wrap_content"
-                        android:fontFamily="@font/sora_semibold"
-                        android:textColor="@color/mainColor"
-                        android:layout_height="wrap_content"
-                        android:text="50.000 VND" />
-                </LinearLayout>
+                    android:layout_marginTop="20dp"/>
             </LinearLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đánh giá chất lượng sản phẩm"
+                android:textStyle="bold"/>
+
             <androidx.appcompat.widget.AppCompatRatingBar
+                android:id="@+id/rtb_star"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -114,6 +104,16 @@
                     android:layout_height="130dp"
                     android:padding="10dp" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btn_sendReview"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="right"
+                android:text="Gửi"
+                android:textAllCaps="false"
+                android:background="@drawable/style_radius_20dp" />
         </LinearLayout>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

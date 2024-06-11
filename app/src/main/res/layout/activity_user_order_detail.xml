@@ -142,7 +142,18 @@
                         android:divider="@android:color/transparent"
                         android:dividerHeight="10dp">
                     </ListView>
-
+                    <Button
+                        android:id="@+id/btn_openReview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:background="@drawable/button_style"
+                        android:text="Viết đánh giá"
+                        android:textStyle="italic"
+                        android:layout_gravity="right"
+                        android:textAllCaps="false"
+                        android:textSize="12dp"
+                        android:paddingHorizontal="20dp"
+                        android:paddingVertical="0dp" />
                 </LinearLayout>
 
                 <LinearLayout

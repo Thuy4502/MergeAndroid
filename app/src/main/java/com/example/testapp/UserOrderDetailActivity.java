@@ -38,9 +38,8 @@ import retrofit2.Response;
 
 public class UserOrderDetailActivity extends AppCompatActivity {
     private ListView lvListProduct;
-    private Button btnShowProcess;
+    private Button btnShowProcess, btnOpenReview;
     private List<OrderDetail> data = new ArrayList<>();
-
     private Toolbar tb_app_bar;
     private ProductDetailOrderAdapter adapter_productDetail;
 
@@ -51,6 +50,7 @@ public class UserOrderDetailActivity extends AppCompatActivity {
     private LinearLayout lnl_showOrderDetail;
     private Integer statusId;
     private final Handler handler = new Handler();
+    public static Long order_id;
 
     public static ArrayList<OrderDetail> orderDetailsReview = new ArrayList<>();
     @Override
@@ -72,6 +72,7 @@ public class UserOrderDetailActivity extends AppCompatActivity {
         lvListProduct = findViewById(R.id.lv_listProduct);
 
         btnShowProcess = findViewById(R.id.btn_showProcess);
+        btnOpenReview = findViewById(R.id.btn_openReview);
 
         tvOrderId = findViewById(R.id.tv_orderId);
         tvProductPrice = findViewById(R.id.tv_productPrice);
@@ -94,12 +95,45 @@ public class UserOrderDetailActivity extends AppCompatActivity {
         proBar_loading.setVisibility(View.VISIBLE);
         lnl_showOrderDetail.setVisibility(View.GONE);
 
-        Long orderId = getIntent().getLongExtra("orderId", 0);
+//        Long orderId = getIntent().getLongExtra("orderId", 0);
 
-        getOrderById(token, orderId);
+//        getOrderById(token, orderId);
+
+        getOrderById(token, 1L);
+//        order_id = orderId;
 
 
+        btnOpenReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserOrderDetailActivity.this, UserReviewActivity.class);
+                startActivity(intent);
+            }
+        });
 
+    }
+
+    private List<OrderDetail> checkUnratedProducts (List<OrderDetail> listOrderDetail) {
+        orderDetailsReview.clear();
+
+        String productName = "null";
+
+//        orderDetailsReview.add(new OrderDetail(null, listOrderDetail.get(0).getPrice(), listOrderDetail.get(0).getQuantity(), listOrderDetail.get(0).getProduct(), listOrderDetail.get(0).getReview()));
+//        productName = listOrderDetail.get(0).getProduct().getProductName();
+
+        for (int i = 0; i < listOrderDetail.size()-1; i++) {
+            if (!listOrderDetail.get(i).getProduct().getProductName().equals(productName) && listOrderDetail.get(i).getReview() == null) {
+                orderDetailsReview.add(new OrderDetail(null, listOrderDetail.get(i).getPrice(), listOrderDetail.get(i).getQuantity(), listOrderDetail.get(i).getProduct(), listOrderDetail.get(0).getReview()));
+                productName = listOrderDetail.get(i).getProduct().getProductName();
+            }
+            else if (listOrderDetail.get(i+1).getProduct().getProductName().equals(productName)) {
+                OrderDetail lastOrderDetail = orderDetailsReview.get(orderDetailsReview.size() - 1);
+                lastOrderDetail.setQuantity(lastOrderDetail.getQuantity() + listOrderDetail.get(i+1).getQuantity());
+            }
+        }
+        Log.i("list size:", String.valueOf(listOrderDetail.size()));
+
+        return listOrderDetail;
     }
 
     private void getOrderById(String token, Long orderId) {
@@ -146,27 +180,6 @@ public class UserOrderDetailActivity extends AppCompatActivity {
                         adapter_productDetail = new ProductDetailOrderAdapter(UserOrderDetailActivity.this, R.layout.layout_item_product_order, listOrderDetail);
                         lvListProduct.setAdapter(adapter_productDetail);
 
-
-//                        Intent intent = new Intent(UserOrderDetailActivity.this, UserReviewActivity.class);
-//                        intent.putParcelableArrayListExtra("orderList", (ArrayList<? extends Parcelable>) orderDetailsReview);
-//                        startActivity(intent);
-
-                        Log.i("listReview", String.valueOf(orderDetailsReview.get(0).getProduct().getProductName()));
-
-//                        String productName = listOrderDetail.get(0).getProduct().getProduct_name();
-//
-//                        orderDetailsReview.add(new OrderDetail(null, listOrderDetail.get(0).getPrice(), null, listOrderDetail.get(0).getProduct()));
-//
-//                        for (int i = 1; i < listOrderDetail.size(); i++) {
-//                            if (!listOrderDetail.get(i).getProduct().getProduct_name().equals(productName)) {
-//                                orderDetailsReview.add(new OrderDetail(null, listOrderDetail.get(i).getPrice(), null, listOrderDetail.get(i).getProduct()));
-//                                productName = listOrderDetail.get(i).getProduct().getProduct_name();
-//                            }
-//                        }
-//                        Intent intent = new Intent(UserOrderDetailActivity.this, UserReviewActivity.class);
-//                        intent.putParcelableArrayListExtra("orderList", (ArrayList<? extends Parcelable>) orderDetailsReview);
-//                        startActivity(intent);
-//                        Log.i("listReview", String.valueOf(orderDetailsReview.get(0).getProduct().getProduct_name()));
                         statusId = orderResponse.getStatus();
 
                         //set height for list view
@@ -175,7 +188,6 @@ public class UserOrderDetailActivity extends AppCompatActivity {
                         }else {
                             lvListProduct.getLayoutParams().height = 690;
                         }
-
                         //set event when status != 4
                         if(statusId != 4){
                             btnShowProcess.setText("Xem tiến trình đơn hàng");
@@ -188,20 +200,16 @@ public class UserOrderDetailActivity extends AppCompatActivity {
                                     startActivity(intent);
                                 }
                             });
+                        }else {
+                            orderDetailsReview = (ArrayList<OrderDetail>) checkUnratedProducts(listOrderDetail);
 
-                            String productName = listOrderDetail.get(0).getProduct().getProductName();
-
-                            orderDetailsReview.add(new OrderDetail(null, listOrderDetail.get(0).getPrice(), null, listOrderDetail.get(0).getProduct()));
-
-                            for (int i = 1; i < listOrderDetail.size(); i++) {
-                                if (!listOrderDetail.get(i).getProduct().getProductName().equals(productName)) {
-                                    orderDetailsReview.add(new OrderDetail(null, listOrderDetail.get(i).getPrice(), null, listOrderDetail.get(i).getProduct()));
-                                    productName = listOrderDetail.get(i).getProduct().getProductName();
-                                }
+                            if(orderDetailsReview.isEmpty()){
+                                btnOpenReview.setVisibility(View.GONE);
+                            }else{
+                                btnOpenReview.setVisibility(View.VISIBLE);
                             }
-
+                            Log.i("check size",String.valueOf(orderDetailsReview.size()));
                         }
-
                         Log.i("status", orderResponse.getStatus().toString());
                         Log.i("message", "onResponse: " + resultResponse.getMessage());
                     }

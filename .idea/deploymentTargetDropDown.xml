@@ -2,18 +2,6 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-<<<<<<< HEAD
-      <entry key="StaffOderListActivity">
-        <State />
-      </entry>
-      <entry key="UserDeliveryProcessActivity">
-        <State />
-      </entry>
-      <entry key="UserOrderHistoryActivity">
-        <State />
-      </entry>
-=======
->>>>>>> fea59abf9028103c44c527ac89115d36d6802260
       <entry key="app">
         <State />
       </entry>
