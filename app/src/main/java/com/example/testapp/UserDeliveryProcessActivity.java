@@ -6,6 +6,7 @@ import static com.example.testapp.function.Function.formatToVND;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
@@ -21,6 +22,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -54,6 +56,7 @@ public class UserDeliveryProcessActivity extends AppCompatActivity {
     private Integer save_statusId = -1;
     public static String timeUpdateOrder, phoneStaff, addressCustomer;
     public static Long orderID, tmp;
+    private Toolbar backIcon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,14 +73,21 @@ public class UserDeliveryProcessActivity extends AppCompatActivity {
     }
 
     private void setEvent() {
-
+        setSupportActionBar(backIcon);
         SharedPreferences sharedPreferences = getSharedPreferences("MyPerfs", Context.MODE_PRIVATE);
         String token = "Bearer " + sharedPreferences.getString("token", null);
 
+        backIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserDeliveryProcessActivity.this, CustomerHomeActivity.class);
+                startActivity(intent);
+            }
+        });
 
-        Long orderId = getIntent().getLongExtra("orderId", 0);
+        Long orderId = getIntent().getLongExtra("OrderID", 0);
 
-        getOrderById(token, orderId);
+        getOrderById(token, orderId);setSupportActionBar(backIcon);
 
 
             ibCallShipper.setOnClickListener(new View.OnClickListener() {
@@ -145,6 +155,9 @@ public class UserDeliveryProcessActivity extends AppCompatActivity {
             tvLineStatus4.setBackgroundTintList(ContextCompat.getColorStateList(UserDeliveryProcessActivity.this, R.color.green));
         }
     }
+
+
+
 
     private void getOrderById(String token, Long id) {
         ApiService.apiService.getOrderById(token, id).enqueue(new Callback<EntityStatusResponse<Order>>() {
@@ -218,5 +231,6 @@ public class UserDeliveryProcessActivity extends AppCompatActivity {
         frame_showMap = findViewById(R.id.frame_showMap);
 
         lnlCallStaff = findViewById(R.id.lnl_callStaff);
+        backIcon = findViewById(R.id.app_bar);
     }
 }

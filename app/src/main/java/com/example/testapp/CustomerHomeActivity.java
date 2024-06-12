@@ -330,7 +330,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
     }
 
     public void getAllProductStar() {
-        ApiService.apiService.gettAllProductStar().enqueue(new Callback<CommonResponse<ReviewStar>>() {
+        ApiService.apiService.getAllProductStar().enqueue(new Callback<CommonResponse<ReviewStar>>() {
             @Override
             public void onResponse(Call<CommonResponse<ReviewStar>> call, Response<CommonResponse<ReviewStar>> response) {
                 List<ReviewStar> rvList = response.body().getData();

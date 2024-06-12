@@ -1,6 +1,6 @@
 package com.example.testapp.model;
 
-public class UserTemp {
+public class UserInfo {
     private String address;
     private String birthday;
     private String cccd;
@@ -9,10 +9,10 @@ public class UserTemp {
     private String lastname;
     private String tax_id;
 
-    public UserTemp() {
+    public UserInfo() {
     }
 
-    public UserTemp(String address, String birthday, String cccd, String email, String firstname, String lastname, String tax_id) {
+    public UserInfo(String address, String birthday, String cccd, String email, String firstname, String lastname, String tax_id) {
         this.address = address;
         this.birthday = birthday;
         this.cccd = cccd;

@@ -2,16 +2,20 @@ package com.example.testapp.api;
 
 import com.example.testapp.model.Coupon;
 //import com.example.testapp.model.CouponDetail;
+import com.example.testapp.model.CouponDetail;
 import com.example.testapp.model.Customer;
 import com.example.testapp.model.FullCart;
 import com.example.testapp.model.Order;
 import com.example.testapp.model.OrderID;
 import com.example.testapp.model.Product;
 import com.example.testapp.model.ProductSaleRequest;
+import com.example.testapp.model.Review;
+import com.example.testapp.model.ReviewDTO;
+import com.example.testapp.model.ReviewStar;
 import com.example.testapp.model.Size;
 import com.example.testapp.model.StatisticRequest;
 import com.example.testapp.model.User;
-import com.example.testapp.model.UserTemp;
+import com.example.testapp.model.UserInfo;
 import com.example.testapp.model.request.CartRequest;
 import com.example.testapp.model.request.OrderRequest;
 import com.example.testapp.response.ApiResponse;
@@ -40,10 +44,7 @@ public interface ApiService {
     //base link:http://....:9999/
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
-//    WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
-//    String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
-
-    ApiService apiService = new Retrofit.Builder().baseUrl("http://192.168.52.100:9999/").addConverterFactory(GsonConverterFactory.create(gson))
+    ApiService apiService = new Retrofit.Builder().baseUrl("http://192.168.1.3:9999/").addConverterFactory(GsonConverterFactory.create(gson))
 
             .build().create(ApiService.class);
 
@@ -92,6 +93,10 @@ public interface ApiService {
     Call<CommonResponse<Order>> getOrderHistoryByJwt(@Header("Authorization") String token);
     @GET("api/coupon/all")
     Call<CommonResponse<Coupon>> getAllCoupon(@Header("Authorization") String token);
+    @POST("api/review/add")
+    Call<EntityStatusResponse<Review>> addReview(@Header("Authorization") String token, @Body ReviewDTO reviewDTO);
+    @GET("api/review/{product_id}/get")
+    Call<EntityStatusResponse<Review>> getReviewProduct(@Path("product_id") String product_id);
 
 
 
@@ -133,10 +138,10 @@ public interface ApiService {
     Call<CommonResponse<Size>> getPriceBySize(@Header("Authorization") String token);
 
     @PUT("api/customer/3/update")
-    Call<Void> changeAddress(@Header("Authorization") String token, @Body UserTemp user);
+    Call<Void> changeAddress(@Header("Authorization") String token, @Body UserInfo user);
 
     @GET("api/users/profile")
-    Call<EntityStatusResponse<UserTemp>> getUserInfor(@Header("Authorization") String token);
+    Call<EntityStatusResponse<UserInfo>> getUserInfor(@Header("Authorization") String token);
 
 
     @GET("api/admin/product/all")
@@ -152,13 +157,14 @@ public interface ApiService {
     Call<ApiResponse> deleteProduct(@Header("Authorization") String token,
                                     @Path("product_id") String product_id);
 
-
     @Multipart
     @PUT("api/admin/product/{product_id}/update")
     Call<ApiResponse> updateProduct(@Header("Authorization") String token,
                                     @Path("product_id") String product_id,
                                     @Part MultipartBody.Part image,
                                     @Part("data") RequestBody data);
+
+
 
     // Coupon API Admin
     @GET("api/admin/coupon/all")
@@ -170,8 +176,8 @@ public interface ApiService {
                                 @Part MultipartBody.Part image,
                                 @Part("data") RequestBody data);
 
-//    @GET("api/coupon/mycoupon")
-//    Call<CommonResponse<CouponDetail>> getMyCoupon(@Header("Authorization") String token);
+    @GET("api/coupon/mycoupon")
+    Call<CommonResponse<CouponDetail>> getMyCoupon(@Header("Authorization") String token);
 
     @GET("api/coupon/get")
     Call<ApiResponse> customerGetCoupon(@Header("Authorization") String token,
@@ -179,4 +185,10 @@ public interface ApiService {
 
     @PUT("api/admin/coupon/{coupon_id}/status")
     Call<ApiResponse> disableCoupon(@Header("Authorization") String token, @Path("coupon_id") String coupon_id, @Body Coupon coupon);
+
+    @GET("api/review/avg/all")
+    Call<CommonResponse<ReviewStar>> getAllProductStar();
+
+    @GET("api/review/{productID}")
+    Call<CommonResponse<ReviewStar>> getAvgStar(@Path("productID") String productID);
 }

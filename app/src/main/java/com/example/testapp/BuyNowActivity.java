@@ -30,9 +30,8 @@ import com.example.testapp.adapter.ProductInOrderAdapter;
 import com.example.testapp.api.ApiService;
 import com.example.testapp.model.OrderID;
 import com.example.testapp.model.Product;
-import com.example.testapp.model.UserTemp;
+import com.example.testapp.model.UserInfo;
 import com.example.testapp.model.request.OrderRequest;
-import com.example.testapp.response.ApiResponse;
 import com.example.testapp.response.EntityStatusResponse;
 
 
@@ -54,7 +53,7 @@ public class BuyNowActivity extends AppCompatActivity {
     public Long orderId;
     public static float totalPrice;
     public static Product sp;
-    EntityStatusResponse<UserTemp> userInfor;
+    EntityStatusResponse<UserInfo> userInfor;
     String newAddress;
     LinearLayout lyEditAdress;
     private Toolbar appBar;
@@ -259,7 +258,7 @@ public class BuyNowActivity extends AppCompatActivity {
     }
 
     public void callApiChangeAdress() {
-        UserTemp user = new UserTemp();
+        UserInfo user = new UserInfo();
         user.setAddress(newAddress);
         user.setBirthday(userInfor.getData().getBirthday());
         user.setCccd(userInfor.getData().getCccd());
@@ -282,15 +281,15 @@ public class BuyNowActivity extends AppCompatActivity {
     }
 
     public void callApiGetUserInfor() {
-        ApiService.apiService.getUserInfor("Bearer "+token).enqueue(new Callback<EntityStatusResponse<UserTemp>>() {
+        ApiService.apiService.getUserInfor("Bearer "+token).enqueue(new Callback<EntityStatusResponse<UserInfo>>() {
             @Override
-            public void onResponse(Call<EntityStatusResponse<UserTemp>> call, Response<EntityStatusResponse<UserTemp>> response) {
+            public void onResponse(Call<EntityStatusResponse<UserInfo>> call, Response<EntityStatusResponse<UserInfo>> response) {
                 userInfor = response.body();
                 tvAddress.setText(String.valueOf(userInfor.getData().getAddress()));
             }
 
             @Override
-            public void onFailure(Call<EntityStatusResponse<UserTemp>> call, Throwable t) {
+            public void onFailure(Call<EntityStatusResponse<UserInfo>> call, Throwable t) {
                 System.out.println("Lay thong tin user thanh cong");
 
             }

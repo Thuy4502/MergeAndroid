@@ -32,7 +32,7 @@ import com.example.testapp.api.ApiService;
 import com.example.testapp.model.Cart;
 import com.example.testapp.model.FullCart;
 import com.example.testapp.model.OrderID;
-import com.example.testapp.model.UserTemp;
+import com.example.testapp.model.UserInfo;
 import com.example.testapp.response.EntityStatusResponse;
 
 import java.text.NumberFormat;
@@ -50,8 +50,8 @@ public class UserOrderActivity extends AppCompatActivity {
     static ProductInOrderAdapter adapter;
     static TextView tvProductPrice;
     static TextView tvTotalPrice;
-    TextView tvAddress, tvFlexible, tvDeliveryCost, tvUserAddress;
-    EntityStatusResponse<UserTemp> userInfor;
+    TextView tvAddress, tvFlexible, tvDeliveryCost;
+    public static EntityStatusResponse<UserInfo> userInfor;
     String newAddress;
     public static float totalProductPrice;
     LinearLayout lyDeliveryCost;
@@ -87,11 +87,6 @@ public class UserOrderActivity extends AppCompatActivity {
         rvProductList.setAdapter(adapter);
         rvProductList.setLayoutManager(new GridLayoutManager(this, 1));
         rvProductList.addItemDecoration(new DividerItemDecoration(rvProductList.getContext(), DividerItemDecoration.VERTICAL));
-
-//        float total = totalProductPrice;
-//        tvProductPrice.setText(formatNumber(total));
-//        tvTotalPrice.setText(formatNumber(total + 15000));
-//        System.out.println("DAY LA DANH SACH  " + productList);
 
     }
 
@@ -217,7 +212,7 @@ public class UserOrderActivity extends AppCompatActivity {
 
 
     public void callApiChangeAdress() {
-        UserTemp user = new UserTemp();
+        UserInfo user = new UserInfo();
         user.setAddress(newAddress);
         user.setBirthday(userInfor.getData().getBirthday());
         user.setCccd(userInfor.getData().getCccd());
@@ -263,10 +258,10 @@ public class UserOrderActivity extends AppCompatActivity {
     }
 
     public void callApiGetUserInfor() {
-        ApiService.apiService.getUserInfor("Bearer "+token).enqueue(new Callback<EntityStatusResponse<UserTemp>
+        ApiService.apiService.getUserInfor("Bearer "+token).enqueue(new Callback<EntityStatusResponse<UserInfo>
                 >() {
             @Override
-            public void onResponse(Call<EntityStatusResponse<UserTemp>> call, Response<EntityStatusResponse<UserTemp>> response) {
+            public void onResponse(Call<EntityStatusResponse<UserInfo>> call, Response<EntityStatusResponse<UserInfo>> response) {
                 userInfor = response.body();
                 System.out.println("Lay thong tin user thanh cong");
                 System.out.println("Ddddddddddddd" + userInfor.getData().getAddress());
@@ -274,7 +269,7 @@ public class UserOrderActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<EntityStatusResponse<UserTemp>> call, Throwable t) {
+            public void onFailure(Call<EntityStatusResponse<UserInfo>> call, Throwable t) {
                 System.out.println("Lay thong tin user thanh cong");
 
             }
