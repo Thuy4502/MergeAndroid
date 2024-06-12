@@ -55,6 +55,7 @@
                     android:textStyle="bold"
                     android:textColor="@color/black"/>
                 <LinearLayout
+                    android:id="@+id/llStar"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:orientation="horizontal"
@@ -66,7 +67,7 @@
                         android:background="@drawable/icon_start_24"
                         android:layout_gravity="center"/>
                     <TextView
-                        android:id="@+id/tv_productEvalu"
+                        android:id="@+id/tvAvgStar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="4.8"
@@ -76,7 +77,7 @@
                         android:layout_marginHorizontal="7dp"
                         android:layout_gravity="center"/>
                     <TextView
-                        android:id="@+id/tv_envaluNumber"
+                        android:id="@+id/tvCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="(5)"

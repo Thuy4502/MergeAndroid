@@ -29,10 +29,12 @@ import com.example.testapp.api.ApiService;
 import com.example.testapp.model.FullCart;
 import com.example.testapp.model.Photo;
 import com.example.testapp.model.Product;
+import com.example.testapp.model.ReviewStar;
 import com.example.testapp.model.request.CartRequest;
 import com.example.testapp.response.ApiResponse;
 import com.example.testapp.response.CommonResponse;
 import com.example.testapp.response.EntityStatusResponse;
+import com.google.android.gms.common.api.Api;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -53,9 +55,9 @@ public class CustomerHomeActivity extends AppCompatActivity {
     static ProductCustomerAdapter productApiAdapter;
     private TextView btnAddItem, tvAddress;
     private ImageButton ib_avtUser;
-
     private Button btnCaPhe, btnPhindi, btnTra, btnFreeze, btnBanh, btnAll, btnCartList;
     private SearchView searchView;
+    private List<ReviewStar> listReviewStar;
 
     static BottomNavigationView bottomNavigationView;
 
@@ -76,11 +78,11 @@ public class CustomerHomeActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MyPerfs", Context.MODE_PRIVATE);
         token =  sharedPreferences.getString("token", null);
         String address = sharedPreferences.getString("address", null);
-        Log.i("address", address);
         setControls();
         rvProduct.setHasFixedSize(true);
         // Thiết lập LayoutManager GridLayoutManager với 2 cột
         rvProduct.setLayoutManager(new GridLayoutManager(this, 2));
+        getAllProductStar();
         callApiGetProduct();
         setCountProductInCart();
         setEvent();
@@ -315,7 +317,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
                 CommonResponse<Product> list = new CommonResponse<>();
                 list = response.body();
                 listPro = list.getData();
-                productApiAdapter = new ProductCustomerAdapter(list.getData());
+                productApiAdapter = new ProductCustomerAdapter(list.getData(), listReviewStar);
                 rvProduct.setAdapter(productApiAdapter);
                 productApiAdapter.notifyDataSetChanged();
             }
@@ -323,6 +325,24 @@ public class CustomerHomeActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<CommonResponse<Product>> call, Throwable t) {
                 Toast.makeText(CustomerHomeActivity.this, "Lỗi lấy tất cả sản phẩm", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void getAllProductStar() {
+        ApiService.apiService.gettAllProductStar().enqueue(new Callback<CommonResponse<ReviewStar>>() {
+            @Override
+            public void onResponse(Call<CommonResponse<ReviewStar>> call, Response<CommonResponse<ReviewStar>> response) {
+                List<ReviewStar> rvList = response.body().getData();
+                listReviewStar = rvList;
+                for(int i = 0; i < listReviewStar.size(); i++) {
+                    System.out.println(listReviewStar.get(i).getStar());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonResponse<ReviewStar>> call, Throwable t) {
+                Toast.makeText(CustomerHomeActivity.this, "Lỗi lấy ra sao đánh giá sản phẩm", Toast.LENGTH_SHORT).show();
             }
         });
     }

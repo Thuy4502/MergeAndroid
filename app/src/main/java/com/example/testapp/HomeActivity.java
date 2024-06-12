@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 
 import com.example.testapp.adapter.ProductAdapter;
 import com.example.testapp.model.Product;
+import com.example.testapp.model.ReviewStar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public class HomeActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
 
     private List<Product> data = new ArrayList<>();
+    private  List<ReviewStar> listReviewStar = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +38,7 @@ public class HomeActivity extends AppCompatActivity {
         // Thiết lập LayoutManager GridLayoutManager với 2 cột
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         // Khởi tạo adapter và gán vào RecyclerView
-        adapter = new ProductAdapter(this, data);
+        adapter = new ProductAdapter(this, data, listReviewStar);
         recyclerView.setAdapter(adapter);
 
         ib_avtUser.setOnClickListener(new View.OnClickListener() {
