@@ -14,8 +14,10 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.testapp.adapter.ProductInOrderAdapter;
 import com.example.testapp.api.ApiService;
+import com.example.testapp.function.Function;
 import com.example.testapp.model.Cart;
 import com.example.testapp.model.FullCart;
 import com.example.testapp.model.OrderID;
@@ -50,7 +53,7 @@ public class UserOrderActivity extends AppCompatActivity {
     static ProductInOrderAdapter adapter;
     static TextView tvProductPrice;
     static TextView tvTotalPrice;
-    TextView tvAddress, tvFlexible, tvDeliveryCost, tvUserAddress;
+    TextView tvAddress, tvFlexible, tvDeliveryCost, tvUserAddress,  tvPointUser, tv_usePoint;;
     EntityStatusResponse<UserTemp> userInfor;
     String newAddress;
     public static float totalProductPrice;
@@ -63,13 +66,15 @@ public class UserOrderActivity extends AppCompatActivity {
 
     public float dCost = 15000;
 
-    static String token;
+    static String token, point;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_order);
         SharedPreferences sharedPreferences = getSharedPreferences("MyPerfs", Context.MODE_PRIVATE);
         token =  sharedPreferences.getString("token", null);
+        point = sharedPreferences.getString("point", null);
         setControl();
         dCost = Float.parseFloat(String.valueOf(tvDeliveryCost.getText()));
         dCost = 15000;
@@ -140,6 +145,8 @@ public class UserOrderActivity extends AppCompatActivity {
         lyDeliveryCost = findViewById(R.id.lyDeliveryCost);
         btnDelivery = findViewById(R.id.btnDelivery);
         appBar = findViewById(R.id.app_bar);
+        tvPointUser = findViewById(R.id.tv_pointUser);
+        tv_usePoint = findViewById(R.id.tv_usePoint);
     }
 
     public void setEvent() {
@@ -148,6 +155,8 @@ public class UserOrderActivity extends AppCompatActivity {
                 12, // giá trị ban đầu của bán kính ở đơn vị dp
                 getResources().getDisplayMetrics()
         );
+
+
 
         GradientDrawable drawableEnable = new GradientDrawable();
         drawableEnable.setShape(GradientDrawable.RECTANGLE);
@@ -159,6 +168,8 @@ public class UserOrderActivity extends AppCompatActivity {
         drawableDisable.setCornerRadius(cornerRadiusPixels);
         drawableDisable.setColor(Color.parseColor("#FFFFFF"));
         drawableDisable.setStroke(4, Color.parseColor("#b42329"));
+
+        tvPointUser.setText("Sử dụng " + point + " điểm");
 
 
         btnOrder.setOnClickListener(new View.OnClickListener() {

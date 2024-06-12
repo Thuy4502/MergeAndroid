@@ -191,7 +191,6 @@ public class UserOrderDetailActivity extends AppCompatActivity {
                         //set event when status != 4
                         if(statusId != 4){
                             btnShowProcess.setText("Xem tiến trình đơn hàng");
-
                             btnShowProcess.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -213,7 +212,7 @@ public class UserOrderDetailActivity extends AppCompatActivity {
                         Log.i("message", "onResponse: " + resultResponse.getMessage());
                     }
                 }
-//                handler.postDelayed(() -> getOrderById(token, orderId), 10000); // 10 giây
+                handler.postDelayed(() -> getOrderById(token, orderId), 10000); // 10 giây
             }
             @Override
             public void onFailure(Call<EntityStatusResponse<Order>> call, Throwable t) {
