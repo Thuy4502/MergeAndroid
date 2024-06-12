@@ -41,11 +41,11 @@ public class ProductCustomerAdapter extends RecyclerView.Adapter<ProductCustomer
         notifyDataSetChanged();
     }
 
-    public ProductCustomerAdapter(List<Product> listProduct, List<ReviewStar> starList) {
-        this.listProduct = listProduct;
-        this.starList = starList;
-
-    }
+//    public ProductCustomerAdapter(List<Product> listProduct, List<ReviewStar> starList) {
+//        this.listProduct = listProduct;
+//        this.starList = starList;
+//
+//    }
 
     public ProductCustomerAdapter(List<Product> listProduct) {
         this.listProduct = listProduct;
@@ -64,6 +64,7 @@ public class ProductCustomerAdapter extends RecyclerView.Adapter<ProductCustomer
 
     @Override
     public void onBindViewHolder(@NonNull ProductCustomerHolder holder, int position) {
+        starList = CustomerHomeActivity.listReviewStar;
         Product sp = listProduct.get(position);
         for (int i = 0;  i < starList.size(); i++) {
             if(starList.get(i).getProduct_id().equals(sp.getProductId())) {
@@ -161,8 +162,6 @@ public class ProductCustomerAdapter extends RecyclerView.Adapter<ProductCustomer
                         product.setAddToCart(true);
                         sanPham = product;
                     }
-
-
                 }
             });
 

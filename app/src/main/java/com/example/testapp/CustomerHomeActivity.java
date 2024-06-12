@@ -57,7 +57,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
     private ImageButton ib_avtUser;
     private Button btnCaPhe, btnPhindi, btnTra, btnFreeze, btnBanh, btnAll, btnCartList;
     private SearchView searchView;
-    private List<ReviewStar> listReviewStar;
+    public static List<ReviewStar> listReviewStar;
 
     static BottomNavigationView bottomNavigationView;
 
@@ -317,7 +317,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
                 CommonResponse<Product> list = new CommonResponse<>();
                 list = response.body();
                 listPro = list.getData();
-                productApiAdapter = new ProductCustomerAdapter(list.getData(), listReviewStar);
+                productApiAdapter = new ProductCustomerAdapter(list.getData());
                 rvProduct.setAdapter(productApiAdapter);
                 productApiAdapter.notifyDataSetChanged();
             }

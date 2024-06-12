@@ -93,15 +93,6 @@ public interface ApiService {
     Call<CommonResponse<Order>> getOrderHistoryByJwt(@Header("Authorization") String token);
     @GET("api/coupon/all")
     Call<CommonResponse<Coupon>> getAllCoupon(@Header("Authorization") String token);
-    @POST("api/review/add")
-    Call<EntityStatusResponse<Review>> addReview(@Header("Authorization") String token, @Body ReviewDTO reviewDTO);
-    @GET("api/review/{product_id}/get")
-    Call<EntityStatusResponse<Review>> getReviewProduct(@Path("product_id") String product_id);
-
-    @POST("api/review/add")
-    Call<EntityStatusResponse<Review>> addReview(@Header("Authorization") String token, @Body ReviewDTO reviewDTO);
-    @GET("api/review/{product_id}/get")
-    Call<CommonResponse<Review>> getReviewProduct(@Path("product_id") String product_id);
 
     @GET("api/review/avg/all")
     Call<CommonResponse<ReviewStar>> getAllProductStar();
@@ -195,9 +186,10 @@ public interface ApiService {
     @PUT("api/admin/coupon/{coupon_id}/status")
     Call<ApiResponse> disableCoupon(@Header("Authorization") String token, @Path("coupon_id") String coupon_id, @Body Coupon coupon);
 
-    @GET("api/review/avg/all")
-    Call<CommonResponse<ReviewStar>> getAllProductStar();
+    @POST("api/review/add")
+    Call<EntityStatusResponse<Review>> addReview(String token, ReviewDTO reviewDTO);
 
-    @GET("api/review/{productID}")
-    Call<CommonResponse<ReviewStar>> getAvgStar(@Path("productID") String productID);
+    @GET("api/review/{product_id}/get")
+    Call<CommonResponse<Review>> getReviewProduct(@Path("product_id") String product_id);
+
 }
