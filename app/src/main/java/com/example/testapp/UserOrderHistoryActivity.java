@@ -154,7 +154,7 @@ public class UserOrderHistoryActivity extends AppCompatActivity {
 
                                     // Chuyển dữ liệu đến Activity mới để hiển thị chi tiết
                                     Intent intent = new Intent(UserOrderHistoryActivity.this, UserOrderDetailActivity.class);
-                                    intent.putExtra("orderId", orderId);
+                                    intent.putExtra("OrderID", orderId);
                                     startActivity(intent);
                                 }
                             });

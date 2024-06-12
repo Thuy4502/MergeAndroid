@@ -1,8 +1,15 @@
 package com.example.testapp;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RatingBar;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,17 +17,32 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.testapp.adapter.ProductDetailOrderAdapter;
+import com.example.testapp.adapter.ReviewAdapter;
+import com.example.testapp.api.ApiService;
 import com.example.testapp.model.OrderDetail;
-import com.example.testapp.model.Product;
+import com.example.testapp.model.Review;
+import com.example.testapp.model.ReviewDTO;
+import com.example.testapp.response.ApiResponse;
+import com.example.testapp.response.CommonResponse;
+import com.example.testapp.response.EntityStatusResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class UserReviewActivity extends AppCompatActivity {
     private ListView lvListProduct;
+    private Button btnSendReview;
+    private EditText etContent;
+    private RatingBar rtbStar;
     private final List<OrderDetail> data = new ArrayList<>();
-    private ProductDetailOrderAdapter productReviewAdapter;
+    private ReviewAdapter reviewAdapter;
+    private int selectedPosition = -1;
+
+    public static String product_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,15 +61,47 @@ public class UserReviewActivity extends AppCompatActivity {
 
     private void setControl() {
         lvListProduct = findViewById(R.id.lv_listProductReview);
+
+        btnSendReview = findViewById(R.id.btn_sendReview);
+
+        rtbStar = findViewById(R.id.rtb_star);
+
+        etContent = findViewById(R.id.et_reviewContent);
     }
 
     private void setEvent() {
-        ArrayList<OrderDetail> receivedOrderList = UserOrderDetailActivity.orderDetailsReview;
-        Log.i("list review product", String.valueOf(receivedOrderList.size()));
-//                getIntent().getParcelableArrayListExtra("orderList");
-//        if (receivedOrderList != null) {
-//            Log.i("listReview", String.valueOf(receivedOrderList.get(0).getProduct().getProductName()));
-//        }
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPerfs", Context.MODE_PRIVATE);
+        String token = "Bearer " + sharedPreferences.getString("token", null);
 
+        ArrayList<OrderDetail> receivedOrderList = UserOrderDetailActivity.orderDetailsReview;
+
+        reviewAdapter = new ReviewAdapter(UserReviewActivity.this, R.layout.layout_item_review, receivedOrderList);
+        lvListProduct.setAdapter(reviewAdapter);
+
+        btnSendReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendReview(token);
+            }
+        });
+    }
+    private void sendReview(String token){
+        ReviewDTO reviewDTO = new ReviewDTO(UserOrderDetailActivity.order_id, product_id, etContent.getText().toString(), rtbStar.getNumStars());
+        ApiService.apiService.addReview(token, reviewDTO).enqueue(new Callback<EntityStatusResponse<Review>>() {
+            @Override
+            public void onResponse(Call<EntityStatusResponse<Review>> call, Response<EntityStatusResponse<Review>> response) {
+                if(response.isSuccessful()){
+                    EntityStatusResponse<Review> resultResponse = response.body();
+                    if(resultResponse != null){
+                        Review reviewUser = resultResponse.getData();
+                        String point = String.valueOf(reviewUser.getPoint_review());
+                        Toast.makeText(UserReviewActivity.this, "Bạn sẽ nhận được " +point, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<EntityStatusResponse<Review>> call, Throwable t) {
+            }
+        });
     }
 }

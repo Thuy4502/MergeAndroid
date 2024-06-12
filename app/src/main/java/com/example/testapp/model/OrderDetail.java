@@ -5,16 +5,18 @@ public class OrderDetail {
     private Integer price;
     private Integer quantity;
     private Product product;
+    private Review review;
 
     public OrderDetail() {
         super();
     }
 
-    public OrderDetail(String size, Integer price, Integer quantity, Product product) {
+    public OrderDetail(String size, Integer price, Integer quantity, Product product, Review review) {
         this.size = size;
         this.price = price;
         this.quantity = quantity;
         this.product = product;
+        this.review = review;
     }
 
     public String getSize() {
@@ -47,5 +49,9 @@ public class OrderDetail {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public Review getReview() {
+        return review;
     }
 }
