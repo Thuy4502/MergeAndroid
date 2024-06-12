@@ -98,7 +98,16 @@ public interface ApiService {
     @GET("api/review/{product_id}/get")
     Call<EntityStatusResponse<Review>> getReviewProduct(@Path("product_id") String product_id);
 
+    @POST("api/review/add")
+    Call<EntityStatusResponse<Review>> addReview(@Header("Authorization") String token, @Body ReviewDTO reviewDTO);
+    @GET("api/review/{product_id}/get")
+    Call<CommonResponse<Review>> getReviewProduct(@Path("product_id") String product_id);
 
+    @GET("api/review/avg/all")
+    Call<CommonResponse<ReviewStar>> getAllProductStar();
+
+    @GET("api/review/{productID}")
+    Call<CommonResponse<ReviewStar>> getAvgStar(@Path("productID") String productID);
 
 
     @GET("api/products/category?")
