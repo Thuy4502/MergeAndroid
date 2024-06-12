@@ -74,8 +74,6 @@ public class CouponAddingAdminActivity extends AppCompatActivity {
         setEvent();
     }
 
-
-
     protected void setControl() {
         ivCouponImg = findViewById(R.id.ivCouponImg);
         etDateRange = findViewById(R.id.etDateRange);
@@ -91,9 +89,6 @@ public class CouponAddingAdminActivity extends AppCompatActivity {
         btnAddCoupon = findViewById(R.id.btnAddCoupon);
         ivBack = findViewById(R.id.ivBack);
     }
-
-
-
 
     // xử lý kết quả trả về từ việc chọn ảnh
     @Override

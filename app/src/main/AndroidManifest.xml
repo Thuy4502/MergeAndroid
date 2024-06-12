@@ -33,11 +33,13 @@
         android:theme="@style/Base.Theme.TestApp"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".UserViewProductReviewActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:exported="true" />
@@ -45,6 +47,9 @@
         <activity
             android:name=".UserMapDirectionsActivity"
             android:exported="true" />
+        <activity
+            android:name=".UserReviewActivity"
+            android:exported="false" />
         <activity
             android:name=".UserOrderHistoryActivity"
             android:exported="true" />
@@ -156,23 +161,31 @@
         <activity
             android:name=".DeleveryProcessOrderInCartActivity"
             android:exported="true" />
-        <activity android:name=".ProductListActivity"
-            android:exported="true"/>
-        <activity android:name=".ProductAddingActivity"
-            android:exported="true"/>
-        <activity android:name=".ProductEditingActivity"
-            android:exported="true"/>
-        <activity android:name=".ProductInfoDetail"
-            android:exported="true"/>
-        <activity android:name=".CouponUserActivity"
-            android:exported="true"/>
-        <activity android:name=".CouponListAdminActivity"
-            android:exported="true"/>
-        <activity android:name=".CouponAddingAdminActivity"
-            android:exported="true"/>
-        <activity android:name=".CouponDetailAdminActivity"
+        <activity
+            android:name=".ProductListActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ProductAddingActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ProductEditingActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ProductInfoDetail"
+            android:exported="true" />
+        <activity
+            android:name=".CouponUserActivity"
+            android:exported="true" />
+        <activity
+            android:name=".CouponListAdminActivity"
+            android:exported="true" />
+        <activity
+            android:name=".CouponAddingAdminActivity"
+            android:exported="true" />
+        <activity
+            android:name=".CouponDetailAdminActivity"
             android:exported="true"
-            android:theme="@style/Base.Theme.TestApp"/>
+            android:theme="@style/Base.Theme.TestApp" />
     </application>
 
 </manifest>

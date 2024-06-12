@@ -2,6 +2,7 @@ package com.example.testapp.api;
 
 import com.example.testapp.model.Coupon;
 //import com.example.testapp.model.CouponDetail;
+import com.example.testapp.model.CouponDetail;
 import com.example.testapp.model.Customer;
 import com.example.testapp.model.FullCart;
 import com.example.testapp.model.Order;
@@ -42,7 +43,7 @@ public interface ApiService {
     //base link:http://....:9999/
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
-    ApiService apiService = new Retrofit.Builder().baseUrl("http://192.168.0.188:9999/").addConverterFactory(GsonConverterFactory.create(gson))
+    ApiService apiService = new Retrofit.Builder().baseUrl("http://172.16.10.247:9999/").addConverterFactory(GsonConverterFactory.create(gson))
 
             .build().create(ApiService.class);
 
@@ -168,8 +169,8 @@ public interface ApiService {
                                 @Part MultipartBody.Part image,
                                 @Part("data") RequestBody data);
 
-//    @GET("api/coupon/mycoupon")
-//    Call<CommonResponse<CouponDetail>> getMyCoupon(@Header("Authorization") String token);
+    @GET("api/coupon/mycoupon")
+    Call<CommonResponse<CouponDetail>> getMyCoupon(@Header("Authorization") String token);
 
     @GET("api/coupon/get")
     Call<ApiResponse> customerGetCoupon(@Header("Authorization") String token,

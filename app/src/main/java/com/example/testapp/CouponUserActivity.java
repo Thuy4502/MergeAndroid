@@ -135,7 +135,7 @@ public class CouponUserActivity extends AppCompatActivity {
 
     public void getMyCoupon(String tokenUser) {
         List<Coupon> MyCouponList = new ArrayList<>();
-        apiService.getMyCoupon("Bearer "+tokenUser).enqueue(new Callback<CommonResponse<CouponDetail>>() {
+        apiService.getMyCoupon("Bearer "+ tokenUser).enqueue(new Callback<CommonResponse<CouponDetail>>() {
             @Override
             public void onResponse(Call<CommonResponse<CouponDetail>> call, Response<CommonResponse<CouponDetail>> response) {
                 if (response.isSuccessful()) {
@@ -164,7 +164,7 @@ public class CouponUserActivity extends AppCompatActivity {
 
 
     public void customerGetCoupon(String tokenUser, Long coupon_id) {
-        apiService.customerGetCoupon("Bearer "+tokenUser, coupon_id.toString()).enqueue(new Callback<ApiResponse>() {
+        apiService.customerGetCoupon("Bearer "+ tokenUser, coupon_id.toString()).enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 Log.i("YY", ""+response);

@@ -4,6 +4,7 @@ import static com.example.testapp.CouponListAdminActivity.tokenStaff;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,8 +17,10 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.bumptech.glide.Glide;
 import com.example.testapp.adapter.CouponAdapter;
 import com.example.testapp.api.ApiService;
+import com.example.testapp.function.Function;
 import com.example.testapp.model.Coupon;
 import com.example.testapp.response.ApiResponse;
 
@@ -29,8 +32,8 @@ import retrofit2.Response;
 public class CouponDetailAdminActivity extends AppCompatActivity {
     TextView tvTitleCoupon, tvStartDate, tvEndDate, tvCouponContent, tvCouponId;
     Button btnDisableCoupon;
-    String coupon_id, coupon_title, startDate, endDate, content, status;
-    ImageView ivBack;
+    String coupon_id, coupon_title, startDate, endDate, url, status, useValue, minimum, quantity;
+    ImageView ivBack, ivImgCoupon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,8 +44,12 @@ public class CouponDetailAdminActivity extends AppCompatActivity {
         coupon_id = intent.getStringExtra("id");
         startDate = intent.getStringExtra("startDate");
         endDate = intent.getStringExtra("endDate");
-        content = intent.getStringExtra("content");
+        useValue= intent.getStringExtra("useValue");
+        minimum= intent.getStringExtra("minimumValue");
+        quantity = intent.getStringExtra("quantity");
         status = intent.getStringExtra("status");
+        url = intent.getStringExtra("imgCoupon");
+
         setControl();
         setEvent();
     }
@@ -53,7 +60,15 @@ public class CouponDetailAdminActivity extends AppCompatActivity {
         tvCouponId.setText(coupon_id);
         tvStartDate.setText(startDate);
         tvEndDate.setText(endDate);
-        tvCouponContent.setText(content);
+        tvCouponContent.setText("- Giá trị sử dụng: " + Function.formatToVND(Integer.valueOf(useValue))  +"\n"+
+                                "- Giá trị tối thiểu: "+ Function.formatToVND(Integer.valueOf(minimum)) + "\n" +
+                                "- Số lượng coupon: " + quantity);
+
+        Glide.with(CouponDetailAdminActivity.this)
+                .load(url)
+                .into(ivImgCoupon);
+
+
         Log.i("RR", ""+status);
         if(status.equals("unactive")){
             btnDisableCoupon.setVisibility(View.GONE);
@@ -86,6 +101,7 @@ public class CouponDetailAdminActivity extends AppCompatActivity {
         tvCouponId = findViewById(R.id.tvCouponId);
         btnDisableCoupon = findViewById(R.id.btnDisableCoupon);
         ivBack = findViewById(R.id.ivBack);
+        ivImgCoupon = findViewById(R.id.iv_imgCouponView);
     }
 
     private void disableCoupon(String token, String id, Coupon coupon){

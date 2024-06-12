@@ -95,12 +95,12 @@ public class UserOrderDetailActivity extends AppCompatActivity {
         proBar_loading.setVisibility(View.VISIBLE);
         lnl_showOrderDetail.setVisibility(View.GONE);
 
-//        Long orderId = getIntent().getLongExtra("orderId", 0);
+        Long orderId = getIntent().getLongExtra("OrderID", 0);
 
-//        getOrderById(token, orderId);
+        getOrderById(token, orderId);
 
-        getOrderById(token, 1L);
-//        order_id = orderId;
+//        getOrderById(token, 1L);
+        order_id = orderId;
 
 
         btnOpenReview.setOnClickListener(new View.OnClickListener() {
@@ -200,9 +200,8 @@ public class UserOrderDetailActivity extends AppCompatActivity {
                                     startActivity(intent);
                                 }
                             });
-                        }else {
+                        }else if (statusId == 4){
                             orderDetailsReview = (ArrayList<OrderDetail>) checkUnratedProducts(listOrderDetail);
-
                             if(orderDetailsReview.isEmpty()){
                                 btnOpenReview.setVisibility(View.GONE);
                             }else{

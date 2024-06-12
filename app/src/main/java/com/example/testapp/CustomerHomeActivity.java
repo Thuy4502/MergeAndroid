@@ -76,7 +76,6 @@ public class CustomerHomeActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MyPerfs", Context.MODE_PRIVATE);
         token =  sharedPreferences.getString("token", null);
         String address = sharedPreferences.getString("address", null);
-        Log.i("address", address);
         setControls();
         rvProduct.setHasFixedSize(true);
         // Thiết lập LayoutManager GridLayoutManager với 2 cột

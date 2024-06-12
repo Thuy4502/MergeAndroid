@@ -126,12 +126,16 @@ public class CouponListAdminActivity extends AppCompatActivity {
                 Intent intent = new Intent(CouponListAdminActivity.this, CouponDetailAdminActivity.class);
 
                 // Đưa dữ liệu của coupon vào Intent
-                intent.putExtra("title", clickedCoupon.getType());
-                intent.putExtra("id", String.valueOf(clickedCoupon.getCoupon_id()));
+
+                intent.putExtra("title", clickedCoupon.getContent());
+                intent.putExtra("id", String.valueOf(clickedCoupon.getType()));
                 intent.putExtra("startDate", formatDateTimeToDate(clickedCoupon.getStart_date()));
                 intent.putExtra("endDate", formatDateTimeToDate(clickedCoupon.getEnd_date()));
-                intent.putExtra("content", clickedCoupon.getContent());
+                intent.putExtra("useValue", String.valueOf(clickedCoupon.getUse_value()));
+                intent.putExtra("minimumValue",  String.valueOf(clickedCoupon.getMinimum_value()));
+                intent.putExtra("quantity",  String.valueOf(clickedCoupon.getQuantity()));
                 intent.putExtra("status", clickedCoupon.getStatus());
+                intent.putExtra("imgCoupon", clickedCoupon.getImage());
                 // Bắt đầu CouponDetailActivity
                 startActivity(intent);
             }
@@ -165,21 +169,11 @@ public class CouponListAdminActivity extends AppCompatActivity {
                 }
                 couponManagerAdapter = new CouponAdapter(CouponListAdminActivity.this, R.layout.item_coupon_admin, filteredData);
                 lvCouponList.setAdapter(couponManagerAdapter);
-
-
                 return false;
             }
 
         });
     }
-
-
-
-
-
-
-
-
 
     public static void getAllCoupon() {
         ApiService.apiService.adminGetAllCoupon(tokenStaff).enqueue(new Callback<CommonResponse<Coupon>>() {
