@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import com.example.testapp.R;
 import com.example.testapp.UserOrderActivity;
 import com.example.testapp.model.PriceUpdateDetail;
 import com.example.testapp.model.Product;
+import com.example.testapp.model.ReviewStar;
 import com.example.testapp.model.request.CartRequest;
 
 import java.util.List;
@@ -26,6 +28,7 @@ import java.util.List;
 public class ProductCustomerAdapter extends RecyclerView.Adapter<ProductCustomerAdapter.ProductCustomerHolder> {
 
     private List<Product> listProduct;
+    private List<ReviewStar> starList;
     private static Context context;
     public static String productID;
     public static CartRequest cartRequest = new CartRequest();
@@ -38,10 +41,16 @@ public class ProductCustomerAdapter extends RecyclerView.Adapter<ProductCustomer
         notifyDataSetChanged();
     }
 
-    public ProductCustomerAdapter(List<Product> listProduct) {
+    public ProductCustomerAdapter(List<Product> listProduct, List<ReviewStar> starList) {
+        this.listProduct = listProduct;
+        this.starList = starList;
 
+    }
+
+    public ProductCustomerAdapter(List<Product> listProduct) {
         this.listProduct = listProduct;
     }
+
 
 
     @NonNull
@@ -56,6 +65,16 @@ public class ProductCustomerAdapter extends RecyclerView.Adapter<ProductCustomer
     @Override
     public void onBindViewHolder(@NonNull ProductCustomerHolder holder, int position) {
         Product sp = listProduct.get(position);
+        for (int i = 0;  i < starList.size(); i++) {
+            if(starList.get(i).getProduct_id().equals(sp.getProductId())) {
+                if (holder.llStar != null) {
+                    holder.tvStar.setText(String.valueOf(starList.get(i).getStar()));
+                    holder.llStar.setVisibility(View.VISIBLE);
+                }
+                break; // Thoát khỏi vòng lặp ngay khi tìm thấy review
+            }
+
+        }
         if(sp == null) {
             return;
         }
@@ -104,8 +123,8 @@ public class ProductCustomerAdapter extends RecyclerView.Adapter<ProductCustomer
 
     public static class ProductCustomerHolder extends RecyclerView.ViewHolder{
         private final TextView txtProductName;
-        public TextView btnAddItem;
-        private TextView txtProductPrice;
+        private TextView btnAddItem, txtProductPrice, tvStar;
+        private LinearLayout llStar;
         private ImageView ivAnhSp;
         int position;
         View rootView;
@@ -117,6 +136,11 @@ public class ProductCustomerAdapter extends RecyclerView.Adapter<ProductCustomer
             txtProductPrice = itemView.findViewById(R.id.tv_ProductPrice);
             btnAddItem = itemView.findViewById(R.id.btnAddItem);
             rootView = itemView;
+            tvStar = itemView.findViewById(R.id.txtEvalu);
+            llStar = itemView.findViewById(R.id.ll_star);
+
+
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

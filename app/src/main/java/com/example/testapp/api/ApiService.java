@@ -11,6 +11,7 @@ import com.example.testapp.model.Product;
 import com.example.testapp.model.ProductSaleRequest;
 import com.example.testapp.model.Review;
 import com.example.testapp.model.ReviewDTO;
+import com.example.testapp.model.ReviewStar;
 import com.example.testapp.model.Size;
 import com.example.testapp.model.StatisticRequest;
 import com.example.testapp.model.User;
@@ -43,7 +44,10 @@ public interface ApiService {
     //base link:http://....:9999/
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
-    ApiService apiService = new Retrofit.Builder().baseUrl("http://172.16.10.247:9999/").addConverterFactory(GsonConverterFactory.create(gson))
+//    WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
+//    String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
+
+    ApiService apiService = new Retrofit.Builder().baseUrl("http://192.168.52.100:9999/").addConverterFactory(GsonConverterFactory.create(gson))
 
             .build().create(ApiService.class);
 
@@ -92,12 +96,17 @@ public interface ApiService {
     Call<CommonResponse<Order>> getOrderHistoryByJwt(@Header("Authorization") String token);
     @GET("api/coupon/all")
     Call<CommonResponse<Coupon>> getAllCoupon(@Header("Authorization") String token);
+
     @POST("api/review/add")
     Call<EntityStatusResponse<Review>> addReview(@Header("Authorization") String token, @Body ReviewDTO reviewDTO);
     @GET("api/review/{product_id}/get")
     Call<CommonResponse<Review>> getReviewProduct(@Path("product_id") String product_id);
 
+    @GET("api/review/avg/all")
+    Call<CommonResponse<ReviewStar>> getAllProductStar();
 
+    @GET("api/review/{productID}")
+    Call<CommonResponse<ReviewStar>> getAvgStar(@Path("productID") String productID);
 
 
     @GET("api/products/category?")
@@ -162,8 +171,6 @@ public interface ApiService {
                                     @Path("product_id") String product_id,
                                     @Part MultipartBody.Part image,
                                     @Part("data") RequestBody data);
-
-
 
     // Coupon API Admin
     @GET("api/admin/coupon/all")

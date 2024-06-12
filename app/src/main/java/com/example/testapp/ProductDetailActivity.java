@@ -23,11 +23,12 @@ import com.colormoon.readmoretextview.ReadMoreTextView;
 import com.example.testapp.adapter.ProductCustomerAdapter;
 import com.example.testapp.api.ApiService;
 import com.example.testapp.model.Product;
+import com.example.testapp.model.ReviewStar;
 import com.example.testapp.model.Size;
 import com.example.testapp.model.request.CartRequest;
 import com.example.testapp.model.request.OrderRequest;
 import com.example.testapp.response.CommonResponse;
-
+import com.example.testapp.response.EntityStatusResponse;
 
 
 import java.util.List;
@@ -37,7 +38,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ProductDetailActivity extends AppCompatActivity {
-    private TextView tvNameDetail, tvPriceDetail;
+    private TextView tvNameDetail, tvPriceDetail, tvStar, tvCountRV;
     private ImageView ivProductImg, ivBack;
     private ProductCustomerAdapter adapter;
     private Button btnBuyNow, btnAddItem, btnSizeS, btnSizeM, btnSizeL;
@@ -52,8 +53,9 @@ public class ProductDetailActivity extends AppCompatActivity {
     public static float percent= 0;
     public String category = "";
 
-    float priceBySize;
-    LinearLayout llSize;
+    float priceBySize, avgStar;
+    int reviewQuantity;
+    LinearLayout llSize, llStar;
     String token;
 
     ReadMoreTextView tvReadMore;
@@ -68,6 +70,8 @@ public class ProductDetailActivity extends AppCompatActivity {
         btnAddItem.setEnabled(false);
 
         getProductDetail();
+        System.out.println("--------------PRODUCT DETAIL");
+        getReviewStar();
         setEvent();
         getAllSize();
 
@@ -185,7 +189,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                         Toast.makeText(ProductDetailActivity.this, "Thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show();
 
                     }
-                    else {
+                    else{
                         Toast.makeText(ProductDetailActivity.this, "Bạn chưa chọn size", Toast.LENGTH_LONG).show();
 
                     }
@@ -240,12 +244,13 @@ public class ProductDetailActivity extends AppCompatActivity {
                 sp = response.body();
                 categoryName = String.valueOf(sp.getCategory().getCategory_name());
                 setTextForProduct();
-//                if(categoryName.equals("Bánh")) {
-//                    llSize.setVisibility(View.GONE);
-//                    size = "M";
-//                    btnBuyNow.setEnabled(true);
-//                    btnAddItem.setEnabled(true);
-//                }
+
+                if(categoryName.equals("Bánh")) {
+                    llSize.setVisibility(View.GONE);
+                    size = "M";
+                    btnBuyNow.setEnabled(true);
+                    btnAddItem.setEnabled(true);
+                }
 
                 if (orderRequest == null) {
                     orderRequest = new OrderRequest();
@@ -258,6 +263,37 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         });
         return sp;
+    }
+
+    public void getReviewStar() {
+        String id = adapter.productID;
+        ApiService.apiService.getAvgStar(id).enqueue(new Callback<CommonResponse<ReviewStar>>() {
+            @Override
+            public void onResponse(Call<CommonResponse<ReviewStar>> call, Response<CommonResponse<ReviewStar>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<ReviewStar> rv = response.body().getData();
+                    if (rv != null && !rv.isEmpty()) {
+                        reviewQuantity = rv.get(0).getCount();
+                        avgStar = rv.get(0).getStar();
+                        tvStar.setText("(" + String.valueOf(avgStar) + ")");
+                        tvCountRV.setText("(" + String.valueOf(reviewQuantity) + ")");
+                    } else {
+                        llStar.setVisibility(View.GONE);
+                        reviewQuantity = 0;
+                        avgStar = 0.0f;
+                    }
+                } else {
+                    reviewQuantity = 0;
+                    avgStar = 0.0f;
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CommonResponse<ReviewStar>> call, Throwable t) {
+
+            }
+        });
     }
 
 
@@ -297,7 +333,10 @@ public class ProductDetailActivity extends AppCompatActivity {
         btnSizeL = findViewById(R.id.btn_sizeL);
         appBar = findViewById(R.id.app_bar);
         llSize = findViewById(R.id.llSize);
-
         lnlListReview = findViewById(R.id.lnl_openListReview);
+        tvCountRV = findViewById(R.id.tvCount);
+        tvStar = findViewById(R.id.tvAvgStar);
+        llStar = findViewById(R.id.llStar);
+
     }
 }
