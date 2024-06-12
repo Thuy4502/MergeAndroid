@@ -3,15 +3,15 @@ package com.example.testapp.model;
 public class Review {
     private Long review_id;
 
-    private int star;
+    private float star;
 
     private String content;
 
     private String status;
 
-    private String created_at;
+    private String date;
 
-    private String updated_at;
+    private String customer_name;
 
     private Long order_detail_id;
 
@@ -23,15 +23,15 @@ public class Review {
         super();
     }
 
-    public Review(Long review_id, int star, String content, String status, String created_at,
-                  String updated_at, Long order_detail_id, String product_id, Long created_by,
+    public Review(Long review_id, int star, String content, String status, String customer_name,
+                  String date, Long order_detail_id, String product_id, Long created_by,
                   float point_review) {
         this.review_id = review_id;
         this.star = star;
         this.content = content;
         this.status = status;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
+        this.date = date;
+        this.customer_name = customer_name;
         this.order_detail_id = order_detail_id;
         this.product_id = product_id;
         this.created_by = created_by;
@@ -46,11 +46,11 @@ public class Review {
         this.review_id = review_id;
     }
 
-    public int getStar() {
+    public float getStar() {
         return star;
     }
 
-    public void setStar(int star) {
+    public void setStar(float star) {
         this.star = star;
     }
 
@@ -70,20 +70,20 @@ public class Review {
         this.status = status;
     }
 
-    public String getCreated_at() {
-        return created_at;
+    public String getDate() {
+        return date;
     }
 
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public String getUpdated_at() {
-        return updated_at;
+    public String getCustomer_name() {
+        return customer_name;
     }
 
-    public void setUpdated_at(String updated_at) {
-        this.updated_at = updated_at;
+    public void setCustomer_name(String updated_at) {
+        this.customer_name = updated_at;
     }
 
     public Long getOrder_detail_id() {

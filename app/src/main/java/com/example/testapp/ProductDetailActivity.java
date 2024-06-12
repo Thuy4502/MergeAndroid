@@ -43,6 +43,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     private Button btnBuyNow, btnAddItem, btnSizeS, btnSizeM, btnSizeL;
     private Toolbar appBar;
     public static Product sp;
+    private LinearLayout lnlListReview;
 
     OrderRequest orderRequest;
     CommonResponse<Size> allSize;
@@ -65,6 +66,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         setControl();
         btnBuyNow.setEnabled(false);
         btnAddItem.setEnabled(false);
+
         getProductDetail();
         setEvent();
         getAllSize();
@@ -108,7 +110,13 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
 
         });
-
+        lnlListReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProductDetailActivity.this, UserViewProductReviewActivity.class);
+                startActivity(intent);
+            }
+        });
         btnSizeM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -222,8 +230,10 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
 
+
     public Product getProductDetail() {
         String id = adapter.productID;
+
         ApiService.apiService.getProductDetail("Bearer "+token, id).enqueue(new Callback<Product>() {
             @Override
             public void onResponse(@NonNull Call<Product> call, @NonNull Response<Product> response) {
@@ -287,5 +297,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         btnSizeL = findViewById(R.id.btn_sizeL);
         appBar = findViewById(R.id.app_bar);
         llSize = findViewById(R.id.llSize);
+
+        lnlListReview = findViewById(R.id.lnl_openListReview);
     }
 }

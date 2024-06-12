@@ -3,7 +3,6 @@ package com.example.testapp;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,13 +16,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.testapp.adapter.ReviewAdapter;
+import com.example.testapp.adapter.ProductReviewAdapter;
 import com.example.testapp.api.ApiService;
 import com.example.testapp.model.OrderDetail;
 import com.example.testapp.model.Review;
 import com.example.testapp.model.ReviewDTO;
-import com.example.testapp.response.ApiResponse;
-import com.example.testapp.response.CommonResponse;
 import com.example.testapp.response.EntityStatusResponse;
 
 import java.util.ArrayList;
@@ -39,7 +36,7 @@ public class UserReviewActivity extends AppCompatActivity {
     private EditText etContent;
     private RatingBar rtbStar;
     private final List<OrderDetail> data = new ArrayList<>();
-    private ReviewAdapter reviewAdapter;
+    private ProductReviewAdapter reviewAdapter;
     private int selectedPosition = -1;
 
     public static String product_id;
@@ -75,7 +72,7 @@ public class UserReviewActivity extends AppCompatActivity {
 
         ArrayList<OrderDetail> receivedOrderList = UserOrderDetailActivity.orderDetailsReview;
 
-        reviewAdapter = new ReviewAdapter(UserReviewActivity.this, R.layout.layout_item_review, receivedOrderList);
+        reviewAdapter = new ProductReviewAdapter(UserReviewActivity.this, R.layout.layout_item_review, receivedOrderList);
         lvListProduct.setAdapter(reviewAdapter);
 
         btnSendReview.setOnClickListener(new View.OnClickListener() {

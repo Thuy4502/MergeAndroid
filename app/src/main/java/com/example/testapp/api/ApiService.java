@@ -94,6 +94,11 @@ public interface ApiService {
     Call<CommonResponse<Coupon>> getAllCoupon(@Header("Authorization") String token);
     @POST("api/review/add")
     Call<EntityStatusResponse<Review>> addReview(@Header("Authorization") String token, @Body ReviewDTO reviewDTO);
+    @GET("api/review/{product_id}/get")
+    Call<CommonResponse<Review>> getReviewProduct(@Path("product_id") String product_id);
+
+
+
 
     @GET("api/products/category?")
     Call<CommonResponse<Product>> filterProductByCategory(@Header("Authorization") String token, @Query("name") String nameParam);
@@ -151,13 +156,14 @@ public interface ApiService {
     Call<ApiResponse> deleteProduct(@Header("Authorization") String token,
                                     @Path("product_id") String product_id);
 
-
     @Multipart
     @PUT("api/admin/product/{product_id}/update")
     Call<ApiResponse> updateProduct(@Header("Authorization") String token,
                                     @Path("product_id") String product_id,
                                     @Part MultipartBody.Part image,
                                     @Part("data") RequestBody data);
+
+
 
     // Coupon API Admin
     @GET("api/admin/coupon/all")
