@@ -35,6 +35,7 @@ public class CouponAdapter extends ArrayAdapter<Coupon> {
     private int resource;
     private List<Coupon> data;
     private List<Coupon> filterCouponList;
+    public static Long coupon_id;
     private OnSaveClickListener onSaveClickListener;
     public void setOnSaveClickListener(OnSaveClickListener listener) {
         this.onSaveClickListener = listener;
@@ -111,7 +112,6 @@ public class CouponAdapter extends ArrayAdapter<Coupon> {
                         onSaveClickListener.onSaveClick(String.valueOf(coupon.getCoupon_id()));
                     }
                     Log.i("YYY", "đã bấm"+ coupon.getCoupon_id());
-
                 }
             });
         }
@@ -124,13 +124,22 @@ public class CouponAdapter extends ArrayAdapter<Coupon> {
                 holder.tvUseCoupon.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         Intent intent = new Intent(v.getContext(), BuyNowActivity.class);
-                        intent.putExtra("USE_VALUE", 20000);
+                        intent.putExtra("USE_VALUE", coupon.getUse_value());
+                        intent.putExtra("coupon_id", coupon.getCoupon_id());
                         v.getContext().startActivity(intent);
+
+//                        Intent intentUse = new Intent(v.getContext(), CouponUserActivity.class);
+//                        intent.putExtra("coupon_id", coupon.getCoupon_id());
+//                        v.getContext().startActivity(intentUse);
+
                     }
                 });
             }
         }
+
         return convertView;
     }
+
 }

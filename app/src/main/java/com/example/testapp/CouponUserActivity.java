@@ -4,6 +4,7 @@ package com.example.testapp;
 import static com.example.testapp.api.ApiService.apiService;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.testapp.Interface.OnSaveClickListener;
 import com.example.testapp.adapter.CouponAdapter;
+import com.example.testapp.api.ApiService;
 import com.example.testapp.model.Coupon;
 import com.example.testapp.model.CouponDetail;
 import com.example.testapp.response.ApiResponse;
@@ -53,6 +55,7 @@ public class CouponUserActivity extends AppCompatActivity {
 
         getCouponList(tokenUser);
 
+
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +84,13 @@ public class CouponUserActivity extends AppCompatActivity {
                 getCouponList(tokenUser);
             }
         });
+
+//        Intent intent = getIntent();
+//        Long coupon_id_use = intent.getLongExtra("coupon_id", 0);
+//        if(coupon_id_use != 0){
+//            updateCoupon(tokenUser, coupon_id_use);
+//            Log.i("yes", String.valueOf(coupon_id_use));
+//        }
 
     }
 
@@ -136,8 +146,6 @@ public class CouponUserActivity extends AppCompatActivity {
         });
     }
 
-
-
     public void getMyCoupon(String tokenUser) {
         List<Coupon> MyCouponList = new ArrayList<>();
         apiService.getMyCoupon("Bearer "+ tokenUser).enqueue(new Callback<CommonResponse<CouponDetail>>() {
@@ -185,5 +193,8 @@ public class CouponUserActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
 }
 

@@ -1,5 +1,7 @@
 package com.example.testapp;
 
+import static com.example.testapp.api.ApiService.apiService;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -29,6 +31,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.testapp.adapter.CouponAdapter;
 import com.example.testapp.adapter.ProductInOrderAdapter;
 import com.example.testapp.api.ApiService;
 import com.example.testapp.function.Function;
@@ -36,6 +39,7 @@ import com.example.testapp.model.OrderID;
 import com.example.testapp.model.Product;
 import com.example.testapp.model.UserInfo;
 import com.example.testapp.model.request.OrderRequest;
+import com.example.testapp.response.ApiResponse;
 import com.example.testapp.response.EntityStatusResponse;
 
 
@@ -64,6 +68,7 @@ public class BuyNowActivity extends AppCompatActivity {
     String token, point;
     Button btnOrder, btnShowListCoupon, btnChangeAddress, btnDelivery, btnPickUp;
     public static float price,  tPrice,  dCost, priceBySize;
+    public static Integer useValue;
 
     Switch swUsePoint;
     @Override
@@ -124,6 +129,7 @@ public class BuyNowActivity extends AppCompatActivity {
                     totalPrice = totalPrice - Integer.valueOf(point);
                     tv_usePoint.setText(Function.formatToVND(Integer.valueOf(point)));
                     tvTotalPrice.setText(Function.formatToVND((int) totalPrice));
+                    btnShowListCoupon.setText("Chưa áp dụng mã giảm giá");
                 } else {
                     // The switch is disabled/unchecked
                     totalPrice = totalPrice + Integer.valueOf(point);
@@ -226,10 +232,19 @@ public class BuyNowActivity extends AppCompatActivity {
         });
 
         Intent intent = getIntent();
-        Integer useValue = intent.getIntExtra("USE_VALUE", 0);
-        tv_usePoint.setText(Function.formatToVND(useValue));
-        tvTotalPrice.setText(Function.formatToVND((int) totalPrice - useValue));
-        Log.i("Use Value", useValue.toString());
+        useValue = intent.getIntExtra("USE_VALUE", 0);
+        Long id = intent.getLongExtra("coupon_id", 0);
+
+        if(useValue != 0){
+            tv_usePoint.setText(Function.formatToVND(useValue));
+            totalPrice = (int) totalPrice - useValue;
+            tvTotalPrice.setText(Function.formatToVND((int) totalPrice));
+            Log.i("Use Value", useValue.toString());
+            btnShowListCoupon.setText("Đã áp dụng mã giảm giá");
+            updateCoupon(token, id);
+            Log.i("Coupon id", String.valueOf(id));
+        }
+
 
     }
 
@@ -370,5 +385,23 @@ public class BuyNowActivity extends AppCompatActivity {
 
         dialog.show();
 
+    }
+
+    public void updateCoupon(String token, Long coupon_id){
+        apiService.updateCouponDetail(token, coupon_id).enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                if(response.isSuccessful()){
+                    ApiResponse resultResponse = response.body();
+                    if(resultResponse != null){
+                        Log.i("updateCoupon",resultResponse.getMessage());
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+                Toast.makeText(BuyNowActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
