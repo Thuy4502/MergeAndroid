@@ -1,6 +1,7 @@
 package com.example.testapp;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -8,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +21,8 @@ import com.example.testapp.model.Customer;
 import com.example.testapp.model.UserInfo;
 import com.example.testapp.response.ApiResponse;
 import com.example.testapp.response.EntityStatusResponse;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.textfield.TextInputEditText;
 
 import retrofit2.Call;
@@ -31,6 +35,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private Button btnLogout, btnChangeInfo;
     private Customer profileResponse;
     public static UserInfo userData;
+    static BottomNavigationView bottomNavigationView;
     UserInfo userInfo;
     String token1;
     @Override
@@ -92,6 +97,28 @@ public class UserProfileActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ApiResponse> call, Throwable t) {
                 Log.i("error logout: ", t.getMessage());
+            }
+        });
+
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()) {
+                    case R.id.btn_home:
+                        Intent homeIntent = new Intent(UserProfileActivity.this, HomeActivity.class);
+                        startActivity(homeIntent);
+                        return true;
+                    case R.id.btn_listOder:
+                        Intent intent = new Intent(UserProfileActivity.this, UserOrderHistoryActivity.class);
+                        startActivity(intent);
+                        return true;
+                    case R.id.btn_showCart:
+                        Intent cartIntent = new Intent(UserProfileActivity.this, CartListActivity.class);
+                        startActivity(cartIntent);
+                        return true;
+                }
+                return false;
             }
         });
 
@@ -183,5 +210,7 @@ public class UserProfileActivity extends AppCompatActivity {
         tvPoint = findViewById(R.id.tv_pointUser);
         btnLogout = findViewById(R.id.btn_logout);
         btnChangeInfo = findViewById(R.id.btnChangeInfo);
+
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
     }
 }

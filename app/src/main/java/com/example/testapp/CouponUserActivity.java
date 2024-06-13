@@ -15,8 +15,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.testapp.Interface.OnSaveClickListener;
 import com.example.testapp.adapter.CouponAdapter;
-import com.example.testapp.function.OnSaveClickListener;
 import com.example.testapp.model.Coupon;
 import com.example.testapp.model.CouponDetail;
 import com.example.testapp.response.ApiResponse;
@@ -36,7 +36,7 @@ public class CouponUserActivity extends AppCompatActivity {
     private CouponAdapter couponAdapter;
     private ImageView ivBack;
     boolean isCallApi=false, isChangeList=false;
-    Coupon coupon1;
+    static List<CouponDetail> listMyCoupon;
 
 
     @Override
@@ -49,8 +49,10 @@ public class CouponUserActivity extends AppCompatActivity {
 
     protected void setEvent() {
         SharedPreferences sharedPreferences = getSharedPreferences("MyPerfs", Context.MODE_PRIVATE);
-        String tokenUser1 =  sharedPreferences.getString("token", null);
-        getCouponList(tokenUser1);
+        String tokenUser =  sharedPreferences.getString("token", null);
+
+        getCouponList(tokenUser);
+
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,7 +67,7 @@ public class CouponUserActivity extends AppCompatActivity {
                 tvShowList.setBackground(null);
                 tvShowListReceived.setBackground(getDrawable(R.drawable.style_border_bottom_3));
                 tvShowListReceived.setTextColor(getColor(R.color.mainColor));
-                getMyCoupon(tokenUser1);
+                getMyCoupon(tokenUser);
             }
         });
 
@@ -76,10 +78,9 @@ public class CouponUserActivity extends AppCompatActivity {
                 tvShowListReceived.setBackground(null);
                 tvShowList.setBackground(getDrawable(R.drawable.style_border_bottom_3));
                 tvShowList.setTextColor(getColor(R.color.mainColor));
-                getCouponList(tokenUser1);
+                getCouponList(tokenUser);
             }
         });
-
 
     }
 
@@ -92,10 +93,11 @@ public class CouponUserActivity extends AppCompatActivity {
     }
 
     public void getCouponList(String tokenUser) {
+        List<Coupon> listDataCoupon = new ArrayList<>();
         apiService.getAllCoupon("Bearer "+tokenUser).enqueue(new Callback<CommonResponse<Coupon>>() {
             @Override
             public void onResponse(Call<CommonResponse<Coupon>> call, Response<CommonResponse<Coupon>> response) {
-                List<Coupon> listDataCoupon = new ArrayList<>();
+
                 if (response.isSuccessful()) {
                     CommonResponse<Coupon> result = response.body();
                     if (result != null) {
@@ -105,20 +107,23 @@ public class CouponUserActivity extends AppCompatActivity {
                                 listDataCoupon.add(coupon);
                             }
                         }
+
                         couponAdapter = new CouponAdapter(CouponUserActivity.this, R.layout.item_coupon, listDataCoupon);
+                        lv_listCoupon.setAdapter(couponAdapter);
+
                         couponAdapter.setOnSaveClickListener(new OnSaveClickListener() {
                             @Override
                             public void onSaveClick(String coupon_id) {
                                 Long couponId = Long.valueOf(coupon_id);
                                 for(Coupon coupon:listAllCoupon){
-                                    if(coupon.getStatus().equals("active")&&coupon.getRemaining_amount()>0){
+                                    if(coupon.getStatus().equals("active") && coupon.getRemaining_amount()>0){
                                         listDataCoupon.add(coupon);
                                     }
                                 }
                                 customerGetCoupon(tokenUser, couponId);
+                                Log.i("coupon id", String.valueOf(couponId));
                             }
                         });
-                        lv_listCoupon.setAdapter(couponAdapter);
                     }
                 } else {
                     Toast.makeText(CouponUserActivity.this, "response false", Toast.LENGTH_SHORT).show();
@@ -142,11 +147,12 @@ public class CouponUserActivity extends AppCompatActivity {
                     CommonResponse<CouponDetail> result = response.body();
                     if (result != null) {
                         List<CouponDetail> couponList = result.getData();
+                        listMyCoupon = couponList;
                         for (CouponDetail couponDetail: couponList){
                             Coupon coupon =  couponDetail.getCoupon();
                             MyCouponList.add(coupon);
                         }
-                        couponAdapter = new CouponAdapter(CouponUserActivity.this, R.layout.item_coupon_user, MyCouponList);
+                        couponAdapter = new CouponAdapter(CouponUserActivity.this, R.layout.item_coupon_user, MyCouponList);;
                         lv_listCoupon.setAdapter(couponAdapter);
                         //MyCouponList.clear();
                     }
@@ -160,7 +166,6 @@ public class CouponUserActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
     public void customerGetCoupon(String tokenUser, Long coupon_id) {
