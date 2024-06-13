@@ -45,19 +45,18 @@ public class ProductDetailActivity extends AppCompatActivity {
     private Toolbar appBar;
     public static Product sp;
     private LinearLayout lnlListReview;
-
     OrderRequest orderRequest;
     CommonResponse<Size> allSize;
     public static String size="";
     String categoryName="";
     public static float percent= 0;
     public String category = "";
-
-    float priceBySize, avgStar;
+    public static float priceBySize;
+    float avgStar;
     int reviewQuantity;
     LinearLayout llSize, llStar;
     String token;
-
+    public static Product sendProduct;
     ReadMoreTextView tvReadMore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,20 +67,16 @@ public class ProductDetailActivity extends AppCompatActivity {
         setControl();
         btnBuyNow.setEnabled(false);
         btnAddItem.setEnabled(false);
-
         getProductDetail();
-        System.out.println("--------------PRODUCT DETAIL");
         getReviewStar();
         setEvent();
         getAllSize();
-
     }
 
 
     public void setEvent() {
         tvReadMore.setCollapsedText("Read more");
         tvReadMore.setTrimLines(2);
-
 
         int cornerRadiusPixels = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
@@ -99,7 +94,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         drawableDisable.setStroke(4, Color.parseColor("#b42329"));
         drawableDisable.setColor(Color.parseColor("#FFFFFF"));
 
-
         btnSizeS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,7 +106,6 @@ public class ProductDetailActivity extends AppCompatActivity {
                 btnSizeL.setBackground(drawableDisable);
 
             }
-
         });
         lnlListReview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,7 +124,6 @@ public class ProductDetailActivity extends AppCompatActivity {
                 btnSizeM.setBackground(drawableEnable);
                 btnSizeL.setBackground(drawableDisable);
                 btnSizeS.setBackground(drawableDisable);
-
             }
         });
 
@@ -145,25 +137,21 @@ public class ProductDetailActivity extends AppCompatActivity {
                 btnSizeL.setBackground(drawableEnable);
                 btnSizeM.setBackground(drawableDisable);
                 btnSizeS.setBackground(drawableDisable);
-
             }
         });
-
 
         btnBuyNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 System.out.println("DAY LA SIZEEE" + size);
-                Product sendProduct;
                 sendProduct = getProductDetail();
                 Intent intent = new Intent(ProductDetailActivity.this, BuyNowActivity.class);
                 if (orderRequest != null) {
                     intent.putExtra("buyNow", orderRequest);
                 }
-                if (priceBySize != 0) {
-                    intent.putExtra("priceBySize", priceBySize);
-                }
-
+//                if (priceBySize != 0) {
+//                    intent.putExtra("priceBySize", priceBySize);
+//                }
                 if (sendProduct != null) {
                     intent.putExtra("product", sendProduct);
                 } else {
@@ -182,16 +170,13 @@ public class ProductDetailActivity extends AppCompatActivity {
                 cartRequest.setProduct_name(sp.getProductName());
                 if(!categoryName.equals("Bánh")) {
                     if(size.equals("S") || size.equals("M") || size.equals("L")) {
-
                         cartRequest.setSize(size);
                         cartRequest.setTopping("");
                         CustomerHomeActivity.callApiAddCart(cartRequest);
                         Toast.makeText(ProductDetailActivity.this, "Thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show();
-
                     }
                     else{
                         Toast.makeText(ProductDetailActivity.this, "Bạn chưa chọn size", Toast.LENGTH_LONG).show();
-
                     }
                 }
                 else if(categoryName.equals("Bánh")) {
@@ -199,12 +184,10 @@ public class ProductDetailActivity extends AppCompatActivity {
                     cartRequest.setSize(size);
                     cartRequest.setTopping("");
                     CustomerHomeActivity.callApiAddCart(cartRequest);
-                    Toast.makeText(ProductDetailActivity.this, "Thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProductDetailActivity.this, "Thêm vào giỏ hàng thành công",
+                            Toast.LENGTH_SHORT).show();
 
                 }
-
-
-
             }
         });
 
@@ -237,7 +220,6 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     public Product getProductDetail() {
         String id = adapter.productID;
-
         ApiService.apiService.getProductDetail("Bearer "+token, id).enqueue(new Callback<Product>() {
             @Override
             public void onResponse(@NonNull Call<Product> call, @NonNull Response<Product> response) {
@@ -251,7 +233,6 @@ public class ProductDetailActivity extends AppCompatActivity {
                     btnBuyNow.setEnabled(true);
                     btnAddItem.setEnabled(true);
                 }
-
                 if (orderRequest == null) {
                     orderRequest = new OrderRequest();
                 }

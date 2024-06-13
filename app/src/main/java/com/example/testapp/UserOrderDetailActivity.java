@@ -96,12 +96,10 @@ public class UserOrderDetailActivity extends AppCompatActivity {
         lnl_showOrderDetail.setVisibility(View.GONE);
 
         Long orderId = getIntent().getLongExtra("OrderID", 0);
-
         getOrderById(token, orderId);
 
 //        getOrderById(token, 1L);
         order_id = orderId;
-
 
         btnOpenReview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,7 +130,6 @@ public class UserOrderDetailActivity extends AppCompatActivity {
             }
         }
         Log.i("list size:", String.valueOf(listOrderDetail.size()));
-
         return listOrderDetail;
     }
 

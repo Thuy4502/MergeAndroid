@@ -115,10 +115,7 @@ public class BuyNowActivity extends AppCompatActivity {
                 getResources().getDisplayMetrics()
         );
 
-
-
         tvPointUser.setText("Sử dụng " + point + " điểm");
-
         swUsePoint.setChecked(false);
         swUsePoint.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -279,8 +276,10 @@ public class BuyNowActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null) {
             OrderRequest orderRequest = (OrderRequest) intent.getSerializableExtra("buyNow");
-            sp  = (Product) intent.getSerializableExtra("product");
-            priceBySize = (float) intent.getSerializableExtra("priceBySize");
+//            sp  = (Product) intent.getSerializableExtra("product");
+//            priceBySize = (float) intent.getSerializableExtra("priceBySize");
+            sp = ProductDetailActivity.sendProduct;
+            priceBySize = ProductDetailActivity.priceBySize;
             productList = new ArrayList<>();
             productList.add(sp);
             System.out.println("Danh sách sản phẩm " + productList.get(0).getProductName());

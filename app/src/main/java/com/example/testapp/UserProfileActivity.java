@@ -30,9 +30,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class UserProfileActivity extends AppCompatActivity {
-    private TextView tvPoint;
+    private TextView tvPoint, btnLogout;
     private TextInputEditText etFullName, etPhoneUser, etAddressUser, etEmail;
-    private Button btnLogout, btnChangeInfo;
+    private Button btnChangeInfo;
     private Customer profileResponse;
     public static UserInfo userData;
     static BottomNavigationView bottomNavigationView;
