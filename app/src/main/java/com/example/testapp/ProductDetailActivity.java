@@ -51,10 +51,12 @@ public class ProductDetailActivity extends AppCompatActivity {
     String categoryName="";
     public static float percent= 0;
     public String category = "";
-    float priceBySize, avgStar;
+    public static float priceBySize;
+    float avgStar;
     int reviewQuantity;
     LinearLayout llSize, llStar;
     String token;
+    public static Product sendProduct;
     ReadMoreTextView tvReadMore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,15 +144,14 @@ public class ProductDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 System.out.println("DAY LA SIZEEE" + size);
-                Product sendProduct;
                 sendProduct = getProductDetail();
                 Intent intent = new Intent(ProductDetailActivity.this, BuyNowActivity.class);
                 if (orderRequest != null) {
                     intent.putExtra("buyNow", orderRequest);
                 }
-                if (priceBySize != 0) {
-                    intent.putExtra("priceBySize", priceBySize);
-                }
+//                if (priceBySize != 0) {
+//                    intent.putExtra("priceBySize", priceBySize);
+//                }
                 if (sendProduct != null) {
                     intent.putExtra("product", sendProduct);
                 } else {

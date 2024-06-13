@@ -85,7 +85,12 @@ public class CustomerHomeActivity extends AppCompatActivity {
         setCountProductInCart();
         setEvent();
         setSlider();
-        tvAddress.setText(address);
+
+        if(address == null){
+            tvAddress.setText("Chưa thiết lập địa chỉ");
+        }else{
+            tvAddress.setText(address);
+        }
     }
 
     public void setSlider() {

@@ -1,4 +1,4 @@
-package com.example.testapp.function;
+package com.example.testapp.Interface;
 
 public interface OnSaveClickListener {
     void onSaveClick(String coupon_id);

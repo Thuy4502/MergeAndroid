@@ -63,6 +63,7 @@ public class CouponAddingAdminActivity extends AppCompatActivity {
     private ListView lvCouponList;
     private String status;
     private JSONObject jsonData = new JSONObject();
+
     String startDateString, endDateString;
     ImageButton btnDateRange;
 
@@ -112,8 +113,6 @@ public class CouponAddingAdminActivity extends AppCompatActivity {
         }
     }
 
-
-
     protected void setEvent() {
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage("Please wait...");
@@ -154,7 +153,6 @@ public class CouponAddingAdminActivity extends AppCompatActivity {
             }
         });
 
-
         //bấm vào nút Chọn ngày áp dụng khuyến mại
         btnDateRange.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,8 +160,6 @@ public class CouponAddingAdminActivity extends AppCompatActivity {
                 openDatePicker(tokenStaff);
             }
         });
-
-
 
 
         btnAddCoupon.setOnClickListener(new View.OnClickListener() {
@@ -229,6 +225,7 @@ public class CouponAddingAdminActivity extends AppCompatActivity {
             jsonData.put("quantity", etCouponQuantity.getText().toString());
             jsonData.put("start_date", startdate);
             jsonData.put("end_date", enddate);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -239,7 +236,6 @@ public class CouponAddingAdminActivity extends AppCompatActivity {
         String imagePath = RealPathUtil.getRealPath(this,selectedImageUri);
         String[] onlyImagePath = imagePath.split("/");
         String lastElement = onlyImagePath[onlyImagePath.length-1];
-
 
         // Tạo File từ đường dẫn ảnh
         File file = new File(imagePath);

@@ -73,6 +73,7 @@ public class CouponListAdminActivity extends AppCompatActivity {
     private void setEvent() {
         SharedPreferences sharedPreferences = getSharedPreferences("MyPerfs", Context.MODE_PRIVATE);
         tokenStaff =  "Bearer "+sharedPreferences.getString("token", null);
+        getAllCoupon();
         btnAddCoupon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,6 +85,7 @@ public class CouponListAdminActivity extends AppCompatActivity {
 
         StatusAdapter spinnerAdapter = new StatusAdapter(this, R.layout.item_category_ver2, listStatus);
         spnCouponFilter.setAdapter(spinnerAdapter);
+
         spnCouponFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -148,7 +150,7 @@ public class CouponListAdminActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        getAllCoupon();
+
         svCoupon.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -194,7 +196,7 @@ public class CouponListAdminActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<CommonResponse<Coupon>> call, Throwable t) {
-                Toast.makeText(lvCouponList.getContext(), "ko call dc api",Toast.LENGTH_SHORT).show();
+                Toast.makeText(lvCouponList.getContext(), "error call all coupon",Toast.LENGTH_SHORT).show();
             }
         });
     }

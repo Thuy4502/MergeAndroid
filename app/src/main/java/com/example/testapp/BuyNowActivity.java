@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -77,7 +78,7 @@ public class BuyNowActivity extends AppCompatActivity {
         String numbers = String.valueOf(tvDeliveryCost.getText()).replaceAll("\\D+", "");
         dCost = Float.parseFloat(numbers);
         callApiGetUserInfor();
-        setInfor();
+        setInfo();
         setEvent();
     }
 
@@ -131,7 +132,6 @@ public class BuyNowActivity extends AppCompatActivity {
                 }
             }
         });
-
 
         GradientDrawable drawableEnable = new GradientDrawable();
         drawableEnable.setShape(GradientDrawable.RECTANGLE);
@@ -224,6 +224,13 @@ public class BuyNowActivity extends AppCompatActivity {
                 Intent intent = new Intent(BuyNowActivity.this, CustomerHomeActivity.class);
             }
         });
+
+        Intent intent = getIntent();
+        Integer useValue = intent.getIntExtra("USE_VALUE", 0);
+        tv_usePoint.setText(Function.formatToVND(useValue));
+        tvTotalPrice.setText(Function.formatToVND((int) totalPrice - useValue));
+        Log.i("Use Value", useValue.toString());
+
     }
 
     private void updateProductPrice() {
@@ -263,12 +270,14 @@ public class BuyNowActivity extends AppCompatActivity {
 
     }
 
-    public void setInfor() {
+    public void setInfo() {
         Intent intent = getIntent();
         if (intent != null) {
             OrderRequest orderRequest = (OrderRequest) intent.getSerializableExtra("buyNow");
-            sp  = (Product) intent.getSerializableExtra("product");
-            priceBySize = (float) intent.getSerializableExtra("priceBySize");
+//            sp  = (Product) intent.getSerializableExtra("product");
+//            priceBySize = (float) intent.getSerializableExtra("priceBySize");
+            sp = ProductDetailActivity.sendProduct;
+            priceBySize = ProductDetailActivity.priceBySize;
             productList = new ArrayList<>();
             productList.add(sp);
             System.out.println("Danh sách sản phẩm " + productList.get(0).getProductName());
@@ -281,7 +290,6 @@ public class BuyNowActivity extends AppCompatActivity {
             tvPrice.setText(UserOrderActivity.formatNumber(priceBySize));
             updateProductPrice();
         }
-
 
     }
 
@@ -309,7 +317,7 @@ public class BuyNowActivity extends AppCompatActivity {
     }
 
     public void callApiGetUserInfor() {
-        ApiService.apiService.getUserInfor("Bearer "+token).enqueue(new Callback<EntityStatusResponse<UserInfo>>() {
+        ApiService.apiService.getUserInfor("Bearer "+ token).enqueue(new Callback<EntityStatusResponse<UserInfo>>() {
             @Override
             public void onResponse(Call<EntityStatusResponse<UserInfo>> call, Response<EntityStatusResponse<UserInfo>> response) {
                 userInfor = response.body();

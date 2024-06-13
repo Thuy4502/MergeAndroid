@@ -18,13 +18,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.testapp.BuyNowActivity;
+import com.example.testapp.CouponUserActivity;
 import com.example.testapp.R;
-import com.example.testapp.UserOrderActivity;
-import com.example.testapp.function.OnSaveClickListener;
+import com.example.testapp.Interface.OnSaveClickListener;
 import com.example.testapp.model.Coupon;
 
 import java.util.List;
@@ -53,6 +54,7 @@ public class CouponAdapter extends ArrayAdapter<Coupon> {
     static class ViewHolder{
         TextView tvValue, tvQuantity, tvMinium, tvTime, tvCouponId, tvStatus, tvSaveCoupon, tvUseCoupon;
         ImageView ivCoupon, ivDelete;
+        CardView cv_coupon;
     }
     @NonNull
     @Override
@@ -71,6 +73,7 @@ public class CouponAdapter extends ArrayAdapter<Coupon> {
             holder.ivDelete = convertView.findViewById(R.id.btnDelete);
             holder.tvSaveCoupon = convertView.findViewById(R.id.tvSaveCoupon);
             holder.tvUseCoupon = convertView.findViewById(R.id.tv_useCoupon);
+            holder.cv_coupon = convertView.findViewById(R.id.cardView_coupon);
             convertView.setTag(holder);
         }
         else{
@@ -107,7 +110,8 @@ public class CouponAdapter extends ArrayAdapter<Coupon> {
                     if (onSaveClickListener != null) {
                         onSaveClickListener.onSaveClick(String.valueOf(coupon.getCoupon_id()));
                     }
-                    Log.i("YYY", "đã bấm"+coupon.getCoupon_id());
+                    Log.i("YYY", "đã bấm"+ coupon.getCoupon_id());
+
                 }
             });
         }
@@ -121,7 +125,7 @@ public class CouponAdapter extends ArrayAdapter<Coupon> {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(v.getContext(), BuyNowActivity.class);
-                        intent.putExtra("USE_VALUE", holder.tvValue.getText());
+                        intent.putExtra("USE_VALUE", 20000);
                         v.getContext().startActivity(intent);
                     }
                 });
@@ -129,6 +133,4 @@ public class CouponAdapter extends ArrayAdapter<Coupon> {
         }
         return convertView;
     }
-
-
 }
