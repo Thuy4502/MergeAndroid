@@ -127,6 +127,8 @@ public class CouponAdapter extends ArrayAdapter<Coupon> {
                         Intent intent = new Intent(v.getContext(), BuyNowActivity.class);
                         intent.putExtra("USE_VALUE", 20000);
                         v.getContext().startActivity(intent);
+                        BuyNowActivity.useValue = 20000;
+
                     }
                 });
             }

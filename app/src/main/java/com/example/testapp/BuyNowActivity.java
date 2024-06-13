@@ -64,6 +64,7 @@ public class BuyNowActivity extends AppCompatActivity {
     String token, point;
     Button btnOrder, btnShowListCoupon, btnChangeAddress, btnDelivery, btnPickUp;
     public static float price,  tPrice,  dCost, priceBySize;
+    public static Integer useValue;
 
     Switch swUsePoint;
     @Override
@@ -228,12 +229,13 @@ public class BuyNowActivity extends AppCompatActivity {
             }
         });
 
-        Intent intent = getIntent();
-        Integer useValue = intent.getIntExtra("USE_VALUE", 0);
-        tv_usePoint.setText(Function.formatToVND(useValue));
-        tvTotalPrice.setText(Function.formatToVND((int) totalPrice - useValue));
-        Log.i("Use Value", useValue.toString());
-
+//        Intent intent = getIntent();
+//        useValue = intent.getIntExtra("USE_VALUE", 0);
+//        if(useValue != null){
+//            tv_usePoint.setText(Function.formatToVND(useValue));
+//            tvTotalPrice.setText(Function.formatToVND((int) totalPrice - useValue));
+//            Log.i("Use Value", useValue.toString());
+//        }
     }
 
     private void updateProductPrice() {
