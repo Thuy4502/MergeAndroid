@@ -50,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etPhone, etPassword;
     private ProgressBar pbLogin;
     public static String role, staffName, address;
+    public static Integer point;
     static boolean isInit = false;
     static boolean isLoad=false;
 
@@ -220,6 +221,8 @@ public class LoginActivity extends AppCompatActivity {
                         staffName = customerResponse.getUser().getFirst_name() + " " + customerResponse.getUser().getLast_name();
                         address = customerResponse.getAddress();
                         String roleName = customerResponse.getUser().getRole().getRole_name();
+                        point = customerResponse.getUser().getPoints();
+
                         Log.i("role: ", roleName);
                         if(roleName.equals("CUSTOMER")){
                             pbLogin.setVisibility(View.GONE);
@@ -232,6 +235,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         editor.putString("address", address);
                         editor.putString("role", roleName);
+                        editor.putString("point", String.valueOf(point));
                         editor.apply();
                     }
                 } else {

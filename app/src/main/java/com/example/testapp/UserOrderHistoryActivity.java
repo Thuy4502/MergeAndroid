@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -13,7 +14,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.util.Pair;
@@ -26,8 +29,10 @@ import com.example.testapp.api.ApiService;
 import com.example.testapp.model.Order;
 import com.example.testapp.model.OrderStatus;
 import com.example.testapp.response.CommonResponse;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,6 +53,8 @@ public class UserOrderHistoryActivity extends AppCompatActivity {
     Spinner spinnerList;
     ProgressBar proBarShowList;
     CardView btnShow;
+    Toolbar app_bar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,9 +83,19 @@ public class UserOrderHistoryActivity extends AppCompatActivity {
         proBarShowList = findViewById(R.id.proBar_showList);
 
         btnShow = findViewById(R.id.btn_showDate);
+
+        app_bar = findViewById(R.id.app_bar);
+
     }
 
     private void setEvent() {
+        app_bar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         SetData();
         SharedPreferences sharedPreferences = getSharedPreferences("MyPerfs", Context.MODE_PRIVATE);
         String token = "Bearer " + sharedPreferences.getString("token", null);
@@ -117,6 +134,7 @@ public class UserOrderHistoryActivity extends AppCompatActivity {
 
             }
         });
+
     }
     private void SetData() {
         listStatus.add(new OrderStatus(-1,"Tất cả"));
@@ -127,6 +145,9 @@ public class UserOrderHistoryActivity extends AppCompatActivity {
         listStatus.add(new OrderStatus(4,"Đã hoàn thành"));
         listStatus.add(new OrderStatus(5,"Đã hủy"));
     }
+
+
+
 
     private void getAllOrder(String token){
         ApiService.apiService.getOrderHistoryByJwt(token).enqueue(new Callback<CommonResponse<Order>>() {

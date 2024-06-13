@@ -288,6 +288,7 @@
                                 android:text="Giá giảm"/>
 
                             <TextView
+                                android:id="@+id/tv_usePoint"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="right"

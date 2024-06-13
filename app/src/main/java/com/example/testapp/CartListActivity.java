@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -25,6 +26,8 @@ import com.example.testapp.api.ApiService;
 import com.example.testapp.model.Cart;
 import com.example.testapp.model.FullCart;
 import com.example.testapp.response.EntityStatusResponse;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.List;
 
@@ -84,7 +87,6 @@ public class CartListActivity extends AppCompatActivity {
         tvTotalPrice = findViewById(R.id.tvTotalPrice);
         btnBuy = findViewById(R.id.btnBuyInCart);
         ivBack = findViewById(R.id.ivBack);
-
     }
 
     public void setEvent() {
@@ -101,7 +103,6 @@ public class CartListActivity extends AppCompatActivity {
                 finish();
             }
         });
-
 
     }
 

@@ -14,9 +14,11 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.testapp.adapter.ProductInOrderAdapter;
 import com.example.testapp.api.ApiService;
+import com.example.testapp.function.Function;
 import com.example.testapp.model.OrderID;
 import com.example.testapp.model.Product;
 import com.example.testapp.model.UserInfo;
@@ -47,7 +50,7 @@ public class BuyNowActivity extends AppCompatActivity {
     ProductInOrderAdapter adapter;
     RecyclerView rvProduct;
     OrderRequest orderRequest;
-    TextView tvProductName, tvProductPrice, tvQuantity, tvTotalPrice, tvDeliveryCost, tvSize, tvAddress, tvPrice, tvFlexible;
+    TextView tvProductName, tvProductPrice, tvQuantity, tvTotalPrice, tvDeliveryCost, tvSize, tvAddress, tvPrice, tvFlexible, tvPointUser, tv_usePoint;
     ImageView ivProductImg, ivAdd, ivMinus;
     public static int quantity ;
     public Long orderId;
@@ -57,15 +60,18 @@ public class BuyNowActivity extends AppCompatActivity {
     String newAddress;
     LinearLayout lyEditAdress;
     private Toolbar appBar;
-    String token;
+    String token, point;
     Button btnOrder, btnShowListCoupon, btnChangeAddress, btnDelivery, btnPickUp;
     public static float price,  tPrice,  dCost, priceBySize;
+
+    Switch swUsePoint;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_now);
         SharedPreferences sharedPreferences = getSharedPreferences("MyPerfs", Context.MODE_PRIVATE);
         token =  sharedPreferences.getString("token", null);
+        point = sharedPreferences.getString("point", null);
         setControl();
         quantity = Integer.parseInt(String.valueOf(tvQuantity.getText()));
         String numbers = String.valueOf(tvDeliveryCost.getText()).replaceAll("\\D+", "");
@@ -95,7 +101,9 @@ public class BuyNowActivity extends AppCompatActivity {
         lyEditAdress = findViewById(R.id.lyEditAdress);
         appBar = findViewById(R.id.app_bar);
         btnShowListCoupon = findViewById(R.id.btnShowListCoupon);
-
+        tvPointUser = findViewById(R.id.tv_pointUser);
+        swUsePoint = findViewById(R.id.sw_usePoint);
+        tv_usePoint = findViewById(R.id.tv_usePoint);
     }
 
     public void setEvent() {
@@ -104,6 +112,26 @@ public class BuyNowActivity extends AppCompatActivity {
                 12, // giá trị ban đầu của bán kính ở đơn vị dp
                 getResources().getDisplayMetrics()
         );
+
+        tvPointUser.setText("Sử dụng " + point + " điểm");
+        swUsePoint.setChecked(false);
+        swUsePoint.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (swUsePoint.isChecked()) {
+                    // The switch is enabled/checked
+                    totalPrice = totalPrice - Integer.valueOf(point);
+                    tv_usePoint.setText(Function.formatToVND(Integer.valueOf(point)));
+                    tvTotalPrice.setText(Function.formatToVND((int) totalPrice));
+                } else {
+                    // The switch is disabled/unchecked
+                    totalPrice = totalPrice + Integer.valueOf(point);
+                    tv_usePoint.setText("0 đ");
+                    tvTotalPrice.setText(Function.formatToVND((int) (totalPrice)));
+                }
+            }
+        });
+
 
         GradientDrawable drawableEnable = new GradientDrawable();
         drawableEnable.setShape(GradientDrawable.RECTANGLE);
@@ -198,14 +226,14 @@ public class BuyNowActivity extends AppCompatActivity {
         });
     }
 
-
     private void updateProductPrice() {
         float newPrice = priceBySize * quantity;
         totalPrice = dCost + newPrice;
         tvProductPrice.setText(UserOrderActivity.formatNumber(newPrice));
         tvTotalPrice.setText(UserOrderActivity.formatNumber(totalPrice));
-
     }
+
+
 
     public void getApiBuyNow() {
         if (orderRequest == null) {

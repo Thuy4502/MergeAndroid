@@ -96,12 +96,10 @@ public class UserOrderDetailActivity extends AppCompatActivity {
         lnl_showOrderDetail.setVisibility(View.GONE);
 
         Long orderId = getIntent().getLongExtra("OrderID", 0);
-
         getOrderById(token, orderId);
 
 //        getOrderById(token, 1L);
         order_id = orderId;
-
 
         btnOpenReview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,7 +130,6 @@ public class UserOrderDetailActivity extends AppCompatActivity {
             }
         }
         Log.i("list size:", String.valueOf(listOrderDetail.size()));
-
         return listOrderDetail;
     }
 
@@ -191,7 +188,6 @@ public class UserOrderDetailActivity extends AppCompatActivity {
                         //set event when status != 4
                         if(statusId != 4){
                             btnShowProcess.setText("Xem tiến trình đơn hàng");
-
                             btnShowProcess.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -213,7 +209,7 @@ public class UserOrderDetailActivity extends AppCompatActivity {
                         Log.i("message", "onResponse: " + resultResponse.getMessage());
                     }
                 }
-//                handler.postDelayed(() -> getOrderById(token, orderId), 10000); // 10 giây
+                handler.postDelayed(() -> getOrderById(token, orderId), 10000); // 10 giây
             }
             @Override
             public void onFailure(Call<EntityStatusResponse<Order>> call, Throwable t) {

@@ -14,8 +14,10 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.testapp.adapter.ProductInOrderAdapter;
 import com.example.testapp.api.ApiService;
+import com.example.testapp.function.Function;
 import com.example.testapp.model.Cart;
 import com.example.testapp.model.FullCart;
 import com.example.testapp.model.OrderID;
@@ -50,7 +53,7 @@ public class UserOrderActivity extends AppCompatActivity {
     static ProductInOrderAdapter adapter;
     static TextView tvProductPrice;
     static TextView tvTotalPrice;
-    TextView tvAddress, tvFlexible, tvDeliveryCost;
+    TextView tvAddress, tvFlexible, tvDeliveryCost, tvUserAddress,  tvPointUser, tv_usePoint;;
     public static EntityStatusResponse<UserInfo> userInfor;
     String newAddress;
     public static float totalProductPrice;
@@ -63,13 +66,15 @@ public class UserOrderActivity extends AppCompatActivity {
 
     public float dCost = 15000;
 
-    static String token;
+    static String token, point;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_order);
         SharedPreferences sharedPreferences = getSharedPreferences("MyPerfs", Context.MODE_PRIVATE);
         token =  sharedPreferences.getString("token", null);
+        point = sharedPreferences.getString("point", null);
         setControl();
         dCost = Float.parseFloat(String.valueOf(tvDeliveryCost.getText()));
         dCost = 15000;
@@ -102,7 +107,6 @@ public class UserOrderActivity extends AppCompatActivity {
                 tvTotalPrice.setText(formatNumber(totalProductPrice + 15000));
                 adapter.notifyDataSetChanged();
             }
-
             @Override
             public void onFailure(Call<EntityStatusResponse<FullCart>> call, Throwable t) {
                 System.out.println("Lỗi truy cập giỏ hàng");
@@ -135,12 +139,14 @@ public class UserOrderActivity extends AppCompatActivity {
         lyDeliveryCost = findViewById(R.id.lyDeliveryCost);
         btnDelivery = findViewById(R.id.btnDelivery);
         appBar = findViewById(R.id.app_bar);
+        tvPointUser = findViewById(R.id.tv_pointUser);
+        tv_usePoint = findViewById(R.id.tv_usePoint);
     }
 
     public void setEvent() {
         int cornerRadiusPixels = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
-                12, // giá trị ban đầu của bán kính ở đơn vị dp
+                12,
                 getResources().getDisplayMetrics()
         );
 
@@ -155,6 +161,7 @@ public class UserOrderActivity extends AppCompatActivity {
         drawableDisable.setColor(Color.parseColor("#FFFFFF"));
         drawableDisable.setStroke(4, Color.parseColor("#b42329"));
 
+        tvPointUser.setText("Sử dụng " + point + " điểm");
 
         btnOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,11 +213,7 @@ public class UserOrderActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-
     }
-
-
     public void callApiChangeAdress() {
         UserInfo user = new UserInfo();
         user.setAddress(newAddress);
@@ -220,20 +223,17 @@ public class UserOrderActivity extends AppCompatActivity {
         user.setFirstname(userInfor.getData().getFirstname());
         user.setLastname(userInfor.getData().getLastname());
         user.setTax_id(userInfor.getData().getTax_id());
-
         ApiService.apiService.changeAddress("Bearer "+token, user).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 Toast.makeText(UserOrderActivity.this, "Thay đổi địa chỉ thành công", Toast.LENGTH_LONG).show();
             }
-
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
 
             }
         });
     }
-
 
     public void callApiOrderInCart() {
         ApiService.apiService.orderInCart("Bearer "+token).enqueue(new Callback<EntityStatusResponse<OrderID>>() {
@@ -246,13 +246,10 @@ public class UserOrderActivity extends AppCompatActivity {
                 startActivity(intent);
                 Toast.makeText(UserOrderActivity.this, "Đặt hàng thành công", Toast.LENGTH_LONG).show();
             }
-
             @Override
             public void onFailure(Call<EntityStatusResponse<OrderID>> call, Throwable t) {
                 System.out.println("Đặt hàng thất bại!");
-
                 Toast.makeText(UserOrderActivity.this, "Đặt hàng thất bại", Toast.LENGTH_LONG).show();
-
             }
         });
     }
@@ -306,7 +303,6 @@ public class UserOrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 newAddress = String.valueOf(edtAddress.getText());
-                System.out.println("-------------------------" + newAddress);
                 callApiChangeAdress();
                 dialog.dismiss();
                 callApiGetUserInfor();

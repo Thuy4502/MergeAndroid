@@ -44,7 +44,11 @@ public interface ApiService {
     //base link:http://....:9999/
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
-    ApiService apiService = new Retrofit.Builder().baseUrl("http://192.168.1.3:9999/").addConverterFactory(GsonConverterFactory.create(gson))
+//    WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
+//    String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
+
+    ApiService apiService = new Retrofit.Builder().baseUrl("http://192.168.1.7:9999/").addConverterFactory(GsonConverterFactory.create(gson))
+
 
             .build().create(ApiService.class);
 
@@ -93,7 +97,6 @@ public interface ApiService {
     Call<CommonResponse<Order>> getOrderHistoryByJwt(@Header("Authorization") String token);
     @GET("api/coupon/all")
     Call<CommonResponse<Coupon>> getAllCoupon(@Header("Authorization") String token);
-
     @GET("api/review/avg/all")
     Call<CommonResponse<ReviewStar>> getAllProductStar();
 
@@ -185,11 +188,11 @@ public interface ApiService {
 
     @PUT("api/admin/coupon/{coupon_id}/status")
     Call<ApiResponse> disableCoupon(@Header("Authorization") String token, @Path("coupon_id") String coupon_id, @Body Coupon coupon);
-
     @POST("api/review/add")
     Call<EntityStatusResponse<Review>> addReview(String token, ReviewDTO reviewDTO);
 
     @GET("api/review/{product_id}/get")
     Call<CommonResponse<Review>> getReviewProduct(@Path("product_id") String product_id);
+
 
 }

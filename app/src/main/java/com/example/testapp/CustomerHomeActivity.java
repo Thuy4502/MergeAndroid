@@ -58,9 +58,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
     private Button btnCaPhe, btnPhindi, btnTra, btnFreeze, btnBanh, btnAll, btnCartList;
     private SearchView searchView;
     public static List<ReviewStar> listReviewStar;
-
     static BottomNavigationView bottomNavigationView;
-
     private static int mcountProduct = 0;
     private ViewPager viewPager;
     private CircleIndicator circleIndicator;
@@ -93,7 +91,6 @@ public class CustomerHomeActivity extends AppCompatActivity {
     public void setSlider() {
         photoAdapter = new PhotoAdapter(this, getListPhoto());
         viewPager.setAdapter(photoAdapter);
-
         circleIndicator.setViewPager(viewPager);
         photoAdapter.registerDataSetObserver(circleIndicator.getDataSetObserver());
         TimerTask timerTask = new TimerTask() {
@@ -240,38 +237,34 @@ public class CustomerHomeActivity extends AppCompatActivity {
 
             }
         });
-//        btnBanh.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                btnBanh.setBackground(drawableEnable);
-//                btnFreeze.setBackground(drawableDisable);
-//                btnTra.setBackground(drawableDisable);
-//                btnCaPhe.setBackground(drawableDisable);
-//                btnPhindi.setBackground(drawableDisable);
-//                btnAll.setBackground(drawableDisable);
-//                name = "Bánh";
-//                callApiFilterProductByCategory();
-//            }
-//        });
+        btnBanh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnBanh.setBackground(drawableEnable);
+                btnFreeze.setBackground(drawableDisable);
+                btnTra.setBackground(drawableDisable);
+                btnCaPhe.setBackground(drawableDisable);
+                btnPhindi.setBackground(drawableDisable);
+                btnAll.setBackground(drawableDisable);
+                name = "Bánh";
+                callApiFilterProductByCategory();
+            }
+        });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String newText) {
                 fileList(newText);
                 return true;
             }
         });
-
-
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
                 switch (item.getItemId()) {
                     case R.id.btn_home:
                         return true;
@@ -372,7 +365,6 @@ public class CustomerHomeActivity extends AppCompatActivity {
     }
 
     private void callApiFilterProductByCategory() {
-
         ApiService.apiService.filterProductByCategory("Bearer "+token, name).enqueue(new Callback<CommonResponse<Product>>() {
             @Override
             public void onResponse(Call<CommonResponse<Product>> call, Response<CommonResponse<Product>> response) {
@@ -383,7 +375,6 @@ public class CustomerHomeActivity extends AppCompatActivity {
                 productApiAdapter = new ProductCustomerAdapter(list.getData());
                 rvProduct.setAdapter(productApiAdapter);
             }
-
             @Override
             public void onFailure(Call<CommonResponse<Product>> call, Throwable t) {
                 Toast.makeText(CustomerHomeActivity.this, "Lỗi lọc sản phẩm theo loại", Toast.LENGTH_LONG).show();
@@ -395,18 +386,15 @@ public class CustomerHomeActivity extends AppCompatActivity {
         ApiService.apiService.addToCart("Bearer "+token, cart).enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-                System.out.println("Them vao gio hang thanh cong");
                 ApiResponse cartResponse = response.body();
                 CustomerHomeActivity.setCountProductInCart();
                 if(cartResponse != null) {
-                    System.out.println("Thêm sản phẩm vào giỏ hành thất bại");
+                    System.out.println("Thêm sản phẩm vào giỏ hàng thanh cong");
                 }
                 else {
-                    System.out.println("Thêm sản phẩm vào gi hàng thành công" );
+                    System.out.println("Thêm sản phẩm vào gio hàng that bai" );
                 }
-
             }
-
             @Override
             public void onFailure(Call<ApiResponse> call, Throwable t) {
                 System.out.println("Them vao gio hang that bai");
@@ -426,7 +414,6 @@ public class CustomerHomeActivity extends AppCompatActivity {
                 else {
                     System.out.println("Giảm số lượng sản phẩm thất bại" );
                 }
-
             }
 
             @Override
@@ -448,7 +435,6 @@ public class CustomerHomeActivity extends AppCompatActivity {
                 else {
                     System.out.println("Tăng số lượng sản phẩm thành công" );
                 }
-
             }
 
             @Override
@@ -457,7 +443,6 @@ public class CustomerHomeActivity extends AppCompatActivity {
             }
         });
     }
-
     public static void callApiDeleteCart(CartRequest cart) {
         ApiService.apiService.deleteCart("Bearer "+token, cart).enqueue(new Callback<ApiResponse>() {
             @Override
@@ -471,10 +456,7 @@ public class CustomerHomeActivity extends AppCompatActivity {
                 else {
                     System.out.println("Xóa sản phẩm trong giỏ hàng thành công");
                 }
-
             }
-
-
             @Override
             public void onFailure(Call<ApiResponse> call, Throwable t) {
                 System.out.println("Xoa san pham khoi gio hang that bai");
@@ -508,7 +490,6 @@ public class CustomerHomeActivity extends AppCompatActivity {
                     System.out.println("Giỏ hàng rỗng");
                 }
             }
-
             @Override
             public void onFailure(Call<EntityStatusResponse<FullCart>> call, Throwable t) {
                 System.out.println("Lỗi truy cập giỏ hàng");
