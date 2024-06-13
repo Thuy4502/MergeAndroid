@@ -180,7 +180,6 @@ public class UserProfileActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<EntityStatusResponse<UserInfo>> call, Throwable t) {
                 System.out.println("Lay thong tin user thanh cong");
-
             }
         });
     }
@@ -189,13 +188,13 @@ public class UserProfileActivity extends AppCompatActivity {
         ApiService.apiService.changeAddress(token1, userInfo).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                Toast.makeText(UserProfileActivity.this, "Thay đổi thông tin thành công", Toast.LENGTH_LONG).show();
                 getInfoUser(token1);
+                Toast.makeText(UserProfileActivity.this, "Thay đổi thông tin thành công", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(UserProfileActivity.this, "Thay đổi thông tin thất bại", Toast.LENGTH_LONG).show();
+//                Toast.makeText(UserProfileActivity.this, "Thay đổi thông tin thất bại", Toast.LENGTH_LONG).show();
             }
         });
 

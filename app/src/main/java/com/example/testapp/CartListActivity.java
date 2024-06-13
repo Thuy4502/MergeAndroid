@@ -130,7 +130,6 @@ public class CartListActivity extends AppCompatActivity {
                         setButtonBuy(countCart);
                     } else {
                         System.out.println("Gio hang rong");
-                        // Xử lý khi danh sách giỏ hàng rỗng
                         GradientDrawable drawableEnable = new GradientDrawable();
                         drawableEnable.setShape(GradientDrawable.RECTANGLE);
                         drawableEnable.setCornerRadius(54);
@@ -143,7 +142,6 @@ public class CartListActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<EntityStatusResponse<FullCart>> call, Throwable t) {
-                // Xử lý khi gặp lỗi trong quá trình gọi API
                 System.out.println("-----------------------Lỗi truy cập giỏ hàng");
             }
         });
