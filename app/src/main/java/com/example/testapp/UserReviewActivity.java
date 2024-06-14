@@ -3,6 +3,7 @@ package com.example.testapp;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,9 +36,7 @@ public class UserReviewActivity extends AppCompatActivity {
     private Button btnSendReview;
     private EditText etContent;
     private RatingBar rtbStar;
-    private final List<OrderDetail> data = new ArrayList<>();
     private ProductReviewAdapter reviewAdapter;
-    private int selectedPosition = -1;
 
     public static String product_id;
 
@@ -98,6 +97,7 @@ public class UserReviewActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<EntityStatusResponse<Review>> call, Throwable t) {
+                Log.i("error review: ", t.getMessage());
             }
         });
     }

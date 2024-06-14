@@ -157,7 +157,8 @@
         <activity
             android:name=".BuyNowActivity"
             android:exported="true"
-            android:theme="@style/CustomTheme" />
+            android:theme="@style/CustomTheme"
+             />
         <activity
             android:name=".DeleveryProcessOrderInCartActivity"
             android:exported="true" />

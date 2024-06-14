@@ -1,11 +1,9 @@
-<!-- dialog_change_address.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@drawable/style_radius_20dp"
+    android:background="@color/white"
     android:layout_marginLeft="20dp"
     android:layout_margin="20dp">
     <ImageView
@@ -15,36 +13,22 @@
         android:layout_gravity="center"
         android:layout_marginBottom="30dp"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <EditText
+        android:id="@+id/edtAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:hint="Nhập địa chỉ giao hàng"
-        android:backgroundTint="@color/mainColor"
-        android:textColorHint="@color/smallTextColor"
-        app:boxStrokeColor="@color/mainColor"
-        app:hintTextColor="@color/black"
-        android:layout_marginBottom="15dp">
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:inputType="phone"
-            android:id="@+id/edtAddress"
-            android:padding="10dp" />
-    </com.google.android.material.textfield.TextInputLayout>
+        android:hint="Nhập địa chỉ giao hàng" />
 
     <Button
         android:id="@+id/btnSaveChange"
         android:layout_width="80dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:text="Lưu"
         android:layout_gravity="right"
         android:textAllCaps="false"
         android:background="@drawable/primary_button_bg_color"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:layout_marginTop="30dp"
         />
-
 </LinearLayout>

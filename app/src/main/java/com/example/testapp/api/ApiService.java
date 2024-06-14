@@ -47,7 +47,7 @@ public interface ApiService {
 //    WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
 //    String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
 
-    ApiService apiService = new Retrofit.Builder().baseUrl("http://192.168.0.188:9999/").addConverterFactory(GsonConverterFactory.create(gson))
+    ApiService apiService = new Retrofit.Builder().baseUrl("http://10.251.8.31:9999/").addConverterFactory(GsonConverterFactory.create(gson))
 
 
             .build().create(ApiService.class);
@@ -191,8 +191,9 @@ public interface ApiService {
 
     @PUT("api/admin/coupon/{coupon_id}/status")
     Call<ApiResponse> disableCoupon(@Header("Authorization") String token, @Path("coupon_id") String coupon_id, @Body Coupon coupon);
+
     @POST("api/review/add")
-    Call<EntityStatusResponse<Review>> addReview(String token, ReviewDTO reviewDTO);
+    Call<EntityStatusResponse<Review>> addReview(@Header("Authorization") String token, @Body ReviewDTO reviewDTO);
 
     @GET("api/review/{product_id}/get")
     Call<CommonResponse<Review>> getReviewProduct(@Path("product_id") String product_id);

@@ -167,12 +167,13 @@ public class UserDeliveryProcessActivity extends AppCompatActivity {
                     EntityStatusResponse<Order> resultResponse = response.body();
                     if(resultResponse != null) {
                         Order orderResponse = resultResponse.getData();
-                        if(orderResponse.getStatus() == 0){
-                            lnlCallStaff.setVisibility(View.GONE);
-                        }else{
-                            lnlCallStaff.setVisibility(View.VISIBLE);
-                            phoneStaff = orderResponse.getStaff().getPhone();
-                        }
+
+//                        if(orderResponse.getStatus() == 0){
+//                            lnlCallStaff.setVisibility(View.GONE);
+//                        }else{
+//                            lnlCallStaff.setVisibility(View.VISIBLE);
+//                            phoneStaff = orderResponse.getStaff().getPhone();
+//                        }
 
                         timeUpdateOrder = formatDateTimeToTime (orderResponse.getUpdate_at());
                         addressCustomer = orderResponse.getCustomer().getAddress();

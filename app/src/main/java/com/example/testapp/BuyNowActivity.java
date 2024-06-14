@@ -133,7 +133,7 @@ public class BuyNowActivity extends AppCompatActivity {
                 } else {
                     // The switch is disabled/unchecked
                     totalPrice = totalPrice + Integer.valueOf(point);
-                    tv_usePoint.setText("0 đ");
+                    tv_usePoint.setText("0");
                     tvTotalPrice.setText(Function.formatToVND((int) (totalPrice)));
                 }
             }

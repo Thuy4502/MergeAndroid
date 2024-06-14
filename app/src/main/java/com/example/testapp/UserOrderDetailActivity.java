@@ -150,11 +150,9 @@ public class UserOrderDetailActivity extends AppCompatActivity {
                         tvOrderId.setText(orderResponse.getOrder_id().toString());
                         //total price product
                         tvProductPrice.setText(Function.formatToVND(orderResponse.getTotal_price()));
-                        //order total price
-                        Integer totalPrice = orderResponse.getTotal_price() + Integer.parseInt((String) tvFreightCost.getText());
-                        Integer format = Integer.parseInt((String) tvFreightCost.getText());
 
-                        tvFreightCost.setText(Function.formatToVND(format));
+                        //order total price
+                        Integer totalPrice = orderResponse.getTotal_price() ;
 
                         tvTotalPrice.setText(Function.formatToVND(totalPrice));
 
@@ -209,7 +207,7 @@ public class UserOrderDetailActivity extends AppCompatActivity {
                         Log.i("message", "onResponse: " + resultResponse.getMessage());
                     }
                 }
-                handler.postDelayed(() -> getOrderById(token, orderId), 10000); // 10 giây
+//                handler.postDelayed(() -> getOrderById(token, orderId), 10000); // 10 giây
             }
             @Override
             public void onFailure(Call<EntityStatusResponse<Order>> call, Throwable t) {
